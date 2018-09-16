@@ -35,6 +35,25 @@ router.get("/result/:movie_id", (req, res) => {
     );
 });
 
+//接UI的 搜索router⬇️ (((能搜出了整个名字，等下让他搜部分也可以)))
+///api/movie/search
+//写一个find movie的router
+router.post("/search", (req, res) => {
+  const searchContent = req.body.searchContent;
+
+  // Find movie by searchContent
+  Movie.findOne({ movie_title: searchContent })
+    .then(movie => {
+      // check movie exist
+      if (!movie) {
+        errors.movieSearch = "movie not found";
+        return res.status(404).json(errors);
+      }
+      res.json(movie);
+    })
+    .catch(err => res.status(404).json({ nomoviesfound: "No movie searched" }));
+});
+
 // just for test !!!
 // post存一个看看collection叫啥:叫movies
 // 这个post测试用，注意title是必输项
