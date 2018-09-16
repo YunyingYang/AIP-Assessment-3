@@ -1,0 +1,16 @@
+.MovieList {
+    width: 900px;
+    height: 200px;
+    opacity: 0%;
+    /*background: rgba(255, 255, 255, 0);*/
+    /*margin: auto;*/
+    position: relative;
+    left: 270px;
+    top: 30px;
+}
+
+p {
+    font-size: large;
+    color: white;
+    text-align: left;
+}
