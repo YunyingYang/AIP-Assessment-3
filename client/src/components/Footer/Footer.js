@@ -21,7 +21,7 @@ const footer = () => {
                     <td><a href="#policy">Privacy Policy</a></td>
                 </tr>
             </table>
-            <p id="copyright">© 2018 Peppa Filmtopia. Film data from IMDb. Made by 🐰🦄🐹 with ♥️</p>
+            <p id="copyright">© {new Date().getFullYear()} Peppa Filmtopia. Film data from IMDb. Made by 🐰🦄🐹 with ♥️</p>
         </div>
     )
 };

@@ -11,35 +11,49 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false,
+      homeActive: true,
+      discoverActive: false
     };
-    this.toggleClass= this.toggleClass.bind(this);
+    this.toggleHomeClass = this.toggleHomeClass.bind(this);
+    this.toggleDiscoverClass = this.toggleDiscoverClass.bind(this);
   }
 
-  toggleClass() {
-    const currentState = this.state.active;
-    this.setState({ active: !currentState });
+  toggleHomeClass() {
+    //const currentHomeState = this.state.homeActive;
+    this.setState({
+      homeActive: true,
+      discoverActive: false
+    });
+  }
+
+  toggleDiscoverClass() {
+    //const currentHomeState = this.state.homeActive;
+    this.setState({
+      homeActive: false,
+      discoverActive: true
+    });
   }
 
   render() {
     return (
       <div className="header-menu">
         <ul className="header-bar">
-          <li>&nbsp;<img className="icon" src={icon}/></li>
+          <li>&nbsp;<img className="icon" src={icon} /></li>
           <li><Link to="/">PEPPA FILMTOPIA</Link></li>
           {/* <Switch> */}
           {/* <Route exact path ="/" component={GuestView} />
           <Route exact path ="/login" component={UserView} /> */}
           <div className="guest-view">
-          <li className="user-mgmt"><Link to="/signup">Sign Up</Link></li>
-          <li className="user-mgmt"><Link to="/login">Log In</Link></li>
+            <li className="user-mgmt"><Link to="/signup">Sign Up</Link></li>
+            <li className="user-mgmt"><Link to="/login">Log In</Link></li>
           </div>
           {/* </Switch> */}
         </ul>
         <ul className="navi-bar">
-          <li><Link to="/" className={this.state.active ? 'tab-active': null}
-                 onClick={this.toggleClass}>Home</Link></li>
-          <li><Link to="/movieinfo">Discover</Link></li>
+          <li><Link to="/" className={this.state.homeActive ? 'tab-active' : null}
+            onClick={this.toggleHomeClass}>Home</Link></li>
+          <li><Link to="/movieinfo" className={this.state.discoverActive ? 'tab-active' : null}
+            onClick={this.toggleDiscoverClass}>Discover</Link></li>
           <li><a href="#news">News</a></li>
           <li><a href="#bs">Best Sellers</a></li>
           <li className="dropdown">
@@ -50,10 +64,10 @@ class Header extends Component {
               <a href="#">Marks</a>
             </div>
           </li>
-          <li className="search-box">      
+          <li className="search-box">
             <form className="form-wrapper-2 cf" method="GET" action="api/search">
               <input type="text" placeholder="Search movies..." name="name" required></input>
-              <button type="submit"><img className="search-icon" src={search}/></button>
+              <button type="submit"><img className="search-icon" src={search} /></button>
             </form>
           </li>
         </ul>
