@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import Background from '../../images/usermgmtbg.jpg';
 import cross from '../../images/cross.png';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/authActions';
 
 var sectionStyle = {
     width: "600px",
@@ -42,9 +45,11 @@ class RegisterPage extends Component {
             password2: this.state.password2
         };
 
-        axios.post('/api/users/register', newUser)
-            .then(res => console.log(res.data))
-            .catch(err => this.setState({ errors: err.response.data }));
+        this.props.registerUser(newUser);
+
+        // axios.post('/api/users/register', newUser)
+        //     .then(res => console.log(res.data))
+        //     .catch(err => this.setState({ errors: err.response.data }));
     }
 
 
@@ -129,4 +134,15 @@ class RegisterPage extends Component {
     }
 }
 
-export default RegisterPage;
+RegisterPage.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    //errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    //errors: state.errors
+});
+
+export default connect(mapStateToProps, { registerUser })(RegisterPage);
