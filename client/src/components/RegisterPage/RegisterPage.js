@@ -10,6 +10,8 @@ import { registerUser } from '../../actions/authActions';
 var sectionStyle = {
     width: "600px",
     height: "520px",
+    border: "3px solid #000",
+    borderRadius: "20px 70px",
     // makesure here is String, following is ES6
     backgroundImage: `url(${Background})`
 };

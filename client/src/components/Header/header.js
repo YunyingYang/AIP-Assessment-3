@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios"; //!
-import classnames from "classnames"; //!
 
 import "./header.css";
 import icon from "../../images/icon.png";
@@ -111,7 +110,7 @@ class Header extends Component {
         <ul className="header-bar">
           <li>
             &nbsp;
-            <img className="icon" src={icon} />
+            <img className="icon" src={icon} alt="filmicon" />
           </li>
           <li>
             <Link to="/">PEPPA FILMTOPIA</Link>
@@ -178,7 +177,7 @@ class Header extends Component {
                 onChange={this.onChange}
               />
               <button type="submit">
-                <img className="search-icon" src={search} />
+                <img className="search-icon" src={search} alt="searchicon" />
               </button>
             </form>
           </li>
