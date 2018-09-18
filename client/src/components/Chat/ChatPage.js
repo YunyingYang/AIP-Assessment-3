@@ -54,7 +54,7 @@ class ChatPage extends Component {
                                 <h2>Let's share feelings about movies!</h2>
                                 <hr />
                                 <div className="messages">
-                                    {/* TODO: add scrollbar here!!! */}
+                                    {/* TODO: add max-height and scrollbar here!!! */}
                                     {this.state.messages.map(message => {
                                         return (
                                             <p className={this.state.username === message.author ?

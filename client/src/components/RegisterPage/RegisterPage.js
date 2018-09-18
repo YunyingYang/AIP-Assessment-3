@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Background from '../../images/usermgmtbg.jpg';
 import cross from '../../images/cross.png';
 import { connect } from 'react-redux';
@@ -30,6 +30,12 @@ class RegisterPage extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    componentDidMount() {
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push('/dashboard');
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors });
@@ -50,7 +56,7 @@ class RegisterPage extends Component {
             password2: this.state.password2
         };
 
-        this.props.registerUser(newUser);
+        this.props.registerUser(newUser, this.props.history);
 
         // axios.post('/api/users/register', newUser)
         //     .then(res => console.log(res.data))
@@ -61,7 +67,6 @@ class RegisterPage extends Component {
     render() {
 
         const { errors } = this.state;
-        const { user } = this.props.auth;
         return (
             <div className="register">
                 <div className="container" style={sectionStyle}>
@@ -70,7 +75,6 @@ class RegisterPage extends Component {
                         <div className="col-md-8 m-auto">
                             <h1 className="display-4 text-center" style={{ color: "#FFF", textShadow: "0 2px #FF7F00, 2px 0 #FF7F00, -2px 0 #FF7F00, 0 -2px #FF7F00" }}>
                                 User Signup
-                                {user ? user.name : null}
                             </h1>
                             {/* <p className = "lead text-center">
                                 Create your Filmtopia account
@@ -152,4 +156,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, { registerUser })(RegisterPage);
+export default connect(mapStateToProps, { registerUser })(withRouter(RegisterPage));

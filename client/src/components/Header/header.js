@@ -6,6 +6,9 @@ import "./header.css";
 import icon from "../../images/icon.png";
 import search from "../../images/search.png";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/authActions';
 // import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 // import UserView from './ViewComponents/userView';
 // import GuestView from './ViewComponents/guestView';
@@ -23,6 +26,11 @@ class Header extends Component {
     this.toggleDiscoverClass = this.toggleDiscoverClass.bind(this);
     this.onSubmit = this.onSubmit.bind(this); //！
     this.onChange = this.onChange.bind(this); //！
+  }
+
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.logoutUser();
   }
 
   toggleHomeClass() {
@@ -70,6 +78,34 @@ class Header extends Component {
   }
 
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+    const authLinks = (
+      <div className="auth-view">
+        <li className="user-mgmt">
+          <a href="" onClick={this.onLogoutClick.bind(this)}>Log Out</a>
+        </li>
+        <li className="user-mgmt">
+          <a href="">Hi, {user.name}!</a>
+        </li>
+        <li className="user-mgmt">
+          <Link to="/dashboard">
+            <img className="rounded-circle"
+              src={user.avatar} alt={user.name}
+              style={{ width: '25px', marginRight: '5px' }} />
+          </Link>
+        </li>
+      </div>
+    );
+    const guestLinks = (
+      <div className="guest-view">
+        <li className="user-mgmt">
+          <Link to="/signup">Sign Up</Link>
+        </li>
+        <li className="user-mgmt">
+          <Link to="/login">Log In</Link>
+        </li>
+      </div>
+    );
     return (
       <div className="header-menu">
         <ul className="header-bar">
@@ -83,14 +119,7 @@ class Header extends Component {
           {/* <Switch> */}
           {/* <Route exact path ="/" component={GuestView} />
           <Route exact path ="/login" component={UserView} /> */}
-          <div className="guest-view">
-            <li className="user-mgmt">
-              <Link to="/signup">Sign Up</Link>
-            </li>
-            <li className="user-mgmt">
-              <Link to="/login">Log In</Link>
-            </li>
-          </div>
+          {isAuthenticated ? authLinks : guestLinks}
           {/* </Switch> */}
         </ul>
         <ul className="navi-bar">
@@ -159,4 +188,13 @@ class Header extends Component {
   }
 }
 
-export default Header;
+Header.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { logoutUser })(Header);
