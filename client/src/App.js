@@ -7,6 +7,7 @@ import Header from "./components/Header/header";
 import Footer from "./components/Footer/Footer";
 import Exhibit from "./components/Exhibit/exhibit";
 import MovieInfo from "./components/MovieInfo/movieinfo";
+import ChatPage from "./components/Chat/ChatPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
 
@@ -23,6 +24,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Exhibit} />
               <Route exact path="/movieinfo" component={MovieInfo} />
+              <Route exact path="/chat" component={ChatPage} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/signup" component={RegisterPage} />
             </Switch>

@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport"); //authentication module
+var io = require('socket.io')();
 
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
@@ -19,12 +20,12 @@ const db = require("./config/keys").mongoURI;
 
 // Connect to mongodb
 mongoose
-  .connect(
-    db
-    // { useNewUrlParser: true } //这个去掉也可以传值，但是为了DeprecationWarning
-  )
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+    .connect(
+        db
+        // { useNewUrlParser: true } //这个去掉也可以传值，但是为了DeprecationWarning
+    )
+    .then(() => console.log("MongoDB Connected"))
+    .catch(err => console.log(err));
 
 // Passport middleware
 app.use(passport.initialize());
@@ -40,4 +41,11 @@ app.use("/api/movies", movies);
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+var server = app.listen(port, () => console.log(`Server running on port ${port}`));
+
+io.attach(server);
+io.on('connection', function(socket) {
+    socket.on('SEND_MESSAGE', function(data) {
+        io.emit('RECEIVE_MESSAGE', data);
+    });
+});

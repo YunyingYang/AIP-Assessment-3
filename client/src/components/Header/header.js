@@ -16,6 +16,7 @@ class Header extends Component {
     this.state = {
       homeActive: true,
       discoverActive: false,
+      chatActive: false,
       searchContent: ""
     };
     this.toggleHomeClass = this.toggleHomeClass.bind(this);
@@ -28,7 +29,8 @@ class Header extends Component {
     //const currentHomeState = this.state.homeActive;
     this.setState({
       homeActive: true,
-      discoverActive: false
+      discoverActive: false,
+      chatActive: false
     });
   }
 
@@ -36,7 +38,17 @@ class Header extends Component {
     //const currentHomeState = this.state.homeActive;
     this.setState({
       homeActive: false,
-      discoverActive: true
+      discoverActive: true,
+      chatActive: false
+    });
+  }
+
+  toggleChatClass() {
+    //const currentHomeState = this.state.homeActive;
+    this.setState({
+      homeActive: false,
+      discoverActive: false,
+      chatActive: true
     });
   }
 
@@ -101,12 +113,21 @@ class Header extends Component {
             </Link>
           </li>
           <li>
+            <Link
+              to="/chat"
+              className={this.state.chatActive ? "tab-active" : null}
+              onClick={this.toggleChatClass}
+            >
+              Share Your Feelings
+            </Link>
+          </li>
+          {/* <li>
             <a href="#news">News</a>
           </li>
           <li>
             <a href="#bs">Best Sellers</a>
-          </li>
-          <li className="dropdown">
+          </li> */}
+          {/* <li className="dropdown">
             <a href="javascript:void(0)" className="dropbtn">
               Favorites ❤
             </a>
@@ -115,7 +136,7 @@ class Header extends Component {
               <a href="#">Comments</a>
               <a href="#">Marks</a>
             </div>
-          </li>
+          </li> */}
           <li className="search-box">
             {/* <form className="form-wrapper-2 cf" method="GET" action="api/search"> */}
             <form className="form-wrapper-2 cf" onSubmit={this.onSubmit}>
