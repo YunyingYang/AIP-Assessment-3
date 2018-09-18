@@ -1,15 +1,15 @@
 import React from 'react';
 import './Footer.css';
 
-const tdStyle = {
-    width: '30px',
-};
+// const tdStyle = {
+//     width: '30px',
+// };
 
 
 const footer = () => {
     return (
         <div className="Footer">
-            <table id="Siteinfo">
+            {/* <table id="Siteinfo">
                 <tr>
                     <td style={tdStyle}></td>
                     <td><a href="#aboutus">About Us</a></td>
@@ -20,7 +20,7 @@ const footer = () => {
                     <td style={tdStyle}></td>
                     <td><a href="#policy">Privacy Policy</a></td>
                 </tr>
-            </table>
+            </table> */}
             <p id="copyright">© {new Date().getFullYear()} Peppa Filmtopia. Film data from IMDb. Made by 🐰🦄🐹 with ♥️</p>
         </div>
     )

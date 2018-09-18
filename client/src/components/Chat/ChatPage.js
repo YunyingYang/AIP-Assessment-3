@@ -48,7 +48,7 @@ class ChatPage extends Component {
         return (
             <div className="container" style={sectionStyle}>
                 <div className="row">
-                    <div className="col-4" style={{ padding: "10px" }}>
+                    <div className="col-sm-12" style={{ padding: "10px" }}>
                         <div>
                             <div>
                                 <h2>Let's share feelings about movies!</h2>
@@ -58,7 +58,7 @@ class ChatPage extends Component {
                                     {this.state.messages.map(message => {
                                         return (
                                             <p className={this.state.username === message.author ?
-                                                "bg-success chat-text" : "bg-info text-warning chat-text"}
+                                                "alert alert-dismissible alert-success" : "alert alert-dismissible alert-info"}
                                                 key={message.author}>
                                                 <strong>{message.author}: </strong>
                                                 {message.message}
@@ -73,7 +73,7 @@ class ChatPage extends Component {
                                 <br />
                                 <input type="text" placeholder="Message" className="form-control" value={this.state.message} onChange={ev => this.setState({ message: ev.target.value })} />
                                 <br />
-                                <button onClick={this.sendMessage} className="btn btn-primary form-control">Send</button>
+                                <button onClick={this.sendMessage} className="btn btn-primary">Send</button>
                             </div>
                         </div>
                     </div>

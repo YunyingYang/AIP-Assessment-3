@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
@@ -31,6 +30,12 @@ class RegisterPage extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({ errors: nextProps.errors });
+        }
+    }
+
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
@@ -56,6 +61,7 @@ class RegisterPage extends Component {
     render() {
 
         const { errors } = this.state;
+        const { user } = this.props.auth;
         return (
             <div className="register">
                 <div className="container" style={sectionStyle}>
@@ -64,6 +70,7 @@ class RegisterPage extends Component {
                         <div className="col-md-8 m-auto">
                             <h1 className="display-4 text-center" style={{ color: "#FFF", textShadow: "0 2px #FF7F00, 2px 0 #FF7F00, -2px 0 #FF7F00, 0 -2px #FF7F00" }}>
                                 User Signup
+                                {user ? user.name : null}
                             </h1>
                             {/* <p className = "lead text-center">
                                 Create your Filmtopia account
@@ -137,12 +144,12 @@ class RegisterPage extends Component {
 RegisterPage.propTypes = {
     registerUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
-    //errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    //errors: state.errors
+    errors: state.errors
 });
 
 export default connect(mapStateToProps, { registerUser })(RegisterPage);
