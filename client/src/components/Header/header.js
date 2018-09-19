@@ -5,10 +5,12 @@ import "./header.css";
 import icon from "../../images/icon.png";
 import search from "../../images/search.png";
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { logoutUser } from '../../actions/authActions';
-import { clearCurrentProfile } from '../../actions/profileActions';
+import { Router, Route, Switch } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
+import { clearCurrentProfile } from "../../actions/profileActions";
+import { withRouter } from "react-router-dom";
 
 class Header extends Component {
   constructor(props) {
@@ -21,6 +23,7 @@ class Header extends Component {
     };
     this.toggleHomeClass = this.toggleHomeClass.bind(this);
     this.toggleDiscoverClass = this.toggleDiscoverClass.bind(this);
+    this.toggleChatClass = this.toggleChatClass.bind(this);
     this.onSubmit = this.onSubmit.bind(this); //！
     this.onChange = this.onChange.bind(this); //！
   }
@@ -69,7 +72,11 @@ class Header extends Component {
     };
     axios
       .post("/api/movies/search", newSearch)
-      .then(res => console.log(res.data))
+      .then(res => {
+        console.log(res.data);
+        this.props.history.push("/mvsearchresult");
+        // window.location.href = "/mvsearchresult";
+      })
       .catch(err => this.setState(console.log("cannot search")));
 
     // location.pathname = "/api/movie/search";
@@ -80,16 +87,21 @@ class Header extends Component {
     const authLinks = (
       <div className="auth-view">
         <li className="user-mgmt">
-          <a href="" onClick={this.onLogoutClick.bind(this)}>Log Out</a>
+          <a href="" onClick={this.onLogoutClick.bind(this)}>
+            Log Out
+          </a>
         </li>
         <li className="user-mgmt">
           <a href="">Hi, {user.name}!</a>
         </li>
         <li className="user-mgmt">
           <Link to="/dashboard">
-            <img className="rounded-circle"
-              src={user.avatar} alt={user.name}
-              style={{ width: '25px', marginRight: '5px' }} />
+            <img
+              className="rounded-circle"
+              src={user.avatar}
+              alt={user.name}
+              style={{ width: "25px", marginRight: "5px" }}
+            />
           </Link>
         </li>
       </div>
@@ -173,10 +185,13 @@ class Header extends Component {
 Header.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
-}
+};
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(Header);
+export default connect(
+  mapStateToProps,
+  { logoutUser, clearCurrentProfile }
+)(withRouter(Header));
