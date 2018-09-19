@@ -4,7 +4,7 @@ import axios from "axios"; //!
 import "./header.css";
 import icon from "../../images/icon.png";
 import search from "../../images/search.png";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
@@ -19,44 +19,48 @@ class Header extends Component {
       chatActive: false,
       searchContent: ""
     };
-    this.toggleHomeClass = this.toggleHomeClass.bind(this);
-    this.toggleDiscoverClass = this.toggleDiscoverClass.bind(this);
-    this.toggleChatClass = this.toggleChatClass.bind(this);
+    // this.toggleHomeClass = this.toggleHomeClass.bind(this);
+    // this.toggleDiscoverClass = this.toggleDiscoverClass.bind(this);
+    // this.toggleChatClass = this.toggleChatClass.bind(this);
     this.onSubmit = this.onSubmit.bind(this); //！
     this.onChange = this.onChange.bind(this); //！
+  }
+
+  componentWillMount() {
+    this.props.history.listen(() => {
+      // get new URL whenever the route change
+      if (this.props.history.location.pathname === "/") {
+        this.setState({
+          homeActive: true,
+          discoverActive: false,
+          chatActive: false
+        });
+      } else if (this.props.history.location.pathname === "/movieinfo") {
+        this.setState({
+          homeActive: false,
+          discoverActive: true,
+          chatActive: false
+        });
+      } else if (this.props.history.location.pathname === "/chat") {
+        this.setState({
+          homeActive: false,
+          discoverActive: false,
+          chatActive: true
+        });
+      } else {
+        this.setState({
+          homeActive: false,
+          discoverActive: false,
+          chatActive: false
+        });
+      }
+    });
   }
 
   onLogoutClick(e) {
     e.preventDefault();
     this.props.clearCurrentProfile();
     this.props.logoutUser();
-  }
-
-  toggleHomeClass() {
-    //const currentHomeState = this.state.homeActive;
-    this.setState({
-      homeActive: true,
-      discoverActive: false,
-      chatActive: false
-    });
-  }
-
-  toggleDiscoverClass() {
-    //const currentHomeState = this.state.homeActive;
-    this.setState({
-      homeActive: false,
-      discoverActive: true,
-      chatActive: false
-    });
-  }
-
-  toggleChatClass() {
-    //const currentHomeState = this.state.homeActive;
-    this.setState({
-      homeActive: false,
-      discoverActive: false,
-      chatActive: true
-    });
   }
 
   onChange(e) {
@@ -115,11 +119,7 @@ class Header extends Component {
           <li>
             <Link to="/">PEPPA FILMTOPIA</Link>
           </li>
-          {/* <Switch> */}
-          {/* <Route exact path ="/" component={GuestView} />
-          <Route exact path ="/login" component={UserView} /> */}
           {isAuthenticated ? authLinks : guestLinks}
-          {/* </Switch> */}
         </ul>
         <ul className="navi-bar">
           <li>
@@ -135,7 +135,6 @@ class Header extends Component {
             <Link
               to="/movieinfo"
               className={this.state.discoverActive ? "tab-active" : null}
-              onClick={this.toggleDiscoverClass}
             >
               Discover
             </Link>
@@ -144,7 +143,6 @@ class Header extends Component {
             <Link
               to="/chat"
               className={this.state.chatActive ? "tab-active" : null}
-              onClick={this.toggleChatClass}
             >
               Share Your Feelings
             </Link>
@@ -180,4 +178,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(Header);
+export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(withRouter(Header));

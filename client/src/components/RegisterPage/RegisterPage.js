@@ -78,9 +78,6 @@ class RegisterPage extends Component {
                             <h1 className="display-4 text-center" style={{ color: "#FFF", textShadow: "0 2px #FF7F00, 2px 0 #FF7F00, -2px 0 #FF7F00, 0 -2px #FF7F00" }}>
                                 User Signup
                             </h1>
-                            {/* <p className = "lead text-center">
-                                Create your Filmtopia account
-                            </p> */}
                             <form noValidate onSubmit={this.onSubmit} >
                                 <div className="form-group">
                                     <input type="text"

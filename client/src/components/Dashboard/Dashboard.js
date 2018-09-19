@@ -100,9 +100,9 @@ class Dashboard extends Component {
         const CheckboxGroup = Checkbox.Group;
 
         const prefsOptions = [
-            { label: 'Apple', value: 'Apple' },
-            { label: 'Pear', value: 'Pear' },
-            { label: 'Orange', value: 'Orange' },
+            { label: 'Drama', value: 'Drama' },
+            { label: 'Comedy', value: 'Comedy' },
+            { label: 'Romance', value: 'Romance' },
         ];
 
         return (
@@ -124,7 +124,7 @@ class Dashboard extends Component {
                                     <label class="btn btn-primary" for="customCheck3">Comedy</label>
                                 </div> */}
                                 <div>
-                                    <CheckboxGroup options={prefsOptions} defaultValue={['Apple']} onChange={this.onCheckChange} />
+                                    <CheckboxGroup options={prefsOptions} defaultValue={['Drama']} onChange={this.onCheckChange} />
                                     <br /><br />
                                 </div>
                                 <input
