@@ -4,7 +4,9 @@ import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
+import { clearCurrentProfile } from './actions/profileActions';
 import store from './store';
+import PrivateRoute from './components/auth/PrivateRoute';
 
 import Header from "./components/Header/header";
 import Footer from "./components/Footer/Footer";
@@ -13,6 +15,7 @@ import MovieInfo from "./components/MovieInfo/movieinfo";
 import ChatPage from "./components/Chat/ChatPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
+import Dashboard from './components/Dashboard/Dashboard';
 
 // Check the token
 if (localStorage.jwtToken) {
@@ -25,6 +28,7 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     store.dispatch(logoutUser());
+    store.dispatch(clearCurrentProfile());
     //redirect to login
     window.location.href = '/login';
   }
@@ -42,9 +46,10 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Exhibit} />
               <Route exact path="/movieinfo" component={MovieInfo} />
-              <Route exact path="/chat" component={ChatPage} />
+              <PrivateRoute exact path="/chat" component={ChatPage} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/signup" component={RegisterPage} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
             <br />
             <br />

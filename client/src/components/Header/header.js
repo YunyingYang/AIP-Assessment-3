@@ -8,9 +8,7 @@ import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
-// import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-// import UserView from './ViewComponents/userView';
-// import GuestView from './ViewComponents/guestView';
+import { clearCurrentProfile } from '../../actions/profileActions';
 
 class Header extends Component {
   constructor(props) {
@@ -29,6 +27,7 @@ class Header extends Component {
 
   onLogoutClick(e) {
     e.preventDefault();
+    this.props.clearCurrentProfile();
     this.props.logoutUser();
   }
 
@@ -149,22 +148,6 @@ class Header extends Component {
               Share Your Feelings
             </Link>
           </li>
-          {/* <li>
-            <a href="#news">News</a>
-          </li>
-          <li>
-            <a href="#bs">Best Sellers</a>
-          </li> */}
-          {/* <li className="dropdown">
-            <a href="javascript:void(0)" className="dropbtn">
-              Favorites ❤
-            </a>
-            <div className="dropdown-content">
-              <a href="#">Likes</a>
-              <a href="#">Comments</a>
-              <a href="#">Marks</a>
-            </div>
-          </li> */}
           <li className="search-box">
             {/* <form className="form-wrapper-2 cf" method="GET" action="api/search"> */}
             <form className="form-wrapper-2 cf" onSubmit={this.onSubmit}>
@@ -196,4 +179,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logoutUser })(Header);
+export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(Header);

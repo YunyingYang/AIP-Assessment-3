@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import io from "socket.io-client";
 
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import './ChatPage.css';
 import Background from '../../images/chatbg.jpg';
 
@@ -45,6 +48,7 @@ class ChatPage extends Component {
         }
     }
     render() {
+        const { user } = this.props.auth;
         return (
             <div className="container" style={sectionStyle}>
                 <div className="row">
@@ -69,11 +73,14 @@ class ChatPage extends Component {
                                 <hr />
                             </div>
                             <div>
-                                <input type="text" placeholder="Username" value={this.state.username} onChange={ev => this.setState({ username: ev.target.value })} className="form-control" />
-                                <br />
-                                <input type="text" placeholder="Message" className="form-control" value={this.state.message} onChange={ev => this.setState({ message: ev.target.value })} />
-                                <br />
-                                <button onClick={this.sendMessage} className="btn btn-primary">Send</button>
+                                <form onSubmit={this.sendMessage}>
+                                    {/* <input type="text" placeholder="Username" value={this.state.username} onChange={ev => this.setState({ username: ev.target.value })} className="form-control" />
+                                <br /> */}
+                                    <input type="text" placeholder="Message" className="form-control" required
+                                        value={this.state.message} onChange={ev => this.setState({ username: user.name, message: ev.target.value })} />
+                                    <br />
+                                    <button type="submit" className="btn btn-primary">Send</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -83,4 +90,12 @@ class ChatPage extends Component {
     }
 }
 
-export default ChatPage;
+ChatPage.propTypes = {
+    auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps)(ChatPage);
