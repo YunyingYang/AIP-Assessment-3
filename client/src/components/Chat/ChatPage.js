@@ -56,7 +56,6 @@ class ChatPage extends Component {
                                 <h2>Let's share feelings about movies!</h2>
                                 <hr />
                                 <div className="messages" style={{ width: "100%", maxHeight: "350px", overflowY: "auto" }}>
-                                    {/* TODO: add max-height and scrollbar here!!! */}
                                     {this.state.messages.map((message, index) => {
                                         return (
                                             <p
