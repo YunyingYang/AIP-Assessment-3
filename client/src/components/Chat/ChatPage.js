@@ -57,14 +57,15 @@ class ChatPage extends Component {
                             <div>
                                 <h2>Let's share feelings about movies!</h2>
                                 <hr />
-                                <div className="messages">
+                                <div className="messages" style={{ maxHeight: "350px", overflowY: "auto" }}>
                                     {/* TODO: add max-height and scrollbar here!!! */}
                                     {this.state.messages.map(message => {
                                         return (
                                             <p className={this.state.username === message.author ?
                                                 "alert alert-dismissible alert-success" : "alert alert-dismissible alert-info"}
-                                                key={message.author}>
-                                                <strong>{message.author}: </strong>
+                                                key={message.author}
+                                                style={{ width: "100%", wordWrap: "break-word" }}>
+                                                <strong>{message.author}:&nbsp</strong>
                                                 {message.message}
                                             </p>
                                         )

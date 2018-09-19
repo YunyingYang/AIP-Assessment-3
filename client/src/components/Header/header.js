@@ -21,6 +21,7 @@ class Header extends Component {
     };
     this.toggleHomeClass = this.toggleHomeClass.bind(this);
     this.toggleDiscoverClass = this.toggleDiscoverClass.bind(this);
+    this.toggleChatClass = this.toggleChatClass.bind(this);
     this.onSubmit = this.onSubmit.bind(this); //！
     this.onChange = this.onChange.bind(this); //！
   }
