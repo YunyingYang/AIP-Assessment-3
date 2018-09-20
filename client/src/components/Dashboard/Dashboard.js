@@ -1,138 +1,81 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import TextFieldGroup from '../common/TextFieldGroup';
-// import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
-// import InputGroup from '../common/InputGroup';
-// import SelectListGroup from '../common/SelectListGroup';
-import { createProfile, getCurrentProfile } from '../../actions/profileActions';
-import isEmpty from '../../validation/is-empty';
+import { connect } from 'react-redux';
+import { getCurrentProfile, deleteAccount } from '../../actions/profileActions';
+import Spinner from '../common/Spinner';
+import ProfileActions from './ProfileActions';
+// import Experience from './Experience';
+// import Education from './Education';
+import Background from "../../images/chatbg.jpg";
 
-import { Checkbox } from 'antd';
+var sectionStyle = {
+    width: "1000px",
+    height: "600px",
+    border: "5px solid #FFF",
+    borderRadius: "20px 70px",
+    // makesure here is String, following is ES6
+    backgroundImage: `url(${Background})`
+};
 
 class Dashboard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            handle: '',
-            location: '',
-            status: '',//几级电影发烧友
-            bio: '',
-            prefs: [],//Customized - 喜欢的电影genre(s)，多选框！自己以后自己加
-            errors: {}
-        };
-
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-    }
-
     componentDidMount() {
         this.props.getCurrentProfile();
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.errors) {
-            this.setState({ errors: nextProps.errors });
-        }
-
-        if (nextProps.profile.profile) {
-            const profile = nextProps.profile.profile;
-
-            //       // Bring skills array back to CSV
-            //       const skillsCSV = profile.skills.join(',');
-
-            // If profile field doesnt exist, make empty string
-            profile.location = !isEmpty(profile.location) ? profile.location : '';
-            profile.bio = !isEmpty(profile.bio) ? profile.bio : '';
-            profile.prefs = !isEmpty(profile.prefs) ? profile.prefs : [];//TODO: 从多选框获得数列啊！
-
-            // Set component fields state
-            this.setState({
-                handle: profile.handle,
-                location: profile.location,
-                status: profile.status,
-                bio: profile.bio,
-                prefs: profile.prefs
-            });
-        }
-    }
-
-    onCheckChange(checkedValues) {
-        console.log('checked = ', checkedValues);
-        this.setState({ prefs: [...this.state.prefs, checkedValues] });//去掉重复值？
-        console.log(this.state.prefs);
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
-        const profileData = {
-            handle: this.state.handle,
-            location: this.state.location,
-            status: this.state.status,
-            bio: this.state.bio,
-            prefs: this.state.prefs
-        };
-
-        this.props.createProfile(profileData, this.props.history);
-    }
-
-    onChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-    }
+    //   onDeleteClick(e) {
+    //     this.props.deleteAccount();
+    //   }
 
     render() {
-        // Select options for status 
-        //TODO: 改成咱们的state！
-        const options = [
-            { label: '* Select Professional Status', value: 0 },
-            { label: 'Developer', value: 'Developer' },
-            { label: 'Junior Developer', value: 'Junior Developer' },
-            { label: 'Senior Developer', value: 'Senior Developer' },
-            { label: 'Manager', value: 'Manager' },
-            { label: 'Student or Learning', value: 'Student or Learning' },
-            { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
-            { label: 'Intern', value: 'Intern' },
-            { label: 'Other', value: 'Other' }
-        ];
+        const { user } = this.props.auth;
+        const { profile, loading } = this.props.profile;
 
-        const CheckboxGroup = Checkbox.Group;
+        let dashboardContent;
 
-        const prefsOptions = [
-            { label: 'Drama', value: 'Drama' },
-            { label: 'Comedy', value: 'Comedy' },
-            { label: 'Romance', value: 'Romance' },
-        ];
+        if (profile === null || loading) {
+            dashboardContent = <Spinner />;
+        } else {
+            //Check if logged in user has profile data
+            if (Object.keys(profile).length > 0) {
+                dashboardContent = (
+                    <div>
+                        <p className="lead text-muted">
+                            Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
+                        </p>
+                        <ProfileActions />
+                        {/* <Experience experience={profile.experience} />
+            <Education education={profile.education} /> */}
+                        <div style={{ marginBottom: '60px' }} />
+                        {/* <button
+              onClick={this.onDeleteClick.bind(this)}
+              className="btn btn-danger"
+            >
+              Delete My Account
+            </button> */}
+                    </div>
+                );
+            } else {
+                // User is logged in but has no profile
+                dashboardContent = (
+                    <div>
+                        <p className="lead text-muted">Welcome {user.name}</p>
+                        <p>You have not yet setup a profile, please add some info</p>
+                        <Link to="/create-profile" className="btn btn-lg btn-info">
+                            Create Profile
+            </Link>
+                    </div>
+                );
+            }
+        }
 
         return (
-            <div className="create-profile">
-                <div className="container">
+            <div className="dashboard">
+                <div className="container" style={sectionStyle}>
                     <div className="row">
-                        <div className="col-md-8 m-auto">
-                            <Link to="/" className="btn btn-light">
-                                Go Back</Link>
-                            <h1 className="display-4 text-center">Edit Profile</h1>
-                            <small className="d-block pb-3">* = required fields</small>
-                            <form onSubmit={this.onSubmit}>
-                                {/* <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked="" />
-                                    <label class="btn btn-primary active" for="customCheck1">Drama</label>
-                                    <input type="checkbox" class="custom-control-input" id="customCheck2" checked="" />
-                                    <label class="btn btn-primary" for="customCheck2">Romance</label>
-                                    <input type="checkbox" class="custom-control-input" id="customCheck3" checked="" />
-                                    <label class="btn btn-primary" for="customCheck3">Comedy</label>
-                                </div> */}
-                                <div>
-                                    <CheckboxGroup options={prefsOptions} defaultValue={['Drama']} onChange={this.onCheckChange} />
-                                    <br /><br />
-                                </div>
-                                <input
-                                    type="submit"
-                                    value="Submit"
-                                    className="btn btn-info btn-block mt-4"
-                                />
-                            </form>
+                        <div className="col-md-12" style={{ padding: "10px" }}>
+                            <h1 className="display-4">Dashboard</h1>
+                            {dashboardContent}
                         </div>
                     </div>
                 </div>
@@ -142,17 +85,17 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-    createProfile: PropTypes.func.isRequired,
     getCurrentProfile: PropTypes.func.isRequired,
-    profile: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+    deleteAccount: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    errors: state.errors
+    auth: state.auth
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
-    withRouter(Dashboard)
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(
+    Dashboard
 );

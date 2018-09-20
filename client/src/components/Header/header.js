@@ -14,7 +14,7 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      homeActive: true,
+      homeActive: false,
       discoverActive: false,
       chatActive: false,
       searchContent: ""
@@ -26,7 +26,7 @@ class Header extends Component {
     this.onChange = this.onChange.bind(this); //！
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.history.listen(() => {
       // get new URL whenever the route change
       if (this.props.history.location.pathname === "/") {
@@ -94,7 +94,7 @@ class Header extends Component {
           </a>
         </li>
         <li className="user-mgmt">
-          <a href="">Hi, {user.name}!</a>
+          <Link to="/dashboard">Hi, {user.name}!</Link>
         </li>
         <li className="user-mgmt">
           <Link to="/dashboard">
@@ -102,7 +102,7 @@ class Header extends Component {
               className="rounded-circle"
               src={user.avatar}
               alt={user.name}
-              style={{ width: "25px", marginRight: "5px" }}
+              style={{ width: "25px", marginRight: "2px" }}
             />
           </Link>
         </li>
