@@ -67,8 +67,8 @@ class ChatPage extends Component {
                                                 key={index}
                                                 style={{ wordBreak: "break-all" }}
                                             >
-                                                <strong>{message.author}:</strong>&
-                                                &nbsp{message.message}
+                                                <strong>{message.author}:</strong>&nbsp;
+                                                {message.message}
                                             </p>
                                         );
                                     })}

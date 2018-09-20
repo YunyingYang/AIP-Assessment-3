@@ -24,6 +24,7 @@ class CreateProfile extends Component {
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onCheckChange = this.onCheckChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,6 +49,12 @@ class CreateProfile extends Component {
 
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    onCheckChange(checkedValues) {
+        console.log('checked = ', checkedValues);
+        this.setState({ prefs: checkedValues });
+        console.log(this.state.prefs);
     }
 
     render() {

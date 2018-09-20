@@ -25,6 +25,7 @@ class Dashboard extends Component {
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onCheckChange = this.onCheckChange.bind(this);
     }
 
     componentDidMount() {
@@ -60,7 +61,7 @@ class Dashboard extends Component {
 
     onCheckChange(checkedValues) {
         console.log('checked = ', checkedValues);
-        this.setState({ prefs: [...this.state.prefs, checkedValues] });//去掉重复值？
+        this.setState({ prefs: checkedValues });
         console.log(this.state.prefs);
     }
 
