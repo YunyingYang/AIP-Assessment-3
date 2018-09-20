@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
+import { getMovies } from "../../actions/searchActions";
 
 class Header extends Component {
   constructor(props) {
@@ -72,16 +73,15 @@ class Header extends Component {
     const newSearch = {
       searchContent: this.state.searchContent //movie title keyword
     };
-    axios
-      .post("/api/movies/search", newSearch)
-      .then(res => {
-        console.log(res.data);
-        this.props.history.push("/mvsearchresult");
-        // window.location.href = "/mvsearchresult";
-      })
-      .catch(err => this.setState(console.log("cannot search")));
 
-    // location.pathname = "/api/movie/search";
+    this.props.getMovies(newSearch, this.props.history);
+    // axios
+    //   .post("/api/movies/search", newSearch)
+    //   .then(res => {
+    //     console.log(res.data);
+    //     this.props.history.push("/mvsearchresult");
+    //   })
+    //   .catch(err => this.setState(console.log("cannot search")));
   }
 
   render() {
@@ -180,7 +180,8 @@ class Header extends Component {
 
 Header.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  getMovies: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -189,5 +190,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, clearCurrentProfile }
+  { logoutUser, clearCurrentProfile, getMovies }
 )(withRouter(Header));

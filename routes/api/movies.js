@@ -35,14 +35,17 @@ router.get("/result/:movie_id", (req, res) => {
     );
 });
 
-//接UI的 搜索router⬇️ (((能搜出了整个名字，等下让他搜部分也可以)))
+//接UI的 搜索router⬇️ (((能搜出了整个名字，等下让他搜部分也可以【已完成✅】)))
 ///api/movie/search
 //写一个find movie的router
 router.post("/search", (req, res) => {
   const searchContent = req.body.searchContent;
 
   // Find movie by searchContent
-  Movie.findOne({ movie_title: searchContent })
+  // Movie.findOne({ movie_title: searchContent })
+  Movie.find({
+    movie_title: { $regex: ".*" + searchContent + ".*", $options: "i" }
+  })
     .then(movie => {
       // check movie exist
       if (!movie) {
