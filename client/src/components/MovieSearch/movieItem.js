@@ -15,6 +15,11 @@ class MovieItem extends Component {
 
   componentDidMount() {
     const { movie } = this.props;
+    let config = {
+      header: {
+        header1: "X-RateLimit"
+      }
+    };
     const url = new URL(
       "https://api.themoviedb.org/3/movie/" +
         movie.tmdbId +
@@ -22,7 +27,7 @@ class MovieItem extends Component {
     );
 
     axios
-      .get(url)
+      .get(url, config)
       .then(res => {
         console.log(res.data);
         this.setState({ tmdbDetail: res.data });
@@ -39,7 +44,7 @@ class MovieItem extends Component {
 
     return (
       <div className="card w-100 border-warning">
-        <table class="table">
+        <table className="table">
           <tbody>
             <tr>
               <th scope="col">
