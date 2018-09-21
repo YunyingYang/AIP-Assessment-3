@@ -68,7 +68,7 @@ class MovieSearch extends Component {
 MovieSearch.propTypes = {
   // logoutUser: PropTypes.func.isRequired,
   // auth: PropTypes.object.isRequired,
-  getMovies: PropTypes.func
+  // getMovies: PropTypes.func
 };
 
 const mapStateToProps = state => ({
