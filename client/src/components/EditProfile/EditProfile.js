@@ -110,6 +110,8 @@ class CreateProfile extends Component {
             { label: 'Drama', value: 'Drama' },
             { label: 'Comedy', value: 'Comedy' },
             { label: 'Romance', value: 'Romance' },
+            { label: 'Musical', value: 'Musical' },
+            { label: 'Sci-Fi', value: 'Sci-Fi' }
         ];
 
         return (

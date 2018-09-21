@@ -135,10 +135,10 @@ class CreateProfile extends Component {
                                         defaultValue={this.state.prefs}>
                                         <Row>
                                             <Checkbox value="Drama">Drama</Checkbox>
-                                            <Col span={4}><Checkbox value="Comedy">Comedy</Checkbox></Col>
                                             <Col span={4}><Checkbox value="Romance">Romance</Checkbox></Col>
-                                            <Col span={4}><Checkbox value="D">D</Checkbox></Col>
-                                            <Col span={4}><Checkbox value="E">E</Checkbox></Col>
+                                            <Col span={4}><Checkbox value="Mucical">Mucical</Checkbox></Col>
+                                            <Col span={4}><Checkbox value="Comedy">Comedy</Checkbox></Col>
+                                            <Col span={4}><Checkbox value="Sci-Fi">Sci-Fi</Checkbox></Col>
                                         </Row>
                                     </Checkbox.Group>
 

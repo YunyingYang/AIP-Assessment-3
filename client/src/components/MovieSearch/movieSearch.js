@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import MovieItem from "./movieItem"; //写一个给每个电影的UI框架
 // import { getMovies } from "../../actions/searchActions";
 import { withRouter } from "react-router-dom";
-// import ad1 from "../../images/ad_sample1.jpg";
 
 class MovieSearch extends Component {
   constructor() {
@@ -38,7 +37,10 @@ class MovieSearch extends Component {
     } else {
       if (movies.length > 0) {
         movieItems = movies.map(movie => (
-          <MovieItem key={movie._id} movie={movie} />
+          <div>
+            <MovieItem key={movie._id} movie={movie} />
+            <br />
+          </div>
         ));
       } else {
         movieItems = <h4>No movies found...</h4>;
