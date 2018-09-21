@@ -2,13 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import TextFieldGroup from '../common/TextFieldGroup';
+import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 // import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
 import { createProfile } from '../../actions/profileActions';
-import { Checkbox } from 'antd';
+import { Checkbox, Row, Col } from 'antd';
 import classnames from 'classnames';
+import Background from "../../images/chatbg.jpg";
+import "./EditProfile.css"
+//import CheckBoxGroup from '../common/CheckBoxGroup';
+
+var sectionStyle = {
+    width: "1000px",
+    // height: "600px",
+    border: "5px solid #FFF",
+    borderRadius: "20px 70px",
+    // makesure here is String, following is ES6
+    backgroundImage: `url(${Background})`
+};
 
 class CreateProfile extends Component {
     constructor(props) {
@@ -62,18 +74,13 @@ class CreateProfile extends Component {
 
         // Select options for status
         const options = [
-            { label: '* Select Professional Status', value: 0 },
-            { label: 'Developer', value: 'Developer' },
-            { label: 'Junior Developer', value: 'Junior Developer' },
-            { label: 'Senior Developer', value: 'Senior Developer' },
-            { label: 'Manager', value: 'Manager' },
-            { label: 'Student or Learning', value: 'Student or Learning' },
-            { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
-            { label: 'Intern', value: 'Intern' },
+            { label: '* Select Movie Lover Status', value: 0 },
+            { label: 'Not interested', value: 'Not interested' },
+            { label: 'Movie novice', value: 'Movie novice' },
+            { label: 'Movie lover', value: 'Movie lover' },
+            { label: 'Fanatic', value: 'Fanatic' },
             { label: 'Other', value: 'Other' }
         ];
-
-        const CheckboxGroup = Checkbox.Group;
 
         const prefsOptions = [
             { label: 'Drama', value: 'Drama' },
@@ -83,39 +90,28 @@ class CreateProfile extends Component {
 
         return (
             <div className="create-profile">
-                <div className="container">
+                <div className="container" style={sectionStyle}>
                     <div className="row">
                         <div className="col-md-8 m-auto">
                             <h1 className="display-4 text-center">Create Your Profile</h1>
-                            <p className="lead text-center">
-                                Let's get some information to make your profile stand out
-              </p>
                             <small className="d-block pb-3">* = required fields</small>
                             <form noValidate onSubmit={this.onSubmit} >
-                                <div className="form-group">
-                                    <input type="text"
-                                        className={classnames('form-control form-control-lg', {
-                                            'is-invalid': errors.handle
-                                        })}
-                                        placeholder="Handle"
-                                        name="handle"
-                                        value={this.state.handle}
-                                        onChange={this.onChange}
-                                        required />
-                                    {errors.handle && (<div className="invalid-feedback">{errors.handle}</div>)}
-                                </div>
-                                <div className="form-group">
-                                    <input type="location"
-                                        className={classnames('form-control form-control-lg', {
-                                            'is-invalid': errors.location
-                                        })}
-                                        placeholder="Location"
-                                        value={this.state.location}
-                                        onChange={this.onChange}
-                                        name="location"
-                                        required />
-                                    {errors.location && (<div className="invalid-feedback">{errors.location}</div>)}
-                                </div>
+                                <TextFieldGroup
+                                    placeholder="* Profile Handle"
+                                    name="handle"
+                                    value={this.state.handle}
+                                    onChange={this.onChange}
+                                    error={errors.handle}
+                                    info="A unique handle for your profile URL. Your full name, nickname, etc."
+                                />
+                                <TextFieldGroup
+                                    placeholder="Location"
+                                    name="location"
+                                    value={this.state.location}
+                                    onChange={this.onChange}
+                                    error={errors.location}
+                                    info="City or city & state suggested (eg. Sydney, Melbourne)"
+                                />
                                 <SelectListGroup
                                     placeholder="Status"
                                     name="status"
@@ -123,7 +119,7 @@ class CreateProfile extends Component {
                                     onChange={this.onChange}
                                     options={options}
                                     error={errors.status}
-                                    info="Give us an idea of where you are at in your career"
+                                    info="Give us an idea of how much you like movies"
                                 />
                                 <TextAreaFieldGroup
                                     placeholder="Short Bio"
@@ -133,7 +129,31 @@ class CreateProfile extends Component {
                                     error={errors.bio}
                                     info="Tell us a little about yourself"
                                 />
-                                <CheckboxGroup options={prefsOptions} defaultValue={['Drama']} onChange={this.onCheckChange} />
+                                <div className="checkboxes" >
+                                    <Checkbox.Group style={{ width: '100%' }}
+                                        onChange={this.onCheckChange}
+                                        defaultValue={this.state.prefs}>
+                                        <Row>
+                                            <Checkbox value="Drama">Drama</Checkbox>
+                                            <Col span={4}><Checkbox value="Comedy">Comedy</Checkbox></Col>
+                                            <Col span={4}><Checkbox value="Romance">Romance</Checkbox></Col>
+                                            <Col span={4}><Checkbox value="D">D</Checkbox></Col>
+                                            <Col span={4}><Checkbox value="E">E</Checkbox></Col>
+                                        </Row>
+                                    </Checkbox.Group>
+
+                                    {/* <Checkbox.Group options={prefsOptions}
+                                        // defaultValue={['Drama']} 
+                                        onChange={this.onCheckChange} /> */}
+                                </div>
+                                {/* <CheckBoxGroup
+                                    placeholder="Prefs"
+                                    name="status"
+                                    value={this.state.prefs}
+                                    onChange={this.onCheckChange}
+                                    options={prefsOptions}
+                                    error={errors.status}
+                                    info="Tell us what kind of movies do you like" /> */}
                                 <br />
                                 <input type="submit" className="btn btn-info btn-block mt-4" value="Submit" />
                             </form>
