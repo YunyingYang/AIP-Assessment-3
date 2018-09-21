@@ -37,7 +37,7 @@ class MovieSearch extends Component {
     } else {
       if (movies.length > 0) {
         movieItems = movies.map(movie => (
-          <div>
+          <div key={movie._id}>
             <MovieItem key={movie._id} movie={movie} />
             <br />
           </div>
