@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
 // @route   GET api/movies/result/:movie_id
 // @desc    Get movies
 // @access  Public
-router.get("/result/:movie_id", (req, res) => {
+router.get("/mvdetails/:movie_id", (req, res) => {
   const errors = {};
   Movie.findById(req.params.movie_id)
     .then(movie => {

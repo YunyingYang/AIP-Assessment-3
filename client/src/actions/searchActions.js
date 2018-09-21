@@ -1,33 +1,9 @@
 import axios from "axios";
 
-import {
-  // ADD_POST,
-  // GET_ERRORS,
-  // CLEAR_ERRORS,
-  // GET_POSTS,
-  // GET_POST,
-  // POST_LOADING,
-  // DELETE_POST
-  POST_SEARCHRESULT
-} from "./types";
+import { POST_SEARCHRESULT, GET_CURRENTMV } from "./types";
 
 // Get Post
 export const getMovies = (searchContent, history) => dispatch => {
-  // dispatch(setPostLoading());
-  // axios
-  //   .get(`/api/posts/${id}`)
-  //   .then(res =>
-  //     dispatch({
-  //       type: GET_POST,
-  //       payload: res.data
-  //     })
-  //   )
-  //   .catch(err =>
-  //     dispatch({
-  //       type: GET_POST,
-  //       payload: null
-  //     })
-  //   );
   axios
     .post("/api/movies/search", searchContent)
     .then(res => {
@@ -39,6 +15,14 @@ export const getMovies = (searchContent, history) => dispatch => {
       history.push("/mvsearchresult");
     })
     .catch(err => this.setState(console.log("cannot search")));
+};
+
+// .get(`/api/profile/handle/${handle}`)
+export const getMovieItem = movie => dispatch => {
+  dispatch({
+    type: GET_CURRENTMV,
+    payload: movie
+  });
 };
 
 // Add Post

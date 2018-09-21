@@ -4,6 +4,7 @@ import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./movieSearch.css";
+import { getMovieItem } from "../../actions/searchActions";
 
 class MovieItem extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class MovieItem extends Component {
     this.state = {
       tmdbDetail: {}
     };
+    this.toggleMovieDetail = this.toggleMovieDetail.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +38,13 @@ class MovieItem extends Component {
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
+  // After click link, switch to mv detail page.
+  toggleMovieDetail() {
+    const { movie } = this.props;
+    //在里面写action
+    this.props.getMovieItem(movie);
+  }
+
   render() {
     const { movie } = this.props;
 
@@ -57,7 +66,9 @@ class MovieItem extends Component {
               </th>
               <th scope="row" style={{ width: "70%" }}>
                 <div className="card-body">
-                  <h5 className="text-left black">{movie.title}</h5>
+                  <Link to="/mvdetails" onClick={this.toggleMovieDetail}>
+                    <h5 className="text-left black">{movie.title}</h5>
+                  </Link>
                   <h6 className="text-left text-muted">{movie.genres}</h6>
                   <h6 className="text-left black">
                     Runtime: {this.state.tmdbDetail.runtime} min
@@ -86,14 +97,16 @@ class MovieItem extends Component {
 }
 
 MovieItem.propTypes = {
-  movie: PropTypes.object.isRequired
+  movie: PropTypes.object.isRequired,
+  getMovieItem: PropTypes.func
 };
 
 const mapStateToProps = state => ({
   // auth: state.auth
+  search: state.search
 });
 
 export default connect(
   mapStateToProps,
-  {}
+  { getMovieItem }
 )(withRouter(MovieItem));

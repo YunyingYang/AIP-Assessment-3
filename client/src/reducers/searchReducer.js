@@ -1,4 +1,4 @@
-import { POST_SEARCHRESULT } from "../actions/types";
+import { POST_SEARCHRESULT, GET_CURRENTMV } from "../actions/types";
 
 const initialState = {
   movie: null,
@@ -13,6 +13,11 @@ export default function(state = initialState, action) {
         ...state,
         movies: action.payload
         // loading: false
+      };
+    case GET_CURRENTMV:
+      return {
+        ...state,
+        movie: action.payload
       };
     // case GET_PROFILE:
     //   return {

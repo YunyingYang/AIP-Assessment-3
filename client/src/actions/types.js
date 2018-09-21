@@ -15,3 +15,4 @@ export const DELETE_POST = "DELETE_POST";
 
 // movie search
 export const POST_SEARCHRESULT = "POST_SEARCHRESULT";
+export const GET_CURRENTMV = "GET_CURRENTMV";
