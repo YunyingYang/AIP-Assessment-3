@@ -20,7 +20,7 @@ import MovieSearch from "./components/MovieSearch/movieSearch";
 
 import CreateProfile from './components/EditProfile/CreateProfile';
 import EditProfile from './components/EditProfile/EditProfile';
-// import Profiles from './components/profiles/Profiles';
+import Profiles from './components/Profiles/Profiles';
 // import Profile from './components/profile/Profile';
 
 // Check the token
@@ -60,8 +60,8 @@ class App extends Component {
               <Route exact path="/mvsearchresult" component={MovieSearch} />
               <PrivateRoute exact path="/edit-profile" component={EditProfile} />
               <PrivateRoute exact path="/create-profile" component={CreateProfile} />
-              {/* <Route exact path="/profiles" component={Profiles} />
-              <Route exact path="/profile/:handle" component={Profile} /> */}
+              <Route exact path="/profiles" component={Profiles} />
+              {/* <Route exact path="/profile/:handle" component={Profile} /> */}
             </Switch>
             <br />
             <br />
