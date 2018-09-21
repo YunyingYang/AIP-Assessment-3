@@ -15,14 +15,12 @@ class ProfileItem extends Component {
           </div>
           <div className="col-lg-6 col-md-4 col-8">
             <h3>{profile.user.name}</h3>
-            <p>
+            <h4>
               {profile.status}{' '}
-            </p>
-            <p>
               {isEmpty(profile.location) ? null : (
-                <span>{profile.location}</span>
+                <span>at {profile.location}</span>
               )}
-            </p>
+            </h4>
             <Link to={`/profile/${profile.handle}`} className="btn btn-info">
               View Profile
             </Link>

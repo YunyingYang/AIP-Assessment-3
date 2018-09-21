@@ -21,7 +21,7 @@ import MovieSearch from "./components/MovieSearch/movieSearch";
 import CreateProfile from './components/EditProfile/CreateProfile';
 import EditProfile from './components/EditProfile/EditProfile';
 import Profiles from './components/Profiles/Profiles';
-// import Profile from './components/profile/Profile';
+import Profile from './components/Profile/Profile';
 
 // Check the token
 if (localStorage.jwtToken) {
@@ -61,7 +61,7 @@ class App extends Component {
               <PrivateRoute exact path="/edit-profile" component={EditProfile} />
               <PrivateRoute exact path="/create-profile" component={CreateProfile} />
               <Route exact path="/profiles" component={Profiles} />
-              {/* <Route exact path="/profile/:handle" component={Profile} /> */}
+              <Route exact path="/profile/:handle" component={Profile} />
             </Switch>
             <br />
             <br />
