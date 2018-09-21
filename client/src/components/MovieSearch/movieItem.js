@@ -21,7 +21,7 @@ class MovieItem extends Component {
         movie.tmdbId +
         "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
     );
-
+    const authheader = axios.defaults.headers.common["Authorization"] || null;
     delete axios.defaults.headers.common["Authorization"];
 
     axios
@@ -31,6 +31,8 @@ class MovieItem extends Component {
         this.setState({ tmdbDetail: res.data });
       })
       .catch(err => this.setState(console.log("cannot find from tmdb")));
+
+    axios.defaults.headers.common["Authorization"] = authheader;
   }
 
   render() {
