@@ -21,6 +21,7 @@ class MovieItem extends Component {
         movie.tmdbId +
         "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
     );
+    // To prevent the Authorization fighting with tmdb api, delete it before axios get.
     const authheader = axios.defaults.headers.common["Authorization"] || null;
     delete axios.defaults.headers.common["Authorization"];
 
@@ -47,14 +48,14 @@ class MovieItem extends Component {
         <table className="table">
           <tbody>
             <tr>
-              <th scope="col">
+              <th scope="col" style={{ width: "30%" }}>
                 <img
                   className="card-img pic_size1"
                   src={picBaseUrl + this.state.tmdbDetail.poster_path}
                   alt="Card image cap"
                 />
               </th>
-              <th scope="row">
+              <th scope="row" style={{ width: "70%" }}>
                 <div className="card-body">
                   <h5 className="text-left black">{movie.title}</h5>
                   <h6 className="text-left text-muted">{movie.genres}</h6>
@@ -64,11 +65,15 @@ class MovieItem extends Component {
                   <h6 className="text-left black">
                     Release Date: {this.state.tmdbDetail.release_date}
                   </h6>
-                  <h6 className="text-left black">
-                    Runtime: {this.state.tmdbDetail.runtime}
+                  <h6
+                    className="text-left black"
+                    style={{ fontSize: "8px", color: "grey" }}
+                  >
+                    Overview: {this.state.tmdbDetail.overview}
                   </h6>
                   <h6 className="text-left black">
-                    Release Date: {this.state.tmdbDetail.release_date}
+                    Average Vote: {this.state.tmdbDetail.vote_average} ( Vote
+                    Account: {this.state.tmdbDetail.vote_count})
                   </h6>
                 </div>
               </th>
