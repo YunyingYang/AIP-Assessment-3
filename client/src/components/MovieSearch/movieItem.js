@@ -37,33 +37,45 @@ class MovieItem extends Component {
     );
 
     return (
-      <div className="card w-75 border-warning mb-3" style={{ width: "18rem" }}>
-        <tr>
-          <th>
-            <img
-              className="card-img-left pic_size1"
-              src={picBaseUrl + this.state.tmdbResult.poster_path}
-              alt="Card image cap"
-            />
-          </th>
-          <th>
-            <div className="card-body">
-              <h5 className="card-title">{movie.title}</h5>
-              <h6 className="card-subtitle mb-2 text-muted">{movie.genres}</h6>
-              <p className="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
+      <div className="card w-100 border-warning">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th scope="col">
+                <img
+                  className="card-img pic_size1"
+                  src={picBaseUrl + this.state.tmdbResult.poster_path}
+                  alt="Card image cap"
+                />
+              </th>
+              <th scope="row">
+                <div className="card-body">
+                  <h5 className="text-left black">{movie.title}</h5>
+                  <h6 className="text-left text-muted">{movie.genres}</h6>
+                  <h6 className="text-left black">
+                    Runtime: {this.state.tmdbResult.runtime} min
+                  </h6>
+                  <h6 className="text-left black">
+                    Release Date: {this.state.tmdbResult.release_date}
+                  </h6>
+                  <h6 className="text-left black">
+                    Runtime: {this.state.tmdbResult.runtime}
+                  </h6>
+                  <h6 className="text-left black">
+                    Release Date: {this.state.tmdbResult.release_date}
+                  </h6>
 
-              {/* <a href="#" className="card-link">
+                  {/* <a href="#" className="card-link">
             Card link
           </a>
           <a href="#" className="card-link">
             Another link
           </a> */}
-            </div>
-          </th>
-        </tr>
+                </div>
+              </th>
+            </tr>
+          </tbody>
+        </table>
       </div>
     );
   }
