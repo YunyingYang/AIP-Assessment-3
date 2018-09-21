@@ -9,7 +9,7 @@ class MovieItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tmdbResult: {}
+      tmdbDetail: {}
     };
   }
 
@@ -20,11 +20,12 @@ class MovieItem extends Component {
         movie.tmdbId +
         "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
     );
+
     axios
       .get(url)
       .then(res => {
         console.log(res.data);
-        this.setState({ tmdbResult: res.data });
+        this.setState({ tmdbDetail: res.data });
       })
       .catch(err => this.setState(console.log("cannot find from tmdb")));
   }
@@ -44,7 +45,7 @@ class MovieItem extends Component {
               <th scope="col">
                 <img
                   className="card-img pic_size1"
-                  src={picBaseUrl + this.state.tmdbResult.poster_path}
+                  src={picBaseUrl + this.state.tmdbDetail.poster_path}
                   alt="Card image cap"
                 />
               </th>
@@ -53,24 +54,17 @@ class MovieItem extends Component {
                   <h5 className="text-left black">{movie.title}</h5>
                   <h6 className="text-left text-muted">{movie.genres}</h6>
                   <h6 className="text-left black">
-                    Runtime: {this.state.tmdbResult.runtime} min
+                    Runtime: {this.state.tmdbDetail.runtime} min
                   </h6>
                   <h6 className="text-left black">
-                    Release Date: {this.state.tmdbResult.release_date}
+                    Release Date: {this.state.tmdbDetail.release_date}
                   </h6>
                   <h6 className="text-left black">
-                    Runtime: {this.state.tmdbResult.runtime}
+                    Runtime: {this.state.tmdbDetail.runtime}
                   </h6>
                   <h6 className="text-left black">
-                    Release Date: {this.state.tmdbResult.release_date}
+                    Release Date: {this.state.tmdbDetail.release_date}
                   </h6>
-
-                  {/* <a href="#" className="card-link">
-            Card link
-          </a>
-          <a href="#" className="card-link">
-            Another link
-          </a> */}
                 </div>
               </th>
             </tr>
