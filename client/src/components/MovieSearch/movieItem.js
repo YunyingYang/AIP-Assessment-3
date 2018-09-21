@@ -15,19 +15,17 @@ class MovieItem extends Component {
 
   componentDidMount() {
     const { movie } = this.props;
-    let config = {
-      header: {
-        header1: "X-RateLimit"
-      }
-    };
+
     const url = new URL(
       "https://api.themoviedb.org/3/movie/" +
         movie.tmdbId +
         "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
     );
 
+    delete axios.defaults.headers.common["Authorization"];
+
     axios
-      .get(url, config)
+      .get(url)
       .then(res => {
         console.log(res.data);
         this.setState({ tmdbDetail: res.data });
