@@ -17,11 +17,12 @@ import LoginPage from "./components/LoginPage/LoginPage";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import MovieSearch from "./components/MovieSearch/movieSearch";
+import MovieItemDetail from "./components/MovieSearch/movieItemDetail";
 
-import CreateProfile from './components/EditProfile/CreateProfile';
-import EditProfile from './components/EditProfile/EditProfile';
-import Profiles from './components/Profiles/Profiles';
-import Profile from './components/Profile/Profile';
+import CreateProfile from "./components/EditProfile/CreateProfile";
+import EditProfile from "./components/EditProfile/EditProfile";
+import Profiles from "./components/Profiles/Profiles";
+import Profile from "./components/Profile/Profile";
 
 // Check the token
 if (localStorage.jwtToken) {
@@ -41,7 +42,6 @@ if (localStorage.jwtToken) {
 }
 
 class App extends Component {
-
   render() {
     return (
       <Provider store={store}>
@@ -58,8 +58,17 @@ class App extends Component {
               <Route exact path="/signup" component={RegisterPage} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <Route exact path="/mvsearchresult" component={MovieSearch} />
-              <PrivateRoute exact path="/edit-profile" component={EditProfile} />
-              <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+              <Route exact path="/mvdetails" component={MovieItemDetail} />
+              <PrivateRoute
+                exact
+                path="/edit-profile"
+                component={EditProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/create-profile"
+                component={CreateProfile}
+              />
               <Route exact path="/profiles" component={Profiles} />
               <Route exact path="/profile/:handle" component={Profile} />
             </Switch>

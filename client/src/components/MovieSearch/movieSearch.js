@@ -11,16 +11,8 @@ class MovieSearch extends Component {
   constructor() {
     super();
     this.state = {
-      // name: '',
-      // email: '',
-      // password: '',
-      // password2: '',
       errors: {}
-      // searchResult: []
     };
-
-    // this.onChange = this.onChange.bind(this);
-    // this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { POST_SEARCHRESULT, GET_CURRENTMV } from "./types";
+import { POST_SEARCHRESULT, GET_CURRENTMV, GET_CURRENTMVTMDB } from "./types";
 
 // Get Post
 export const getMovies = (searchContent, history) => dispatch => {
@@ -23,6 +23,29 @@ export const getMovieItem = movie => dispatch => {
     type: GET_CURRENTMV,
     payload: movie
   });
+};
+
+export const getMovieItemTmdb = movie => dispatch => {
+  const url = new URL(
+    "https://api.themoviedb.org/3/movie/" +
+      movie.tmdbId +
+      "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
+  );
+
+  const authheader = axios.defaults.headers.common["Authorization"] || null;
+  delete axios.defaults.headers.common["Authorization"];
+  axios
+    .get(url)
+    .then(res => {
+      // console.log(res.data);
+      dispatch({
+        type: GET_CURRENTMVTMDB,
+        payload: res.data
+      });
+    })
+    .catch(err => this.setState(console.log("cannot find from tmdb")));
+
+  axios.defaults.headers.common["Authorization"] = authheader;
 };
 
 // Add Post

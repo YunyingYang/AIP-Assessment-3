@@ -4,7 +4,7 @@ import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./movieSearch.css";
-import { getMovieItem } from "../../actions/searchActions";
+import { getMovieItem, getMovieItemTmdb } from "../../actions/searchActions";
 
 class MovieItem extends Component {
   constructor(props) {
@@ -43,6 +43,7 @@ class MovieItem extends Component {
     const { movie } = this.props;
     //在里面写action
     this.props.getMovieItem(movie);
+    this.props.getMovieItemTmdb(movie);
   }
 
   render() {
@@ -98,7 +99,8 @@ class MovieItem extends Component {
 
 MovieItem.propTypes = {
   movie: PropTypes.object.isRequired,
-  getMovieItem: PropTypes.func
+  getMovieItem: PropTypes.func,
+  getMovieItemTmdb: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -108,5 +110,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getMovieItem }
+  { getMovieItem, getMovieItemTmdb }
 )(withRouter(MovieItem));

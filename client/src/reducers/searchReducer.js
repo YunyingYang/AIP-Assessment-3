@@ -1,7 +1,12 @@
-import { POST_SEARCHRESULT, GET_CURRENTMV } from "../actions/types";
+import {
+  POST_SEARCHRESULT,
+  GET_CURRENTMV,
+  GET_CURRENTMVTMDB
+} from "../actions/types";
 
 const initialState = {
   movie: null,
+  movieTmdb: null,
   movies: null
   // loading: false
 };
@@ -18,6 +23,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         movie: action.payload
+      };
+    case GET_CURRENTMVTMDB:
+      return {
+        ...state,
+        movieTmdb: action.payload
       };
     // case GET_PROFILE:
     //   return {
