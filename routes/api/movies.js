@@ -44,7 +44,7 @@ router.post("/search", (req, res) => {
   // Find movie by searchContent
   // Movie.findOne({ movie_title: searchContent })
   Movie.find({
-    movie_title: { $regex: ".*" + searchContent + ".*", $options: "i" }
+    title: { $regex: ".*" + searchContent + ".*", $options: "i" }
   })
     .then(movie => {
       // check movie exist
