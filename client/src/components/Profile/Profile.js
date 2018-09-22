@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
 // import ProfileCreds from './ProfileCreds';
-import ProfileGithub from './ProfileGithub';
+// import ProfileGithub from './ProfileGithub';
 import Spinner from '../common/Spinner';
 import { getProfileByHandle } from '../../actions/profileActions';
 
@@ -24,7 +24,17 @@ class Profile extends Component {
 
   render() {
     const { profile, loading } = this.props.profile;
+    const { isAuthenticated, user } = this.props.auth;
     let profileContent;
+
+    const editYourProfile = (
+      <div className="edit-your-profile-button">
+        <Link to="/edit-profile" className="btn btn-light mb-3 float-left">
+          <i className="fa fa-edit" />
+          Edit Profile
+          </Link>
+      </div>
+    );
 
     if (profile === null || loading) {
       profileContent = <Spinner />;
@@ -36,6 +46,7 @@ class Profile extends Component {
               <Link to="/profiles" className="btn btn-light mb-3 float-left">
                 Back To Profiles
               </Link>
+              {isAuthenticated && user.id === profile.user._id ? editYourProfile : null}
             </div>
             <div className="col-md-6" />
           </div>
@@ -45,9 +56,9 @@ class Profile extends Component {
             education={profile.education}
             experience={profile.experience}
           /> */}
-          {profile.githubusername ? (
+          {/* {profile.githubusername ? (
             <ProfileGithub username={profile.githubusername} />
-          ) : null}
+          ) : null} */}
         </div>
       );
     }
@@ -66,11 +77,14 @@ class Profile extends Component {
 
 Profile.propTypes = {
   getProfileByHandle: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { getProfileByHandle })(Profile);
