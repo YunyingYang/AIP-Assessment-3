@@ -12,7 +12,7 @@ class ProfileAbout extends Component {
     // Skill List
     const skills = profile.prefs.map((pref, index) => (
       <div key={index} className="p-3">
-        <i className="fa fa-check" /> {pref}
+        <i className="fa fa-heart" /> {pref}
       </div>
     ));
 
