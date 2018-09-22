@@ -61,6 +61,7 @@ class LoginPage extends Component {
 
   render() {
     const { errors } = this.state;
+    const { isAuthenticated, user } = this.props.auth;
     return (
       <div className="login">
         <div className="container" style={sectionStyle}>

@@ -38,31 +38,27 @@ class Dashboard extends Component {
         } else {
             //Check if logged in user has profile data
             if (Object.keys(profile).length > 0) {
-                dashboardContent = (
-                    <div>
-                        <p className="lead text-warning">
-                            Welcome,&nbsp;
-                            <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
-                        </p>
-                        <ProfileActions />
-                        {/* <Experience experience={profile.experience} />
-            <Education education={profile.education} /> */}
-                        <div style={{ marginBottom: '60px' }} />
-                        {/* <button
-              onClick={this.onDeleteClick.bind(this)}
-              className="btn btn-danger"
-            >
-              Delete My Account
-            </button> */}
-                    </div>
-                );
+                this.props.history.push(`/profile/${profile.handle}`);
+                // dashboardContent = (
+                //     <div>
+                //         <p className="lead text-warning">
+                //             Welcome,&nbsp;
+                //             <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
+                //         </p>
+                //         <ProfileActions />
+                // <Experience experience={profile.experience} />
+                //  <Education education={profile.education} /> */}
+                //         <div style={{ marginBottom: '60px' }} />
+                //     </div>
+                // );
             } else {
                 // User is logged in but has no profile
                 dashboardContent = (
                     <div>
                         <p className="lead text-muted">Welcome {user.name}</p>
-                        <p>You have not yet setup a profile, please add some info</p>
+                        <p>You have not yet setup a profile, please tell us a little about your self</p>
                         <Link to="/create-profile" className="btn btn-lg btn-info">
+                            <i className="fa fa-edit" />
                             Create Profile
             </Link>
                     </div>
