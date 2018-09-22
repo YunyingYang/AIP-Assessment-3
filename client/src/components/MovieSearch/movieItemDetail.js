@@ -16,7 +16,7 @@ class MovieItemDetail extends Component {
     this.state = {
       movie: {},
       movieTmdb: {},
-      movieContent: null
+      videoKey: null
     };
     this.getTmdbData_detail = this.getTmdbData_detail.bind(this);
     this.getTmdbData_video = this.getTmdbData_video.bind(this);
@@ -32,6 +32,7 @@ class MovieItemDetail extends Component {
       .then(res => {
         this.setState({ movie: res.data });
         this.getTmdbData_detail(res.data);
+        this.getTmdbData_video(res.data);
       })
       .catch(err =>
         console.log("cannot get movie by get api/movies/mvdetails/${movie_id}")
@@ -42,11 +43,11 @@ class MovieItemDetail extends Component {
     getMovieItemTmdb(this.state.movie);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.search.movie === null && this.props.search.loading) {
-      this.props.history.push("/not-found");
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.search.movie === null && this.props.search.loading) {
+  //     this.props.history.push("/not-found");
+  //   }
+  // }
 
   getTmdbData_detail(movie) {
     const url = new URL(
@@ -72,7 +73,7 @@ class MovieItemDetail extends Component {
     const url = new URL(
       "https://api.themoviedb.org/3/movie/" +
         movie.tmdbId +
-        "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
+        "/videos?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
     );
     // To prevent the Authorization fighting with tmdb api, delete it before axios get.
     const authheader = axios.defaults.headers.common["Authorization"] || null;
@@ -81,21 +82,38 @@ class MovieItemDetail extends Component {
       .get(url)
       .then(res => {
         console.log(res.data);
-        this.setState({ movieTmdb: res.data });
-        this.props.saveSingleTmdb(res.data);
+        this.setState({ videoKey: res.data.results[0].key });
+        // this.props.saveSingleTmdb(res.data);
       })
       .catch(err => this.setState(console.log("cannot find from tmdb")));
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
   render() {
+    const { movie, movieTmdb, videoKey } = this.state;
+
     const picBaseUrl = new URL(
       "http://image.tmdb.org/t/p/w185_and_h278_bestv2/"
     );
-    const movie = this.state.movie;
-    const movieTmdb = this.state.movieTmdb;
+
+    var videoUrl = 0;
+    if (videoKey !== null) {
+      videoUrl = new URL(
+        "https://www.youtube.com/embed/" +
+          videoKey +
+          "?autoplay=1&origin=http://example.com"
+      );
+      {
+        /* <iframe id="ytplayer" type="text/html" width="640" height="360"
+      src="http://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"
+      frameborder="0"/> */
+      }
+    } else {
+      videoUrl = 0;
+    }
+
     return (
-      <div className="card w-100 border-warning">
+      <div className="card w-75 border-warning">
         <table className="table">
           <tbody>
             <tr>
@@ -122,32 +140,38 @@ class MovieItemDetail extends Component {
                     className="text-left black"
                     style={{ fontSize: "8px", color: "grey" }}
                   >
-                    {/* Overview: {movieTmdb.overview} */}
+                    Overview: {movieTmdb.overview}
                   </h6>
                   <br />
                   <h6 className="text-left black">
-                    {/* Average Vote: {movieTmdb.vote_average} ( Vote Account:{" "}
-                    {movieTmdb.vote_count}) */}
+                    Average Vote: {movieTmdb.vote_average} ( Vote Account:{" "}
+                    {movieTmdb.vote_count})
                   </h6>
                 </div>
               </th>
             </tr>
             <tr>
-              {/* {movieTmdb.genres.length > 0 ? (
-                <ul className="list-group">{movieTmdb.genres[0].name}</ul>
-              ) : (
-                <p className="text-center">No genres Listed</p>
-              )} */}
-              {/* <div className="Video">
-                <iframe
-                  id="ytplayer"
-                  type="text/html"
-                  width="420"
-                  height="300"
-                  src="https://www.youtube.com/embed/CGzKnyhYDQI?autoplay=1&origin=https://www.youtube.com/watch?v=Q-z0csLnwxU"
-                  frameBorder="0"
-                />
-              </div> */}
+              <th>
+                <h1>{movie.title} Trailer: </h1>
+              </th>
+              <th>
+                {videoKey !== null ? (
+                  <div className="trailer">
+                    <iframe
+                      id="ytplayer"
+                      type="text/html"
+                      width="1280"
+                      height="720"
+                      src={videoUrl}
+                      frameBorder="0"
+                    />
+                  </div>
+                ) : (
+                  <div className="trailer">
+                    <p5>The trailer of this video has not been collected.</p5>
+                  </div>
+                )}
+              </th>
             </tr>
           </tbody>
         </table>

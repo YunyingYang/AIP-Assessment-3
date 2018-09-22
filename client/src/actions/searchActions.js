@@ -54,7 +54,6 @@ export const getMovieItem = (movie, history) => dispatch => {
         payload: res.data
       });
       history.push(`/api/movies/mvdetails/${movie._id}`);
-      // history.push("/mvdetails");
     })
     .catch(err =>
       console.log("cannot save movie state by get /mvdetails/${movie_id}")

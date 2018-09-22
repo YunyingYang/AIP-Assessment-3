@@ -10,10 +10,11 @@ class MovieItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tmdbDetail: {}
+      tmdbDetail: {},
+      genre: ""
       // movie: {}
     };
-    this.toggleMovieDetail = this.toggleMovieDetail.bind(this);
+    // this.toggleMovieDetail = this.toggleMovieDetail.bind(this);
     // this.props.getMovieItem = this.props.getMovieItem.bind(this); //??
   }
 
@@ -35,6 +36,7 @@ class MovieItem extends Component {
       .then(res => {
         console.log(res.data);
         this.setState({ tmdbDetail: res.data });
+        this.setState({ genre: res.data.genres[0].name });
       })
       .catch(err => this.setState(console.log("cannot find from tmdb")));
 
@@ -42,16 +44,16 @@ class MovieItem extends Component {
   }
 
   // After click link, switch to mv detail page.
-  toggleMovieDetail() {
-    const { movie } = this.props;
-    // const movie = this.state.movie;
-    //在里面写action
-    // this.props.getMovieItem(movie, this.props.history); // get from our api
-    //TODO: add if statement here to see if movieState is null.
-    // const movieState = this.props.search.movie;
-    // this.props.getMovieItemTmdb(movie, this.props.history);
-    this.props.history.push(`api/movies/mvdetails/${movie._id}`);
-  }
+  // toggleMovieDetail() {
+  // const { movie } = this.props;
+  // const movie = this.state.movie;
+  //在里面写action
+  // this.props.getMovieItem(movie, this.props.history); // get from our api
+  //TODO: add if statement here to see if movieState is null.
+  // const movieState = this.props.search.movie;
+  // this.props.getMovieItemTmdb(movie, this.props.history);
+  //   this.props.history.push(`api/movies/mvdetails/${movie._id}`);
+  // }
 
   render() {
     const { movie } = this.props;
@@ -74,14 +76,14 @@ class MovieItem extends Component {
               </th>
               <th scope="row" style={{ width: "70%" }}>
                 <div className="card-body">
-                  {/* <Link to="/mvdetails" onClick={this.toggleMovieDetail}> */}
-                  <h5
-                    className="text-left black"
-                    onClick={this.toggleMovieDetail}
-                  >
-                    {movie.title}
-                  </h5>
-                  {/* </Link> */}
+                  <Link to={`/api/movies/mvdetails/${movie._id}`}>
+                    <h5
+                      className="text-left black"
+                      onClick={this.toggleMovieDetail}
+                    >
+                      {movie.title}
+                    </h5>
+                  </Link>
                   <h6 className="text-left text-muted">{movie.genres}</h6>
                   <h6 className="text-left black">
                     Runtime: {this.state.tmdbDetail.runtime} min
@@ -93,7 +95,8 @@ class MovieItem extends Component {
                     className="text-left black"
                     style={{ fontSize: "8px", color: "grey" }}
                   >
-                    Overview: {this.state.tmdbDetail.overview}
+                    {/* Overview: {this.state.tmdbDetail.overview} */}
+                    Overview: {this.state.genre}
                   </h6>
                   <h6 className="text-left black">
                     Average Vote: {this.state.tmdbDetail.vote_average} ( Vote
