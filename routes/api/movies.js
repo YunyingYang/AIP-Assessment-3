@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
     .catch(err => res.status(404).json({ nomoviesfound: "No movies found" }));
 });
 
-// @route   GET api/movies/result/:movie_id
+// @route   GET api/movies/mvdetails/:movie_id
 // @desc    Get movies
 // @access  Public
 router.get("/mvdetails/:movie_id", (req, res) => {

@@ -1,9 +1,16 @@
 import axios from "axios";
 
-import { POST_SEARCHRESULT, GET_CURRENTMV, GET_CURRENTMVTMDB } from "./types";
+import {
+  GET_ERRORS,
+  MOVIE_LOADING,
+  POST_SEARCHRESULT,
+  GET_CURRENTMV,
+  GET_CURRENTMVTMDB
+} from "./types";
 
 // Get Post
 export const getMovies = (searchContent, history) => dispatch => {
+  dispatch(setMovieLoading());
   axios
     .post("/api/movies/search", searchContent)
     .then(res => {
@@ -17,21 +24,51 @@ export const getMovies = (searchContent, history) => dispatch => {
     .catch(err => this.setState(console.log("cannot search")));
 };
 
-// .get(`/api/profile/handle/${handle}`)
-export const getMovieItem = movie => dispatch => {
-  dispatch({
-    type: GET_CURRENTMV,
-    payload: movie
-  });
+// Get profile by movie._id
+export const getMovieByMvId = mvId => dispatch => {
+  dispatch(setMovieLoading());
+  axios
+    .get(`/api/movies/mvdetails/${mvId}`)
+    .then(res => {
+      dispatch({
+        type: GET_CURRENTMV,
+        payload: res.data
+      });
+      console.log("save movie state by get api/movies/mvdetails/${movie_id}");
+    })
+    .catch(err =>
+      console.log(
+        "cannot save movie state by get api/movies/mvdetails/${movie_id}"
+      )
+    );
 };
 
+// Get movie from our api, and then save in "movie" state.
+export const getMovieItem = (movie, history) => dispatch => {
+  dispatch(setMovieLoading());
+  axios
+    .get(`/api/movies/mvdetails/${movie._id}`)
+    .then(res => {
+      dispatch({
+        type: GET_CURRENTMV,
+        payload: res.data
+      });
+      history.push(`/api/movies/mvdetails/${movie._id}`);
+      // history.push("/mvdetails");
+    })
+    .catch(err =>
+      console.log("cannot save movie state by get /mvdetails/${movie_id}")
+    );
+};
+
+// getMovieItemTmdb will control the page redirection.
 export const getMovieItemTmdb = movie => dispatch => {
-  const url = new URL(
+  dispatch(setMovieLoading());
+  const url = URL(
     "https://api.themoviedb.org/3/movie/" +
       movie.tmdbId +
       "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
   );
-
   const authheader = axios.defaults.headers.common["Authorization"] || null;
   delete axios.defaults.headers.common["Authorization"];
   axios
@@ -42,147 +79,27 @@ export const getMovieItemTmdb = movie => dispatch => {
         type: GET_CURRENTMVTMDB,
         payload: res.data
       });
+      axios.defaults.headers.common["Authorization"] = authheader;
     })
-    .catch(err => this.setState(console.log("cannot find from tmdb")));
+    .catch(err => {
+      console.log("cannot find from tmdb");
+      axios.defaults.headers.common["Authorization"] = authheader;
+    });
 
-  axios.defaults.headers.common["Authorization"] = authheader;
+  // axios.defaults.headers.common["Authorization"] = authheader;
 };
 
-// Add Post
-// export const addPost = postData => dispatch => {
-//   dispatch(clearErrors());
-//   axios
-//     .post('/api/posts', postData)
-//     .then(res =>
-//       dispatch({
-//         type: ADD_POST,
-//         payload: res.data
-//       })
-//     )
-//     .catch(err =>
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       })
-//     );
-// };
+// Save single tmdb movieItem info
+export const saveSingleTmdb = movieTmdb => dispatch => {
+  dispatch({
+    type: GET_CURRENTMVTMDB,
+    payload: movieTmdb
+  });
+};
 
-// // Get Posts
-// export const getPosts = () => dispatch => {
-//   dispatch(setPostLoading());
-//   axios
-//     .get('/api/posts')
-//     .then(res =>
-//       dispatch({
-//         type: GET_POSTS,
-//         payload: res.data
-//       })
-//     )
-//     .catch(err =>
-//       dispatch({
-//         type: GET_POSTS,
-//         payload: null
-//       })
-//     );
-// };
-
-// // Delete Post
-// export const deletePost = id => dispatch => {
-//   axios
-//     .delete(`/api/posts/${id}`)
-//     .then(res =>
-//       dispatch({
-//         type: DELETE_POST,
-//         payload: id
-//       })
-//     )
-//     .catch(err =>
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       })
-//     );
-// };
-
-// // Add Like
-// export const addLike = id => dispatch => {
-//   axios
-//     .post(`/api/posts/like/${id}`)
-//     .then(res => dispatch(getPosts()))
-//     .catch(err =>
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       })
-//     );
-// };
-
-// // Remove Like
-// export const removeLike = id => dispatch => {
-//   axios
-//     .post(`/api/posts/unlike/${id}`)
-//     .then(res => dispatch(getPosts()))
-//     .catch(err =>
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       })
-//     );
-// };
-
-// // Add Comment
-// export const addComment = (postId, commentData) => dispatch => {
-//   dispatch(clearErrors());
-//   axios
-//     .post(`/api/posts/comment/${postId}`, commentData)
-//     .then(res =>
-//       dispatch({
-//         type: GET_POST,
-//         payload: res.data
-//       })
-//     )
-//     .catch(err =>
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       })
-//     );
-// };
-
-// // Delete Comment
-// export const deleteComment = (postId, commentId) => dispatch => {
-//   axios
-//     .delete(`/api/posts/comment/${postId}/${commentId}`)
-//     .then(res =>
-//       dispatch({
-//         type: GET_POST,
-//         payload: res.data
-//       })
-//     )
-//     .catch(err =>
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       })
-//     );
-// };
-
-// // Set loading state
-// export const setPostLoading = () => {
-//   return {
-//     type: POST_LOADING
-//   };
-// };
-
-// // Clear errors
-// export const clearErrors = () => {
-//   return {
-//     type: CLEAR_ERRORS
-//   };
-// };
-
-// export const setSearchLoading = () => {
-//   return {
-//     type: PROFILE_LOADING
-//   };
-// };
+// Movie loading
+export const setMovieLoading = () => {
+  return {
+    type: MOVIE_LOADING
+  };
+};

@@ -1,4 +1,5 @@
 import {
+  MOVIE_LOADING,
   POST_SEARCHRESULT,
   GET_CURRENTMV,
   GET_CURRENTMVTMDB
@@ -7,12 +8,17 @@ import {
 const initialState = {
   movie: null,
   movieTmdb: null,
-  movies: null
-  // loading: false
+  movies: null,
+  loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case MOVIE_LOADING:
+      return {
+        ...state,
+        loading: true
+      };
     case POST_SEARCHRESULT:
       return {
         ...state,

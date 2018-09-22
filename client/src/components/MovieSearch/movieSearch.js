@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import MovieItem from "./movieItem"; //写一个给每个电影的UI框架
 // import { getMovies } from "../../actions/searchActions";
 import { withRouter } from "react-router-dom";
+import { getMovieItem, getMovieItemTmdb } from "../../actions/searchActions";
 
 class MovieSearch extends Component {
   constructor() {

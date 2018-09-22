@@ -14,6 +14,7 @@ export const ADD_POST = "ADD_POST";
 export const DELETE_POST = "DELETE_POST";
 
 // movie search
+export const MOVIE_LOADING = "MOVIE_LOADING";
 export const POST_SEARCHRESULT = "POST_SEARCHRESULT";
 export const GET_CURRENTMV = "GET_CURRENTMV";
 export const GET_CURRENTMVTMDB = "GET_CURRENTMVTMDB";

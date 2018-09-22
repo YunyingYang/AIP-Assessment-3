@@ -14,7 +14,16 @@ const MovieSchema = new Schema({
   genres: {
     type: String,
     required: true
+  },
+  imdbId: {
+    type: Number,
+    required: true
+  },
+  tmdbId: {
+    type: Number,
+    required: true
   }
+
   // !!NOTE: The Following is for Previous Database.
 
   // movie_title: {

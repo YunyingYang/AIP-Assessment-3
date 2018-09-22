@@ -58,7 +58,12 @@ class App extends Component {
               <Route exact path="/signup" component={RegisterPage} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <Route exact path="/mvsearchresult" component={MovieSearch} />
-              <Route exact path="/mvdetails" component={MovieItemDetail} />
+              {/* <Route exact path="/mvdetails" component={MovieItemDetail} /> */}
+              <Route
+                exact
+                path="/api/movies/mvdetails/:movie_id"
+                component={MovieItemDetail}
+              />
               <PrivateRoute
                 exact
                 path="/edit-profile"
