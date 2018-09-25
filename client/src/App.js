@@ -9,9 +9,8 @@ import store from "./store";
 import PrivateRoute from "./components/auth/PrivateRoute";
 
 import Header from "./components/Header/header";
-import Footer from "./components/Footer/Footer";
+import Footer from "./components/Homepage/Footer";
 import Exhibit from "./components/Exhibit/exhibit";
-import MovieInfo from "./components/MovieInfo/movieinfo";
 import ChatPage from "./components/Chat/ChatPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
@@ -24,67 +23,76 @@ import EditProfile from "./components/EditProfile/EditProfile";
 import Profiles from "./components/Profiles/Profiles";
 import Profile from "./components/Profile/Profile";
 
+
+import Carousel from './components/Homepage/Carousel';
+import Home from './components/Homepage/Home';
+
+
+
+
 // Check the token
 if (localStorage.jwtToken) {
-  // set auth header token
-  setAuthToken(localStorage.jwtToken);
-  // Decode token to retrieve user info and expiration
-  const decoded = jwt_decode(localStorage.jwtToken);
-  store.dispatch(setCurrentUser(decoded));
-  // Check for expired token
-  const currentTime = Date.now() / 1000;
-  if (decoded.exp < currentTime) {
-    store.dispatch(logoutUser());
-    store.dispatch(clearCurrentProfile());
-    //redirect to login
-    window.location.href = "/login";
-  }
+    // set auth header token
+    setAuthToken(localStorage.jwtToken);
+    // Decode token to retrieve user info and expiration
+    const decoded = jwt_decode(localStorage.jwtToken);
+    store.dispatch(setCurrentUser(decoded));
+    // Check for expired token
+    const currentTime = Date.now() / 1000;
+    if (decoded.exp < currentTime) {
+        store.dispatch(logoutUser());
+        store.dispatch(clearCurrentProfile());
+        //redirect to login
+        window.location.href = "/login";
+    }
 }
 
 class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Router>
-          <div>
-            <Header />
-            <br />
-            <br />
-            <Switch>
-              <Route exact path="/" component={Exhibit} />
-              <Route exact path="/movieinfo" component={MovieInfo} />
-              <PrivateRoute exact path="/chat" component={ChatPage} />
-              <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/signup" component={RegisterPage} />
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <Route exact path="/mvsearchresult" component={MovieSearch} />
-              {/* <Route exact path="/mvdetails" component={MovieItemDetail} /> */}
-              <Route
-                exact
-                path="/api/movies/mvdetails/:movie_id"
-                component={MovieItemDetail}
-              />
-              <PrivateRoute
-                exact
-                path="/edit-profile"
-                component={EditProfile}
-              />
-              <PrivateRoute
-                exact
-                path="/create-profile"
-                component={CreateProfile}
-              />
-              <Route exact path="/profiles" component={Profiles} />
-              <Route exact path="/profile/:handle" component={Profile} />
-            </Switch>
-            <br />
-            <br />
-            <Footer />
-          </div>
-        </Router>
-      </Provider>
-    );
-  }
+    render() {
+        return (
+            <Provider store={store}>
+                <Router>
+                    <div>
+                        <Header />
+                        <br />
+                        <br />
+                        <div className="container w-90">
+                            <Switch>
+                                <Route exact path="/" component={Home} />
+                                {/*<Route exact path="/movieinfo" component={} />*/}
+                                <PrivateRoute exact path="/chat" component={ChatPage} />
+                                <Route exact path="/login" component={LoginPage} />
+                                <Route exact path="/signup" component={RegisterPage} />
+                                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                                <Route exact path="/mvsearchresult" component={MovieSearch} />
+                                {/* <Route exact path="/mvdetails" component={MovieItemDetail} /> */}
+                                <Route
+                                    exact
+                                    path="/api/movies/mvdetails/:movie_id"
+                                    component={MovieItemDetail}
+                                />
+                                <PrivateRoute
+                                    exact
+                                    path="/edit-profile"
+                                    component={EditProfile}
+                                />
+                                <PrivateRoute
+                                    exact
+                                    path="/create-profile"
+                                    component={CreateProfile}
+                                />
+                                <Route exact path="/profiles" component={Profiles} />
+                                <Route exact path="/profile/:handle" component={Profile} />
+                            </Switch>
+                        </div>
+                        <br />
+                        <br />
+                        <Footer />
+                    </div>
+                </Router>
+            </Provider>
+        );
+    }
 }
 
 export default App;
