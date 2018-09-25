@@ -21,7 +21,7 @@ export const getMovies = (searchContent, history) => dispatch => {
       // console.log(res.data);
       history.push("/mvsearchresult");
     })
-    .catch(err => this.setState(console.log("cannot search")));
+    .catch(err => console.log("cannot search"));
 };
 
 // Get profile by movie._id

@@ -26,6 +26,7 @@ import Profile from "./components/Profile/Profile";
 
 import Carousel from './components/Homepage/Carousel';
 import Home from './components/Homepage/Home';
+import Discover from './components/DiscoverPage/Discover';
 
 
 
@@ -59,7 +60,7 @@ class App extends Component {
                         <div className="container w-90">
                             <Switch>
                                 <Route exact path="/" component={Home} />
-                                {/*<Route exact path="/movieinfo" component={} />*/}
+                                <Route exact path="/movieinfo" component={Discover} />
                                 <PrivateRoute exact path="/chat" component={ChatPage} />
                                 <Route exact path="/login" component={LoginPage} />
                                 <Route exact path="/signup" component={RegisterPage} />

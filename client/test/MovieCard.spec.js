@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import TestUtils, { findRenderedDOMComponentWithClass } from 'react-addons-test-utils';
 
-import Movie from '../src/components/Homepage/MovieCard';
+import Movie from '../src/components/Homepage/MovieCardLarge';
 
 describe('test:Movie.js', function() {
     it('expect to render a div with movie class', function() {

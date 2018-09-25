@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import axios from "axios";
 import Star from './Star';
 
+import img from '../../images/2.jpg';
+
 const style = {
     width: '400px',
-    height: '200px'
+    height: '400px'
 };
 
 
@@ -57,7 +59,7 @@ const style = {
 
 
 
-class MovieCard extends Component {
+class MovieCardLarge extends Component {
     constructor(props) {
         super(props);
 
@@ -93,10 +95,11 @@ class MovieCard extends Component {
 
         return (
             <div className="card bg-light text-black" style={style}>
-                <img className="card-img-top" src={imageURL + this.state.poster} alt="movie poster" />
+                {/*<img className="card-img-top" src={imageURL + this.state.poster} alt="movie poster" />*/}
+                <img className="card-img-top" src={img} alt="movie poster" />
                 <div className="card-body">
                     <h5 className="card-title">{this.props.title}</h5>
-                    <Star className="text-right" />
+                    <Star className="mr-3" />
                     <p className="card-text">{this.props.genres}</p>
                     <p className="card-text">{this.state.description}</p>
                 </div>
@@ -105,4 +108,4 @@ class MovieCard extends Component {
     }
 }
 
-export default MovieCard;
+export default MovieCardLarge;
