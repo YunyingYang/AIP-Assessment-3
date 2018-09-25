@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
+import ProfileMovie from './ProfileMovie';
 // import ProfileCreds from './ProfileCreds';
 // import ProfileGithub from './ProfileGithub';
 import Spinner from '../common/Spinner';
@@ -52,6 +53,7 @@ class Profile extends Component {
           </div>
           <ProfileHeader profile={profile} />
           <ProfileAbout profile={profile} />
+          <ProfileMovie user={profile.user} />
           {/* <ProfileCreds
             education={profile.education}
             experience={profile.experience}

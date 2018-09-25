@@ -78,6 +78,28 @@ router.get(
     }
 );
 
+// @route   GET api/usermovieratings/user/:user_id
+// @desc    Get movie ratings of a specific user
+// @access  Public
+
+router.get("/user/:user_id", (req, res) => {
+    const errors = {};
+
+    UserMovieRating.find({ user: req.params.user_id })
+        .populate("user movie", ["name", "avatar", "title", "genres"])
+        .then(usermovierating => {
+            if (!usermovierating) {
+                errors.nousermovierating = "There is no rating by this user";
+                res.status(404).json(errors);
+            }
+            //usermovierating.populate("movie", ["title", "genres"]);
+            res.json(usermovierating);
+        })
+        .catch(err =>
+            res.status(404).json({ usermovierating: "Find rating by this user error" })
+        );
+});
+
 // // @route   GET api/profile/handle/:handle
 // // @desc    Get profile by handle
 // // @access  Public
