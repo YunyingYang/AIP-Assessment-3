@@ -1,14 +1,21 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import small_img from '../../images/test_card_small.jpg';
+import Star from './Star';
+
+import img from '../../images/test_card_medium.jpg';
 
 const style = {
-    width: '180px',
-    height: '230px'
+    width: '375px',
+    height: '300px'
+};
+
+const imgStyle = {
+    width: '350px',
+    height: '210px'
 };
 
 
-class MovieCardSmall extends Component {
+class MovieCardMedium extends Component {
     constructor(props) {
         super(props);
 
@@ -38,13 +45,19 @@ class MovieCardSmall extends Component {
             "http://image.tmdb.org/t/p/w185_and_h278_bestv2/"
         );
 
+
         return (
-            <div className="card" style={style}>
+            <div className="card bg-light text-black" style={style}>
                 {/*<img className="card-img-top" src={imageURL + this.state.poster} alt="movie poster" />*/}
-                <img className="card-img-top" src={small_img} alt="movie poster" />
+                <img className="card-img-top" style={imgStyle} src={img} alt="movie poster" />
+                <div className="card-body">
+                    <h5 className="card-title">{this.props.title}</h5>
+                    <Star className="text-right" />
+                    <p className="card-text">{this.props.genres}</p>
+                </div>
             </div>
         );
     }
 }
 
-export default MovieCardSmall;
+export default MovieCardMedium;

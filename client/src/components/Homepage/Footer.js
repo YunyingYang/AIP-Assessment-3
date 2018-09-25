@@ -27,7 +27,7 @@ const footer = () => {
                 <a className="nav-link" href="#Privacy Policy">Privacy Policy</a>
             </nav>
             <p id="copyright" className="text-sm-center" style={textStyle}>
-                © {new Date().getFullYear()} Peppa Filmtopia. Film data from TMDb. Made by 🐰🦄🐹 with ♥️
+                © {new Date().getFullYear()} Peppa Filmtopia. Made by 🐰🦄🐹 with ♥️
             </p>
         </div>
     )
