@@ -11,11 +11,15 @@ const UserMovieRatingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "movies"
     },
+    // movie: {
+    //     type: String,
+    //     required: true
+    // },
     rating: {
         type: Number,
         required: true,
-        min: 0.0,
-        max: 5.0
+        min: 0,
+        max: 10
     },
     date: {
         type: Date,

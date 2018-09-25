@@ -4,12 +4,12 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 
 // Load Validation
-const validateProfileInput = require("../../validation/usermovierating");
+const validateUserMovieRatingInput = require("../../validation/usermovierating");
 // const validateExperienceInput = require("../../validation/experience");
 // const validateEducationInput = require("../../validation/education");
 
-// Load Profile Model
-const Profile = require("../../models/UserMovieRating");
+// Load UserMovieRating Model
+const UserMovieRating = require("../../models/UserMovieRating");
 // Load User Model
 const User = require("../../models/User");
 
@@ -21,14 +21,13 @@ router.get("/test", (req, res) => res.json({ msg: "UserMovieRatings Works" }));
 // @route   GET api/usermovieratings
 // @desc    Get current users usermovieratings
 // @access  Private
-//这里及以下还没改完
 router.get(
     "/",
     passport.authenticate("jwt", { session: false }),
     (req, res) => {
         const errors = {};
 
-        Profile.findOne({ user: req.user.id })
+        UserMovieRating.find({ user: req.user.id })
             .populate("user", ["name", "avatar"])
             .then(usermovierating => {
                 if (!usermovierating) {
@@ -41,75 +40,94 @@ router.get(
     }
 );
 
-// @route   GET api/profile/all
-// @desc    Get all profiles
+// @route   GET api/usermovierating/all
+// @desc    Get all usermovieratings
 // @access  Public
 router.get("/all", (req, res) => {
     const errors = {};
 
-    Profile.find()
+    UserMovieRating.find()
         .populate("user", ["name", "avatar"])
-        .then(profiles => {
-            if (!profiles) {
-                errors.noprofile = "There are no profiles";
+        .then(usermovieratings => {
+            if (!usermovieratings) {
+                errors.nousermovierating = "There are no ratings yet";
                 return res.status(404).json(errors);
             }
 
-            res.json(profiles);
+            res.json(usermovieratings);
         })
-        .catch(err => res.status(404).json({ profile: "There are no profiles" }));
+        .catch(err => res.status(404).json({ usermovierating: "There are no usermovieratings" }));
 });
 
-// @route   GET api/profile/handle/:handle
-// @desc    Get profile by handle
-// @access  Public
+// @route   GET api/usermovieratings/:mv_id
+// @desc    Get a movie rating of current user from usermovieratings
+// @access  Private
+router.get(
+    "/:mv_id",
+    passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+        UserMovieRating.findOne({ user: req.user.id, movie: req.params.mv_id })
+            .then(usermovierating => {
+                if (!usermovierating) {
+                    errors.nousermovierating = "This movie hasn't rated by this user";
+                    return res.status(404).json(errors);
+                }
+                res.json(usermovierating);
+            })
+            .catch(err => res.status(404).json(err));
+    }
+);
 
-router.get("/handle/:handle", (req, res) => {
-    const errors = {};
+// // @route   GET api/profile/handle/:handle
+// // @desc    Get profile by handle
+// // @access  Public
 
-    Profile.findOne({ handle: req.params.handle })
-        .populate("user", ["name", "avatar"])
-        .then(profile => {
-            if (!profile) {
-                errors.noprofile = "There is no profile for this user";
-                res.status(404).json(errors);
-            }
+// router.get("/handle/:handle", (req, res) => {
+//     const errors = {};
 
-            res.json(profile);
-        })
-        .catch(err => res.status(404).json(err));
-});
+//     Profile.findOne({ handle: req.params.handle })
+//         .populate("user", ["name", "avatar"])
+//         .then(profile => {
+//             if (!profile) {
+//                 errors.noprofile = "There is no profile for this user";
+//                 res.status(404).json(errors);
+//             }
 
-// @route   GET api/profile/user/:user_id
-// @desc    Get profile by user ID
-// @access  Public
+//             res.json(profile);
+//         })
+//         .catch(err => res.status(404).json(err));
+// });
 
-router.get("/user/:user_id", (req, res) => {
-    const errors = {};
+// // @route   GET api/profile/user/:user_id
+// // @desc    Get profile by user ID
+// // @access  Public
 
-    Profile.findOne({ user: req.params.user_id })
-        .populate("user", ["name", "avatar"])
-        .then(profile => {
-            if (!profile) {
-                errors.noprofile = "There is no profile for this user";
-                res.status(404).json(errors);
-            }
+// router.get("/user/:user_id", (req, res) => {
+//     const errors = {};
 
-            res.json(profile);
-        })
-        .catch(err =>
-            res.status(404).json({ profile: "There is no profile for this user" })
-        );
-});
+//     Profile.findOne({ user: req.params.user_id })
+//         .populate("user", ["name", "avatar"])
+//         .then(profile => {
+//             if (!profile) {
+//                 errors.noprofile = "There is no profile for this user";
+//                 res.status(404).json(errors);
+//             }
 
-// @route   POST api/profile
-// @desc    Create or edit user profile
+//             res.json(profile);
+//         })
+//         .catch(err =>
+//             res.status(404).json({ profile: "There is no profile for this user" })
+//         );
+// });
+
+// @route   POST api/usermovieratings
+// @desc    Create or edit user movie rating
 // @access  Private
 router.post(
     "/",
     passport.authenticate("jwt", { session: false }),
     (req, res) => {
-        const { errors, isValid } = validateProfileInput(req.body);
+        const { errors, isValid } = validateUserMovieRatingInput(req.body);
 
         // Check Validation
         if (!isValid) {
@@ -118,39 +136,35 @@ router.post(
         }
 
         // Get fields
-        const profileFields = {};
-        profileFields.user = req.user.id; //这行可以用电影的id
-        if (req.body.handle) profileFields.handle = req.body.handle;
-        if (req.body.location) profileFields.location = req.body.location;
-        if (req.body.bio) profileFields.bio = req.body.bio;
-        if (req.body.status) profileFields.status = req.body.status;
-        if (req.body.prefs) profileFields.prefs = req.body.prefs;
-        // // Skills - Spilt into array
-        // if (typeof req.body.skills !== "undefined") {
-        //   profileFields.skills = req.body.skills.split(",");
-        // }
+        const userMovieRatingFields = {};
+        userMovieRatingFields.user = req.user.id;
+        userMovieRatingFields.movie = req.body.movieID;
+        //if (req.body.movieID) userMovieRatingFields.movie = req.body.movieID;
+        if (req.body.rating) userMovieRatingFields.rating = req.body.rating;
 
-        Profile.findOne({ user: req.user.id }).then(profile => {
-            if (profile) {
+        UserMovieRating.findOne({ user: req.user.id, movie: req.body.movieID }).then(usermovierating => {
+            //new UserMovieRating(userMovieRatingFields).save().then(usermovierating => res.json(usermovierating));
+            //if (UserMovieRating.findOne({ movie: req.body.movieID })) {
+            if (usermovierating) {
                 // Update
-                Profile.findOneAndUpdate(
-                    { user: req.user.id },
-                    { $set: profileFields },
+                UserMovieRating.findOneAndUpdate(
+                    { user: req.user.id, movie: req.body.movieID },
+                    { $set: userMovieRatingFields },
                     { new: true }
-                ).then(profile => res.json(profile));
+                ).then(usermovierating => res.json(usermovierating));
+                //}
             } else {
-                // Create
 
                 // Check if handle exists
-                Profile.findOne({ handle: profileFields.handle }).then(profile => {
-                    if (profile) {
-                        errors.handle = "That handle already exists";
-                        res.status(400).json(errors);
-                    }
+                // UserMovieRating.findOne({ handle: profileFields.handle }).then(profile => {
+                //     if (profile) {
+                //         errors.handle = "That handle already exists";
+                //         res.status(400).json(errors);
+                //     }
 
-                    // Save Profile
-                    new Profile(profileFields).save().then(profile => res.json(profile));
-                });
+                // Create and save UserMovieRating
+                new UserMovieRating(userMovieRatingFields).save().then(usermovierating => res.json(usermovierating));
+                //});
             }
         });
     }
@@ -224,67 +238,41 @@ router.post(
 //   }
 // );
 
-// // @route   DELETE api/profile/experience/:exp_id
-// // @desc    Delete experience from profile
+// // @route   DELETE api/usermovieratings/:mv_id
+// // @desc    Delete a movie rating from usermovieratings
 // // @access  Private
 // router.delete(
-//   "/experience/:exp_id",
+//   "/:mv_id",
 //   passport.authenticate("jwt", { session: false }),
 //   (req, res) => {
-//     Profile.findOne({ user: req.user.id })
-//       .then(profile => {
+//     UserMovieRating.findOne({ user: req.user.id, movie: req.body.movieID })
+//       .then(usermovierating => {
 //         // Get remove index
-//         const removeIndex = profile.experience
+//         const removeIndex = usermovierating.experience
 //           .map(item => item.id)
-//           .indexOf(req.params.exp_id);
+//           .indexOf(req.params.mv_id);
 
 //         // Splice out of array
-//         profile.experience.splice(removeIndex, 1);
+//         usermovierating.experience.splice(removeIndex, 1);
 
 //         // Save
-//         profile.save().then(profile => res.json(profile));
+//         usermovierating.save().then(usermovierating => res.json(usermovierating));
 //       })
 //       .catch(err => res.status(404).json(err));
 //   }
 // );
 
-// // @route   DELETE api/profile/education/:edu_id
-// // @desc    Delete education from profile
-// // @access  Private
-// router.delete(
-//   "/education/:edu_id",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     Profile.findOne({ user: req.user.id })
-//       .then(profile => {
-//         // Get remove index
-//         const removeIndex = profile.education
-//           .map(item => item.id)
-//           .indexOf(req.params.edu_id);
-
-//         // Splice out of array
-//         profile.education.splice(removeIndex, 1);
-
-//         // Save
-//         profile.save().then(profile => res.json(profile));
-//       })
-//       .catch(err => res.status(404).json(err));
-//   }
-// );
-
-// // @route   DELETE api/profile
-// // @desc    Delete user and profile
-// // @access  Private
-// router.delete(
-//   "/",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     Profile.findOneAndRemove({ user: req.user.id }).then(() => {
-//       User.findOneAndRemove({ _id: req.user.id }).then(() =>
-//         res.json({ success: true })
-//       );
-//     });
-//   }
-// );
+// @route   DELETE api/usermovieratings
+// @desc    Delete user and usermovieratings
+// @access  Private
+router.delete(
+    "/",
+    passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+        UserMovieRating.findAndRemove({ user: req.user.id }).then(() => {
+            res.json({ success: true })
+        });
+    }
+);
 
 module.exports = router;

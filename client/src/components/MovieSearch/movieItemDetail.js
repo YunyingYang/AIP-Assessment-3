@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
+import classnames from "classnames";
+import StarRatings from 'react-star-ratings';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./movieSearch.css";
@@ -17,11 +19,16 @@ class MovieItemDetail extends Component {
       movie: {},
       movieTmdb: {},
       videoKey: null,
-      casts: []
+      casts: [],
+      rating: 0,
+      errors: {}
     };
     this.getTmdbData_detail = this.getTmdbData_detail.bind(this);
     this.getTmdbData_video = this.getTmdbData_video.bind(this);
     this.getTmdbData_cast = this.getTmdbData_cast.bind(this);
+    this.onChange = this.onChange.bind(this);
+    //this.onSubmit = this.onSubmit.bind(this);
+    this.changeRating = this.changeRating.bind(this);
   }
 
   componentWillMount() {
@@ -40,10 +47,23 @@ class MovieItemDetail extends Component {
       .catch(err =>
         console.log("cannot get movie by get api/movies/mvdetails/${movie_id}")
       );
+
+    axios
+      .get(`/api/usermovieratings/${this.props.match.params.movie_id}`)
+      .then(res => {
+        this.setState({ rating: res.data.rating });
+      })
+      .catch(err => console.log(err));
   }
 
   componentDidMount() {
     getMovieItemTmdb(this.state.movie);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -55,8 +75,8 @@ class MovieItemDetail extends Component {
   getTmdbData_detail(movie) {
     const url = new URL(
       "https://api.themoviedb.org/3/movie/" +
-        movie.tmdbId +
-        "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
+      movie.tmdbId +
+      "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
     );
     // To prevent the Authorization fighting with tmdb api, delete it before axios get.
     const authheader = axios.defaults.headers.common["Authorization"] || null;
@@ -75,8 +95,8 @@ class MovieItemDetail extends Component {
   getTmdbData_video(movie) {
     const url = new URL(
       "https://api.themoviedb.org/3/movie/" +
-        movie.tmdbId +
-        "/videos?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
+      movie.tmdbId +
+      "/videos?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
     );
     // To prevent the Authorization fighting with tmdb api, delete it before axios get.
     const authheader = axios.defaults.headers.common["Authorization"] || null;
@@ -95,8 +115,8 @@ class MovieItemDetail extends Component {
   getTmdbData_cast(movie) {
     const url = new URL(
       "https://api.themoviedb.org/3/movie/" +
-        movie.tmdbId +
-        "/credits?api_key=9ff347d908a575c777ebecebe3fdcf6b"
+      movie.tmdbId +
+      "/credits?api_key=9ff347d908a575c777ebecebe3fdcf6b"
     );
     // To prevent the Authorization fighting with tmdb api, delete it before axios get.
     const authheader = axios.defaults.headers.common["Authorization"] || null;
@@ -112,8 +132,46 @@ class MovieItemDetail extends Component {
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  // onSubmit(e) {
+  //   e.preventDefault();
+
+  //   //const { user } = this.props.auth;
+  //   //const { movie } = this.state.search.movie;
+
+  //   const userRatingData = {
+  //     movieID: this.props.match.params.movie_id,
+  //     rating: this.state.rating
+  //   };
+  //   console.log(userRatingData);
+
+  //   axios.post('/api/usermovieratings', userRatingData)
+  //     .then(res => console.log(res.data))
+  //     .catch(err => this.setState({ errors: err.response.data }));//console.log(err)); 
+  // }
+  changeRating(newRating, name) {
+    this.setState({
+      rating: newRating * 2
+    });
+    const userRatingData = {
+      movieID: this.props.match.params.movie_id,
+      rating: newRating * 2
+    };
+    console.log(userRatingData);
+    axios.post('/api/usermovieratings', userRatingData)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
+  }
+
   render() {
     const { movie, movieTmdb, videoKey } = this.state;
+
+    const { errors } = this.state;
+
+    const { isAuthenticated, user } = this.props.auth;
 
     const picBaseUrl = new URL(
       "http://image.tmdb.org/t/p/w185_and_h278_bestv2/"
@@ -123,8 +181,8 @@ class MovieItemDetail extends Component {
     if (videoKey !== null) {
       videoUrl = new URL(
         "https://www.youtube.com/embed/" +
-          videoKey +
-          "?autoplay=1&origin=http://example.com"
+        videoKey +
+        "?autoplay=1&origin=http://example.com"
       );
     } else {
       videoUrl = 0;
@@ -163,6 +221,41 @@ class MovieItemDetail extends Component {
         castName = <h4>No casts found...</h4>;
       }
     }
+
+    const voteForm = (
+      <StarRatings
+        rating={this.state.rating / 2}
+        starRatedColor="gold"
+        changeRating={this.changeRating}
+        numberOfStars={5}
+        name='rating'
+      />
+      // <form noValidate onSubmit={this.onSubmit}>
+      //   <div className="form-group">
+      //     <input
+      //       type="rating"
+      //       className={classnames("form-control form-control-lg", {
+      //         "is-invalid": errors.rating
+      //       })}
+      //       placeholder="Rating"
+      //       name="rating"
+      //       value={this.state.rating}
+      //       onChange={this.onChange}
+      //       required
+      //       style={{ width: "70%" }}
+      //     />
+      //     {errors.rating && (
+      //       <div className="invalid-feedback">{errors.rating}</div>
+      //     )}
+      //     <input
+      //       type="submit"
+      //       className="btn btn-primary"
+      //       value="Vote"
+      //     />
+      //   </div>
+      // </form>
+
+    );
 
     return (
       <div className="profiles">
@@ -204,6 +297,7 @@ class MovieItemDetail extends Component {
                           Average Vote: {movieTmdb.vote_average} ( Vote Account:{" "}
                           {movieTmdb.vote_count})
                         </h6>
+                        {isAuthenticated ? voteForm : null}
                       </div>
                     </th>
                   </tr>
@@ -289,12 +383,12 @@ class MovieItemDetail extends Component {
                           />
                         </div>
                       ) : (
-                        <div className="trailer">
-                          <p5>
-                            The trailer of this video has not been collected.
+                          <div className="trailer">
+                            <p5>
+                              The trailer of this video has not been collected.
                           </p5>
-                        </div>
-                      )}
+                          </div>
+                        )}
                     </th>
                   </tr>
                 </tbody>
@@ -309,6 +403,8 @@ class MovieItemDetail extends Component {
 }
 
 MovieItemDetail.propTypes = {
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
   movie: PropTypes.object.isRequired,
   movieTmdb: PropTypes.object.isRequired,
   loading: PropTypes.object.isRequired,
@@ -319,7 +415,8 @@ MovieItemDetail.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  // auth: state.auth
+  auth: state.auth,
+  errors: state.errors,
   search: state.search
 });
 
