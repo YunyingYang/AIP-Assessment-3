@@ -1,5 +1,5 @@
 import React from 'react';
-import './movieDetails.css';
+import '../MovieDetail/movieDetails.css';
 import twitter from '../../images/twitter.png';
 import facebook from '../../images/facebook.jpg';
 
