@@ -19,16 +19,14 @@ class MovieCardLarge extends Component {
             "http://image.tmdb.org/t/p/w185_and_h278_bestv2"
         );
 
-        let result = this.props.movie;
-
         return (
             <div className="card bg-light text-black" style={style}>
-                {/*<img className="card-img-top" src={imageURL + movie.poster_path} alt="movie poster" />*/}
                 <img className="card-img-top" src={img} alt="movie poster" />
+                {/*<img className="card-img-top" src={imageURL + this.props.movie.poster_path} alt="movie poster" />*/}
                 <div className="card-body">
-                    <h5 className="card-title">{this.props.title}</h5>
-                    <Star className="mr-3" rate={this.props.vote_average} />
-                    <p className="card-text">{this.props.overview}</p>
+                    {/*<h5 className="card-title">{this.props.movie.title}</h5>*/}
+                    {/*<Star className="mr-3" rate={this.props.movie.vote_average} />*/}
+                    {/*<p className="card-text">{this.props.movie.overview}</p>*/}
                 </div>
             </div>
         );

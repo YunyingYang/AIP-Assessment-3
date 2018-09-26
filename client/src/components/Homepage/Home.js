@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import axios from "axios";
+import FanartTvApi from 'fanart.tv-api';
 
 import Carousel from './Carousel';
 import MovieCardLarge from './MovieCardLarge';
 import MovieCardMedium from './MovieCardMedium';
 import MovieCardSmall from './MovieCardSmall';
-import MovieItem from "../MovieSearch/movieItem";
-import axios from "axios";
-import FanartTvApi from 'fanart.tv-api';
+
 
 class Home extends Component {
     constructor() {
@@ -45,7 +43,6 @@ class Home extends Component {
             })
             .catch(err => console.log("cannot get trending movies"));
     }
-
 
     render() {
         console.log(this.state.movies);
