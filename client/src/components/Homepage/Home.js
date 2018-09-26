@@ -39,48 +39,48 @@ class Home extends Component {
 
         return (
             <div>
-                <Carousel/>
-                <br/>
-                <br/>
+                <Carousel />
+                <br />
+                <br />
 
                 <h5>Trending Movies</h5>
                 <div className="card-deck">
-                    <MovieCardLarge movie={this.state.movies[0]}/>
-                    <MovieCardLarge movie={this.state.movies[1]}/>
+                    <MovieCardLarge movie={this.state.movies[0]} />
+                    <MovieCardLarge movie={this.state.movies[1]} />
 
                 </div>
-                <br/>
-                <br/>
+                <br />
+                <br />
                 <div className="card-deck">
-                    <MovieCardMedium movie={this.state.movies[2]}/>
-                    <MovieCardMedium movie={this.state.movies[3]}/>
-                    <MovieCardMedium movie={this.state.movies[4]}/>
+                    <MovieCardMedium movie={this.state.movies[2]} />
+                    <MovieCardMedium movie={this.state.movies[3]} />
+                    <MovieCardMedium movie={this.state.movies[4]} />
                 </div>
-                <br/>
+                <br />
                 <h6 className="text-right">More...</h6>
-                <br/>
-                <br/>
+                <br />
+                <br />
 
                 <h5>People also like...</h5>
                 <div className="card-deck">
-                    <MovieCardLarge movie={this.state.movies[5]}/>
-                    <MovieCardLarge movie={this.state.movies[6]}/>
+                    <MovieCardLarge movie={this.state.movies[5]} />
+                    <MovieCardLarge movie={this.state.movies[6]} />
                 </div>
-                <br/>
-                <br/>
+                <br />
+                <br />
                 <div className="card-deck">
-                    <MovieCardSmall movie={this.state.movies[7]}/>
-                    <MovieCardSmall movie={this.state.movies[8]}/>
-                    <MovieCardSmall movie={this.state.movies[9]}/>
-                    <MovieCardSmall movie={this.state.movies[10]}/>
-                    <MovieCardSmall movie={this.state.movies[11]}/>
-                    <MovieCardSmall movie={this.state.movies[12]}/>
+                    <MovieCardSmall movie={this.state.movies[7]} />
+                    <MovieCardSmall movie={this.state.movies[8]} />
+                    <MovieCardSmall movie={this.state.movies[9]} />
+                    <MovieCardSmall movie={this.state.movies[10]} />
+                    <MovieCardSmall movie={this.state.movies[11]} />
+                    <MovieCardSmall movie={this.state.movies[12]} />
                 </div>
-                <br/>
+                <br />
                 <h6 className="text-right">More...</h6>
 
-                <br/>
-                <br/>
+                <br />
+                <br />
             </div>
         );
     }

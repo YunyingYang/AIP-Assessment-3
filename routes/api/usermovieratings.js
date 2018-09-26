@@ -260,31 +260,22 @@ router.post(
 //   }
 // );
 
-// // @route   DELETE api/usermovieratings/:mv_id
-// // @desc    Delete a movie rating from usermovieratings
-// // @access  Private
-// router.delete(
-//   "/:mv_id",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     UserMovieRating.findOne({ user: req.user.id, movie: req.body.movieID })
-//       .then(usermovierating => {
-//         // Get remove index
-//         const removeIndex = usermovierating.experience
-//           .map(item => item.id)
-//           .indexOf(req.params.mv_id);
+// @route   DELETE api/usermovieratings/:mv_id
+// @desc    Delete a movie rating from usermovieratings
+// @access  Private
+router.delete(
+    "/:mv_id",
+    passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+        UserMovieRating.findOneAndRemove({ user: req.user.id, movie: req.params.mv_id })
+            .then(() => {
+                res.json({ success: true })
+            })
+            .catch(err => res.status(404).json(err));
+    }
+);
 
-//         // Splice out of array
-//         usermovierating.experience.splice(removeIndex, 1);
-
-//         // Save
-//         usermovierating.save().then(usermovierating => res.json(usermovierating));
-//       })
-//       .catch(err => res.status(404).json(err));
-//   }
-// );
-
-// @route   DELETE api/usermovieratings
+// @route   DELETE api/usermovieratings/
 // @desc    Delete user and usermovieratings
 // @access  Private
 router.delete(

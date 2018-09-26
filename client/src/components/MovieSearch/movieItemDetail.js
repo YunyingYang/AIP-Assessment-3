@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
-import classnames from "classnames";
-import StarRatings from 'react-star-ratings';
+import ReactStars from 'react-stars';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./movieSearch.css";
@@ -136,23 +135,7 @@ class MovieItemDetail extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  // onSubmit(e) {
-  //   e.preventDefault();
-
-  //   //const { user } = this.props.auth;
-  //   //const { movie } = this.state.search.movie;
-
-  //   const userRatingData = {
-  //     movieID: this.props.match.params.movie_id,
-  //     rating: this.state.rating
-  //   };
-  //   console.log(userRatingData);
-
-  //   axios.post('/api/usermovieratings', userRatingData)
-  //     .then(res => console.log(res.data))
-  //     .catch(err => this.setState({ errors: err.response.data }));//console.log(err)); 
-  // }
-  changeRating(newRating, name) {
+  changeRating(newRating) {
     this.setState({
       rating: newRating * 2
     });
@@ -223,38 +206,12 @@ class MovieItemDetail extends Component {
     }
 
     const voteForm = (
-      <StarRatings
-        rating={this.state.rating / 2}
-        starRatedColor="gold"
-        changeRating={this.changeRating}
-        numberOfStars={5}
-        name='rating'
-      />
-      // <form noValidate onSubmit={this.onSubmit}>
-      //   <div className="form-group">
-      //     <input
-      //       type="rating"
-      //       className={classnames("form-control form-control-lg", {
-      //         "is-invalid": errors.rating
-      //       })}
-      //       placeholder="Rating"
-      //       name="rating"
-      //       value={this.state.rating}
-      //       onChange={this.onChange}
-      //       required
-      //       style={{ width: "70%" }}
-      //     />
-      //     {errors.rating && (
-      //       <div className="invalid-feedback">{errors.rating}</div>
-      //     )}
-      //     <input
-      //       type="submit"
-      //       className="btn btn-primary"
-      //       value="Vote"
-      //     />
-      //   </div>
-      // </form>
-
+      <ReactStars
+        count={5}
+        onChange={this.changeRating}
+        size={24}
+        value={this.state.rating / 2}
+        color2={'#ffd700'} />
     );
 
     return (
