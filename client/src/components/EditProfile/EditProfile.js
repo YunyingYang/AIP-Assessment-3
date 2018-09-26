@@ -158,21 +158,37 @@ class CreateProfile extends Component {
                                     error={errors.bio}
                                     info="Tell us a little about yourself"
                                 />
-                                <div className="checkboxes" >
-                                    {/* <Checkbox.Group style={{ width: '100%' }} onChange={this.onCheckChange}>
-                                        <Row>
-                                            <Checkbox value="A">A</Checkbox>
-                                            <Col span={4}><Checkbox value="B">B</Checkbox></Col>
-                                            <Col span={4}><Checkbox value="C">C</Checkbox></Col>
-                                            <Col span={4}><Checkbox value="D">D</Checkbox></Col>
-                                            <Col span={4}><Checkbox value="E">E</Checkbox></Col>
-                                        </Row>
-                                    </Checkbox.Group> */}
+                                {/*<div className="checkboxes" >*/}
+                                    {/*/!* <Checkbox.Group style={{ width: '100%' }} onChange={this.onCheckChange}>*/}
+                                        {/*<Row>*/}
+                                            {/*<Checkbox value="A">A</Checkbox>*/}
+                                            {/*<Col span={4}><Checkbox value="B">B</Checkbox></Col>*/}
+                                            {/*<Col span={4}><Checkbox value="C">C</Checkbox></Col>*/}
+                                            {/*<Col span={4}><Checkbox value="D">D</Checkbox></Col>*/}
+                                            {/*<Col span={4}><Checkbox value="E">E</Checkbox></Col>*/}
+                                        {/*</Row>*/}
+                                    {/*</Checkbox.Group> *!/*/}
 
-                                    <Checkbox.Group options={prefsOptions}
-                                        value={this.state.prefs}
-                                        onChange={this.onCheckChange} />
+                                    {/*<Checkbox.Group options={prefsOptions}*/}
+                                        {/*value={this.state.prefs}*/}
+                                        {/*onChange={this.onCheckChange} />*/}
+                                {/*</div>*/}
+
+
+                                {/*checkbox-style button group*/}
+                                {/*先丢在这好了=。= 晚点研究一下*/}
+                                {/*按下btn以后setstate 把相应的value放进prefs数组里*/}
+                                <div className="btn-group" role="group" data-toggle="buttons" aria-label="preference">
+                                    <button className="btn btn-outline-secondary btn-sm" >aaaaa</button>
+                                    <button className="btn btn-outline-secondary btn-sm" >bbbbb</button>
+                                    <button className="btn btn-outline-secondary btn-sm" >ccccc</button>
+                                    <button className="btn btn-outline-secondary btn-sm" >ddddd</button>
+                                    <button className="btn btn-outline-secondary btn-sm" >eeeee</button>
                                 </div>
+
+
+
+
                                 <input
                                     type="submit"
                                     value="Submit"
