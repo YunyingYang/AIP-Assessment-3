@@ -25,7 +25,6 @@ class ProfileAbout extends Component {
 
   render() {
     const { profile } = this.props;
-
     // Get first name
     const firstName = profile.user.name.trim().split(' ')[0];
 
@@ -39,10 +38,14 @@ class ProfileAbout extends Component {
     const ratings = this.state.usermovieratings.map((usermovierating, index) => (
       <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}>
         <li key={index} className="p-3 alert alert-dismissible alert-warning d-flex justify-content-between">
-          <span><i className="fa fa-eye" />&nbsp;{usermovierating.movie.title}</span><span>&nbsp;</span><span className="badge badge-pill badge-danger">{usermovierating.rating}</span>
+          <span><i className="fa fa-eye" />&nbsp;{usermovierating.movie.title}</span><span>&nbsp;</span><span className="badge badge-pill badge-info">{usermovierating.rating}</span>
         </li>
       </Link>
     ));
+
+    const deleteButton = (
+      <div className="delete-rating"><span class="badge badge-pill badge-danger">X</span></div>
+    );
 
     return (
       <div className="row">
