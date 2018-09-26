@@ -16,9 +16,9 @@ class Home extends Component {
 
     componentDidMount() {
 
-        //get the weekly trending movies
+        //get the daily trending movies
         const url = new URL(
-            "https://api.themoviedb.org/3/trending/movie/week?api_key=9ff347d908a575c777ebecebe3fdcf6b"
+            "https://api.themoviedb.org/3/trending/movie/day?api_key=9ff347d908a575c777ebecebe3fdcf6b"
         );
 
         axios

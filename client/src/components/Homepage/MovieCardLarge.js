@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import FanartTvApi from "fanart.tv-api";
+import axios from "axios";
 
 import Star from './Star';
-import img from '../../images/1.jpg';
 
 const style = {
     width: '400px',
@@ -19,21 +18,32 @@ class MovieCardLarge extends Component {
     }
 
     componentDidMount() {
-        // get movie stills
-        const fanart = new FanartTvApi({
-            apiKey: "33f74d6cff548383dab95ca4f8901333"
-        });
+        // get movie stills from fanart.tv api
+        const baseUrl = "https://webservice.fanart.tv/v3/movies/";
+        const id = this.props.movie.id;
+        const key = "?api_key=33f74d6cff548383dab95ca4f8901333";
+        const url = baseUrl + id + key;
 
-        fanart.getMovieImages(this.props.movie.id)
+        axios
+            .get(url)
             .then(res => {
-                console.log(res);
-                this.setState({ images: res.moviebackground[0] });
+                console.log(res.data);
+                this.setState({ images: res.data.moviebackground });
             })
             .catch(err => console.log("cannot get movie stills"));
     }
 
     render() {
-        const imgURL = this.state.images.url;
+        if (!this.state.images[0])
+            return <div>Loading...</div>;
+
+        // if you want to get a smaller preview of images: replace fanart with preview in url
+        // before: http://assets.fanart.tv/fanart/movies/145220/hdmovielogo/muppets-most-wanted-53c1385817504.png
+        // after: http://assets.fanart.tv/preview/movies/145220/hdmovielogo/muppets-most-wanted-53c1385817504.png
+        // let imgSource = this.state.images[0].url;
+        // let imgURL = imgSource.replace("assets.fanart.tv/fanart", "assets.fanart.tv/preview");
+
+        let imgURL = this.state.images[0].url;
 
         return (
         <div className="card bg-light text-black" style={style}>
