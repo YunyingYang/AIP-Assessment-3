@@ -7,7 +7,6 @@ import MovieCardLarge from './MovieCardLarge';
 import MovieCardMedium from './MovieCardMedium';
 import MovieCardSmall from './MovieCardSmall';
 
-
 class Home extends Component {
     constructor() {
         super();
@@ -16,8 +15,7 @@ class Home extends Component {
         }
     };
 
-    componentWillMount() {
-
+    componentDidMount() {
 //         const fanart = new FanartTvApi({
 //             apiKey: "33f74d6cff548383dab95ca4f8901333",
 //         });
@@ -29,6 +27,7 @@ class Home extends Component {
 //             // return fanart.getLatestMoviesImages();
 //             })
 //             .catch(err => console.error(err));
+
 
         //get the weekly trending movies
         const url = new URL(
@@ -45,7 +44,11 @@ class Home extends Component {
     }
 
     render() {
-        console.log(this.state.movies);
+        // it's gonna render the 1st time when page loads & will re-render after getting response
+        // only after getting response can it pass data to child
+        // so at the 1st time this.state is undefined
+        if (!this.state.movies[0])
+            return <div>Loading...</div>;
 
         return (
             <div>
