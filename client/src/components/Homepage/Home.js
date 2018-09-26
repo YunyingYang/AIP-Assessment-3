@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import FanartTvApi from 'fanart.tv-api';
 
 import Carousel from './Carousel';
 import MovieCardLarge from './MovieCardLarge';
@@ -16,18 +15,6 @@ class Home extends Component {
     };
 
     componentDidMount() {
-//         const fanart = new FanartTvApi({
-//             apiKey: "33f74d6cff548383dab95ca4f8901333",
-//         });
-//
-// // An example of all the available functions chained together.
-//         fanart.getMovieImages('10195')
-//             .then(res => {
-//             console.log(res);
-//             // return fanart.getLatestMoviesImages();
-//             })
-//             .catch(err => console.error(err));
-
 
         //get the weekly trending movies
         const url = new URL(
