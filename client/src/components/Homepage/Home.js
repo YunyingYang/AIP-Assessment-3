@@ -1,14 +1,10 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 import Carousel from './Carousel';
 import MovieCardLarge from './MovieCardLarge';
 import MovieCardMedium from './MovieCardMedium';
 import MovieCardSmall from './MovieCardSmall';
-import MovieItem from "../MovieSearch/movieItem";
-import axios from "axios";
-//import FanartTvApi from 'fanart.tv-api';
 
 class Home extends Component {
     constructor() {
@@ -18,19 +14,7 @@ class Home extends Component {
         }
     };
 
-    componentWillMount() {
-
-        //         const fanart = new FanartTvApi({
-        //             apiKey: "33f74d6cff548383dab95ca4f8901333",
-        //         });
-        //
-        // // An example of all the available functions chained together.
-        //         fanart.getMovieImages('10195')
-        //             .then(res => {
-        //             console.log(res);
-        //             // return fanart.getLatestMoviesImages();
-        //             })
-        //             .catch(err => console.error(err));
+    componentDidMount() {
 
         //get the weekly trending movies
         const url = new URL(
@@ -46,9 +30,12 @@ class Home extends Component {
             .catch(err => console.log("cannot get trending movies"));
     }
 
-
     render() {
-        console.log(this.state.movies);
+        // it's gonna render the 1st time when page loads & will re-render after getting response
+        // only after getting response can it pass data to child
+        // so at the 1st time this.state is undefined
+        if (!this.state.movies[0])
+            return <div>Loading...</div>;
 
         return (
             <div>

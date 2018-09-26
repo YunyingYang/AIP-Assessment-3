@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import axios from "axios";
-import Star from './Star';
+import FanartTvApi from "fanart.tv-api";
 
+import Star from './Star';
 import img from '../../images/test_card_medium.jpg';
 
 const style = {
@@ -14,46 +14,38 @@ const imgStyle = {
     height: '210px'
 };
 
-
 class MovieCardMedium extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            poster: "",
+            images: {}
         };
     }
 
     componentDidMount() {
-        const url = new URL(
-            "https://api.themoviedb.org/3/movie/" +
-            this.props.tmdbId +
-            "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
-        );
+        // get movie stills
+        const fanart = new FanartTvApi({
+            apiKey: "33f74d6cff548383dab95ca4f8901333"
+        });
 
-        axios
-            .get(url)
+        fanart.getMovieImages(this.props.movie.id)
             .then(res => {
-                console.log(res.data);
-                this.setState({ poster: res.data.poster_path });
+                console.log(res);
+                this.setState({ images: res.moviebackground[0] });
             })
+            .catch(err => console.log("cannot get movie stills"));
     }
 
     render() {
-
-        const imageURL = new URL(
-            "http://image.tmdb.org/t/p/w185_and_h278_bestv2/"
-        );
-
+        const imgURL = this.state.images.url;
 
         return (
             <div className="card bg-light text-black" style={style}>
-                {/*<img className="card-img-top" src={imageURL + this.state.poster} alt="movie poster" />*/}
-                <img className="card-img-top" style={imgStyle} src={img} alt="movie poster" />
+                <img className="card-img-top" style={imgStyle} src={imgURL} alt="movie poster" />
                 <div className="card-body">
-                    <h5 className="card-title">{this.props.title}</h5>
-                    <Star className="text-right" />
-                    <p className="card-text">{this.props.genres}</p>
+                    <h5 className="card-title">{this.props.movie.title}</h5>
+                    <Star className="mr-3" rate={this.props.movie.vote_average} />
                 </div>
             </div>
         );
