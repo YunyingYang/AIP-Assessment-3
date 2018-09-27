@@ -30,7 +30,7 @@ class MovieItemDetail extends Component {
     this.changeRating = this.changeRating.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.match.params.movie_id) {
       this.props.getMovieByMvId(this.props.match.params.movie_id);
     }
@@ -53,11 +53,13 @@ class MovieItemDetail extends Component {
         this.setState({ rating: res.data.rating });
       })
       .catch(err => console.log(err));
+
+      getMovieItemTmdb(this.state.movie);
   }
 
-  componentDidMount() {
-    getMovieItemTmdb(this.state.movie);
-  }
+  // componentDidMount() {
+  //   getMovieItemTmdb(this.state.movie);
+  // }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {

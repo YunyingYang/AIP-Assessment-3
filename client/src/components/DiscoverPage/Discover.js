@@ -8,23 +8,39 @@ class Discover extends Component {
     constructor() {
         super();
         this.state = {
-            movies: {}
+            movies: {},
+            isMounted: false
         }
     };
 
     componentDidMount() {
-        //get the weekly trending movies - for test -
-        const url = new URL(
-            "https://api.themoviedb.org/3/trending/movie/week?api_key=9ff347d908a575c777ebecebe3fdcf6b"
-        );
+        // bug report: authentication conflicts with tmdb api and fanart.tv api
+        // quick & dirty solution: delete authentication for now and add it back later >_<
+        delete axios.defaults.headers.common["Authorization"];
 
-        axios
-            .get(url)
-            .then(res => {
-                console.log(res.data);
-                this.setState({ movies: res.data.results });
-            })
-            .catch(err => console.log("cannot get trending movies"));
+        this.setState({ isMounted: true }, () => {
+            if (this.state.isMounted) {
+                //get the weekly trending movies - for test -
+                const url = new URL(
+                    "https://api.themoviedb.org/3/trending/movie/week?api_key=9ff347d908a575c777ebecebe3fdcf6b"
+                );
+
+                axios
+                    .get(url)
+                    .then(res => {
+                        console.log(res.data);
+                        this.setState({ movies: res.data.results });
+                    })
+                    .catch(err => console.log("cannot get trending movies"));
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        this.setState({ isMounted: false });
+        // add authentication back
+        const authheader = axios.defaults.headers.common["Authorization"] || null;
+        axios.defaults.headers.common["Authorization"] = authheader;
     }
 
     render() {

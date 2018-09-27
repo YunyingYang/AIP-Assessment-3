@@ -35,7 +35,7 @@ class MovieCardLarge extends Component {
 
     render() {
         if (!this.state.images[0])
-            return <div>Loading...</div>;
+            return (<div>Loading...</div>);
 
         // if you want to get a smaller preview of images: replace fanart with preview in url
         // before: http://assets.fanart.tv/fanart/movies/145220/hdmovielogo/muppets-most-wanted-53c1385817504.png
