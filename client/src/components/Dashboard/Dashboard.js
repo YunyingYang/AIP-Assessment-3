@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../actions/profileActions';
 import Spinner from '../common/Spinner';
 import ProfileActions from './ProfileActions';
-// import Experience from './Experience';
-// import Education from './Education';
+import axios from 'axios';
+import isEmpty from '../../validation/is-empty';
 import Background from "../../images/chatbg.jpg";
 
 var sectionStyle = {
@@ -19,16 +19,55 @@ var sectionStyle = {
 };
 
 class Dashboard extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            usermovieratings: [],
+            user: this.props.auth.user
+        };
+        this.onClickDelete = this.onClickDelete.bind(this); //！
+    }
+
+    componentWillMount() {
+        //console.log(this.state.user.id);
+        axios
+            .get(`/api/usermovieratings/user/${this.state.user.id}`)
+            .then(res => {
+                console.log(res.data);
+                this.setState({ usermovieratings: res.data });
+            })
+            .catch(err => console.log(err));
+    }
+
     componentDidMount() {
         this.props.getCurrentProfile();
     }
 
-    //   onDeleteClick(e) {
-    //     this.props.deleteAccount();
-    //   }
+    onClickDelete(id) {
+        axios
+            .delete(`/api/usermovieratings/${id}`)
+            .then(res => {
+                console.log(res.data);
+                // axios
+                //     .get(`/api/usermovieratings/user/${this.state.user.id}`)
+                //     .then(res => {
+                //         console.log(res.data);
+                //         this.setState({ usermovieratings: res.data });
+                //     })
+                //     .catch(err => console.log(err));
+                var ratingArray = this.state.usermovieratings;
+                var removeIndex = ratingArray.map(function (rating) { return rating.id; })
+                    .indexOf(id);
+                ratingArray.splice(removeIndex, 1);
+                this.setState({ usermovieratings: ratingArray })
+                //TODO:删除页面上的条目或者rerender？
+            })
+            .catch(err => this.setState(console.log("cannot delete")));
+    }
 
     render() {
-        const { user } = this.props.auth;
+        //const { user } = this.props.auth;
         const { profile, loading } = this.props.profile;
 
         let dashboardContent;
@@ -42,11 +81,9 @@ class Dashboard extends Component {
                     <div>
                         <p className="lead text-warning">
                             Welcome,&nbsp;
-                            <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
+                            <Link to={`/profile/${profile.handle}`}>{this.state.user.name}</Link>
                         </p>
                         <ProfileActions />
-                        {/* <Experience experience={profile.experience} />
-                 <Education education={profile.education} />  */}
                         <div style={{ marginBottom: '60px' }} />
                     </div>
                 );
@@ -54,7 +91,7 @@ class Dashboard extends Component {
                 // User is logged in but has no profile
                 dashboardContent = (
                     <div>
-                        <p className="lead text-muted">Welcome {user.name}</p>
+                        <p className="lead text-muted">Welcome {this.state.user.name}</p>
                         <p>You have not yet setup a profile, please tell us a little about your self</p>
                         <Link to="/create-profile" className="btn btn-lg btn-info">
                             <i className="fa fa-edit" />
@@ -63,7 +100,17 @@ class Dashboard extends Component {
                     </div>
                 );
             }
+
         }
+        const ratings = this.state.usermovieratings.map((usermovierating, index) => (
+
+            <li key={index} className="p-3 d-flex">
+                <div className="alert alert-dismissible alert-info justify-content-between">
+                    <button type="button" className="close" onClick={() => this.onClickDelete(usermovierating.movie._id)}><i className="fa fa-minus-circle" /></button>
+                    <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}><span style={{ textDecoration: "none" }}><i className="fa fa-eye" />&nbsp;{usermovierating.movie.title}</span><span>&nbsp;</span><span className="badge badge-pill badge-info">{usermovierating.rating}</span></Link>
+                </div>
+            </li>
+        ));
 
         return (
             <div className="dashboard">
@@ -72,6 +119,20 @@ class Dashboard extends Component {
                         <div className="col-md-12" style={{ padding: "10px" }}>
                             <h1 className="display-4">Dashboard</h1>
                             {dashboardContent}
+                            <hr />
+                            <h3 className="text-center text-info">Manage Your Ratings</h3>
+                            <div className="row">
+                                <div className="d-flex flex-wrap justify-content-center align-items-center">
+                                    {isEmpty(this.state.usermovieratings) ? (
+                                        <p className="lead text-info">
+                                            <span>{this.state.user.name} has not rated a movie</span>
+                                        </p>
+                                    ) : (<ul className="list-group">
+                                        {ratings}
+                                    </ul>
+                                        )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -82,7 +143,6 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
-    deleteAccount: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired
 };
