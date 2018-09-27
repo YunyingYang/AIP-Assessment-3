@@ -49,18 +49,18 @@ class Dashboard extends Component {
             .delete(`/api/usermovieratings/${id}`)
             .then(res => {
                 console.log(res.data);
-                // axios
-                //     .get(`/api/usermovieratings/user/${this.state.user.id}`)
-                //     .then(res => {
-                //         console.log(res.data);
-                //         this.setState({ usermovieratings: res.data });
-                //     })
-                //     .catch(err => console.log(err));
-                var ratingArray = this.state.usermovieratings;
-                var removeIndex = ratingArray.map(function (rating) { return rating.id; })
-                    .indexOf(id);
-                ratingArray.splice(removeIndex, 1);
-                this.setState({ usermovieratings: ratingArray })
+                axios
+                    .get(`/api/usermovieratings/user/${this.state.user.id}`)
+                    .then(res => {
+                        console.log(res.data);
+                        this.setState({ usermovieratings: res.data });
+                    })
+                    .catch(err => console.log(err));
+                // var ratingArray = this.state.usermovieratings;
+                // var removeIndex = ratingArray.map(function (rating) { return rating.id; })
+                //     .indexOf(id);
+                // ratingArray.splice(removeIndex, 1);
+                // this.setState({ usermovieratings: ratingArray })
                 //TODO:删除页面上的条目或者rerender？
             })
             .catch(err => this.setState(console.log("cannot delete")));
@@ -103,13 +103,10 @@ class Dashboard extends Component {
 
         }
         const ratings = this.state.usermovieratings.map((usermovierating, index) => (
-
-            <li key={index} className="p-3 d-flex">
-                <div className="alert alert-dismissible alert-info justify-content-between">
-                    <button type="button" className="close" onClick={() => this.onClickDelete(usermovierating.movie._id)}><i className="fa fa-minus-circle" /></button>
-                    <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}><span style={{ textDecoration: "none" }}><i className="fa fa-eye" />&nbsp;{usermovierating.movie.title}</span><span>&nbsp;</span><span className="badge badge-pill badge-info">{usermovierating.rating}</span></Link>
-                </div>
-            </li>
+            <div key={index} className="p-3 alert alert-dismissible alert-info">
+                <button type="button" className="close" onClick={() => this.onClickDelete(usermovierating.movie._id)}><i className="fa fa-minus-circle" /></button>
+                <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}><span style={{ textDecoration: "none" }}>&nbsp;{usermovierating.movie.title}</span><span>&nbsp;</span><span className="badge badge-pill badge-info">{usermovierating.rating}</span></Link>
+            </div>
         ));
 
         return (
