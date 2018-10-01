@@ -58,13 +58,13 @@ class Home extends Component {
                 <br />
                 <br />
 
-                <h5>Trending Movies</h5>
-                <div className="card-deck">
-                    <MovieCardLarge movie={this.state.movies[0]} />
-                    <MovieCardLarge movie={this.state.movies[1]} />
-                </div>
-                <br />
-                <br />
+                {/*<h5>Trending Movies</h5>*/}
+                {/*<div className="card-deck">*/}
+                    {/*<MovieCardLarge movie={this.state.movies[0]} />*/}
+                    {/*<MovieCardLarge movie={this.state.movies[1]} />*/}
+                {/*</div>*/}
+                {/*<br />*/}
+                {/*<br />*/}
 
                 {/*<div className="card-deck">*/}
                     {/*<MovieCardMedium movie={this.state.movies[2]} />*/}
@@ -76,12 +76,12 @@ class Home extends Component {
                 {/*<br />*/}
                 {/*<br />*/}
 
-                <h5>People also like...</h5>
-                <div className="card-deck">
-                    <MovieCardLarge movie={this.state.movies[5]} />
-                    <MovieCardLarge movie={this.state.movies[6]} />
-                </div>
-                <br />
+                {/*<h5>People also like...</h5>*/}
+                {/*<div className="card-deck">*/}
+                    {/*<MovieCardLarge movie={this.state.movies[5]} />*/}
+                    {/*<MovieCardLarge movie={this.state.movies[6]} />*/}
+                {/*</div>*/}
+                {/*<br />*/}
                 <br />
                 <div className="card-deck">
                     <MovieCardSmall movie={this.state.movies[7]} />

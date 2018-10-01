@@ -1,5 +1,5 @@
-module.exports = {
-  // mongoURI: "mongodb://bunny1:bunny1@ds111549.mlab.com:11549/filmtopia",
-  mongoURI: "mongodb://bunny1:bunny1@ds263642.mlab.com:63642/research",
-  secretOrKey: "secret"
-};
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./keys_prod');
+} else {
+  module.exports = require('./keys_dev');
+}

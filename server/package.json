@@ -4,11 +4,12 @@
   "description": "A web app for filmtopia",
   "main": "server.js",
   "scripts": {
-    "client-install": "npm install --prefix client",
+    "client-install": "cd ../client npm install",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "cd ../client && npm start",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd ../client && npm install && npm run build"
   },
   "author": "Doreamon",
   "license": "MIT",
