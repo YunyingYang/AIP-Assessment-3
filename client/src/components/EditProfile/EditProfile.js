@@ -9,8 +9,7 @@ import SelectListGroup from "../common/SelectListGroup";
 import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 import isEmpty from "../../validation/is-empty";
 import "./EditProfile.css";
-import { Checkbox, Row, Col } from "antd";
-import ButtonGroup from "antd/lib/button/button-group";
+import { Checkbox } from "antd";
 
 class CreateProfile extends Component {
   constructor(props) {

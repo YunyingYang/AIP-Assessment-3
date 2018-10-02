@@ -41,7 +41,7 @@ class ChatPage extends Component {
       <div className="chat-page">
         <div
           className="container alert alert-dismissible alert-secondary"
-          style={{ maxWidth: "60rem" }}
+          style={{ maxWidth: "60rem", minHeight: "30rem" }}
         >
           <div className="row">
             <div className="col-sm-12" style={{ padding: "10px" }}>
@@ -53,7 +53,8 @@ class ChatPage extends Component {
                     className="messages"
                     style={{
                       width: "100%",
-                      maxHeight: "350px",
+                      maxHeight: "20rem",
+                      minHeight: "15rem",
                       overflowY: "auto"
                     }}
                   >

@@ -4,7 +4,7 @@ import axios from "axios"; //!
 import "./header.css";
 import icon from "../../images/icon.png";
 import search from "../../images/search.png";
-import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";

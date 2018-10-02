@@ -65,6 +65,7 @@ class RegisterPage extends Component {
           <Link to="/">
             <img
               src={cross}
+              alt="Close"
               style={{
                 width: "30px",
                 height: "30px",

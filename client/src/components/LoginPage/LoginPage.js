@@ -51,7 +51,6 @@ class LoginPage extends Component {
 
   render() {
     const { errors } = this.state;
-    const { isAuthenticated, user } = this.props.auth;
     return (
       <div className="login">
         <br />
@@ -62,6 +61,7 @@ class LoginPage extends Component {
           <Link to="/">
             <img
               src={cross}
+              alt="Close"
               style={{
                 width: "30px",
                 height: "30px",
