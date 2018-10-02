@@ -2,19 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
-import Background from "../../images/usermgmtbg.jpg";
 import cross from "../../images/cross.png";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
-
-var sectionStyle = {
-  width: "600px",
-  height: "410px",
-  border: "3px solid #000",
-  borderRadius: "20px 70px",
-  // makesure here is String, following is ES6
-  backgroundImage: `url(${Background})`
-};
 
 class LoginPage extends Component {
   constructor() {
@@ -64,7 +54,11 @@ class LoginPage extends Component {
     const { isAuthenticated, user } = this.props.auth;
     return (
       <div className="login">
-        <div className="container" style={sectionStyle}>
+        <br />
+        <div
+          className="container alert alert-dismissible alert-secondary"
+          style={{ maxWidth: "40rem" }}
+        >
           <Link to="/">
             <img
               src={cross}
@@ -79,21 +73,10 @@ class LoginPage extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <br />
-              <br />
-              <h1
-                className="display-4 text-center"
-                style={{
-                  color: "#FFF",
-                  textShadow:
-                    "0 2px #FF7F00, 2px 0 #FF7F00, -2px 0 #FF7F00, 0 -2px #FF7F00"
-                }}
-              >
-                User Login
-              </h1>
+              <h1 className="display-4 text-center">User Login</h1>
               {/* <p className = "lead text-center">
                                 Log in with your Filmtopia account!
                             </p> */}
-              <br />
               <form noValidate onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
@@ -127,16 +110,19 @@ class LoginPage extends Component {
                     <div className="invalid-feedback">{errors.password}</div>
                   )}
                 </div>
-                <br />
                 <input
                   type="submit"
-                  className="btn btn-primary"
+                  className="btn btn-secondary btn-block mt-4"
                   value="Sign In"
                 />
+                <br />
               </form>
             </div>
           </div>
         </div>
+        <br />
+        <br />
+        <br />
       </div>
     );
   }

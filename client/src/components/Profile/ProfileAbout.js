@@ -13,7 +13,7 @@ class ProfileAbout extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     axios
       .get(`/api/usermovieratings/user/${this.props.user._id}`)
       .then(res => {
