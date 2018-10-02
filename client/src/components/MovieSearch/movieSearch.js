@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import classnames from "classnames";
-// import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import MovieItem from "./movieItem"; //写一个给每个电影的UI框架
-// import { getMovies } from "../../actions/searchActions";
 import { withRouter } from "react-router-dom";
-import { getMovieItem, getMovieItemTmdb } from "../../actions/searchActions";
 
 class MovieSearch extends Component {
   constructor() {
@@ -60,7 +56,7 @@ class MovieSearch extends Component {
 
 MovieSearch.propTypes = {
   // logoutUser: PropTypes.func.isRequired,
-  // auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
   // getMovies: PropTypes.func
 };
 

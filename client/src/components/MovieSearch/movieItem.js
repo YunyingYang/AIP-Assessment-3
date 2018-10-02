@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
+// import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./movieSearch.css";
@@ -71,7 +72,7 @@ class MovieItem extends Component {
                 <img
                   className="card-img pic_size1"
                   src={picBaseUrl + this.state.tmdbDetail.poster_path}
-                  alt="Card image cap"
+                  alt="movie_poster"
                 />
               </th>
               <th scope="row" style={{ width: "70%" }}>

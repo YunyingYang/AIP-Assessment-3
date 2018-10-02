@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import {
-  GET_ERRORS,
+  // GET_ERRORS,
   MOVIE_LOADING,
   POST_SEARCHRESULT,
   GET_CURRENTMV,
@@ -34,11 +34,11 @@ export const getMovieByMvId = mvId => dispatch => {
         type: GET_CURRENTMV,
         payload: res.data
       });
-      console.log("save movie state by get api/movies/mvdetails/${movie_id}");
+      console.log("save movie state by get api/movies/mvdetails/:movie_id");
     })
     .catch(err =>
       console.log(
-        "cannot save movie state by get api/movies/mvdetails/${movie_id}"
+        "cannot save movie state by get api/movies/mvdetails/:movie_id"
       )
     );
 };
@@ -56,7 +56,7 @@ export const getMovieItem = (movie, history) => dispatch => {
       history.push(`/api/movies/mvdetails/${movie._id}`);
     })
     .catch(err =>
-      console.log("cannot save movie state by get /mvdetails/${movie_id}")
+      console.log("cannot save movie state by get /mvdetails/:movie_id")
     );
 };
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
+// import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import ReactStars from "react-stars";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -43,9 +44,9 @@ class MovieItemDetail extends Component {
         this.getTmdbData_video(res.data);
         this.getTmdbData_cast(res.data);
       })
-      .catch(err =>
-        console.log("cannot get movie by get api/movies/mvdetails/${movie_id}")
-      );
+      .catch(err => {
+        console.log("cannot get movie by get api/movies/mvdetails/:movie_id");
+      });
 
     axios
       .get(`/api/usermovieratings/${this.props.match.params.movie_id}`)
@@ -155,9 +156,10 @@ class MovieItemDetail extends Component {
   render() {
     const { movie, movieTmdb, videoKey } = this.state;
 
-    const { errors } = this.state;
+    // const { errors } = this.state;
 
-    const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated } = this.props.auth;
+    // const { isAuthenticated, user } = this.props.auth;
 
     const picBaseUrl = new URL(
       "http://image.tmdb.org/t/p/w185_and_h278_bestv2/"
@@ -232,7 +234,7 @@ class MovieItemDetail extends Component {
                 <img
                   className="card-img pic_size2"
                   src={picBaseUrl + movieTmdb.poster_path}
-                  alt="Card image cap"
+                  alt="movie poster"
                 />
               </th>
               <th scope="row" style={{ width: "70%" }}>
@@ -335,6 +337,7 @@ class MovieItemDetail extends Component {
                 {videoKey !== null ? (
                   <div className="trailer">
                     <iframe
+                      title="youtube_trailer"
                       id="ytplayer"
                       type="text/html"
                       width="1280"
