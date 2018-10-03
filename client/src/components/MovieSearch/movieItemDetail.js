@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 // import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import ReactStars from "react-stars";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -44,7 +44,7 @@ class MovieItemDetail extends Component {
         this.setState({ ratings: res.data });
       })
       .catch(err => {
-        console.log("cannot get movie by get api/movies/mvdetails/:movie_id");
+        console.log("cannot get movie ratings");
       });
 
     axios
@@ -199,10 +199,9 @@ class MovieItemDetail extends Component {
         castImg = casts.map(cast => (
           <img
             key={cast.cast_id}
-            className="rounded-circle"
             src={picBaseUrl + cast.profile_path}
             alt={cast.name}
-            style={{ width: "113px", height: "160px" }}
+            style={{ width: "140px", height: "195px" }}
           />
         ));
       } else {
@@ -249,179 +248,168 @@ class MovieItemDetail extends Component {
     ));
 
     return (
-      // {/* <div className="profiles"> */}
-      //   {/* <div className="container">
-      //     <div className="row">
-      //       <div className="col-md-12"> */}
-      <div className="movie-item-detail">
-        <div
-          className="container alert alert-dismissible alert-secondary"
-          style={{ maxWidth: "70rem" }}
-        >
-          <table className="table">
-            <tbody>
-              <tr>
-                <th scope="col" style={{ width: "30%" }}>
+      <div className="container">
+        <div className="row">
+          {/* 第一个card */}
+          <div className="card col-md-12 p-3">
+            <div className="row">
+              <div className="col-md-4">
+                <img
+                  className="card-img pic_size2 w-100"
+                  src={picBaseUrl + movieTmdb.poster_path}
+                  alt="movie poster"
+                />
+                {/* <img
+                  className="w-100"
+                  src="https://via.placeholder.com/350x350"
+                /> */}
+              </div>
+              <div className="col-md-8">
+                <div className="card-block">
+                  <h5 className="text-left black">{movie.title}</h5>{" "}
+                  <h6 className="text-left text-muted">{movie.genres}</h6>
                   <br />
-                  <img
-                    className="card-img pic_size2"
-                    src={picBaseUrl + movieTmdb.poster_path}
-                    alt="movie poster"
-                  />
-                </th>
-                <th scope="row" style={{ width: "70%" }}>
-                  <div className="card-body">
-                    <h5 className="text-left black">{movie.title}</h5>{" "}
-                    <h6 className="text-left text-muted">{movie.genres}</h6>
-                    <br />
-                    <h6 className="text-left black">
-                      Runtime: {movieTmdb.runtime} min
-                    </h6>
-                    <h6 className="text-left black">
-                      Release Date: {movieTmdb.release_date}
-                    </h6>
-                    <br />
-                    <h6
-                      className="text-left black"
-                      style={{ fontSize: "8px", color: "grey" }}
-                    >
-                      Overview: {movieTmdb.overview}
-                    </h6>
-                    <br />
-                    <h6 className="text-left black">
-                      Average Vote: {movieTmdb.vote_average} ( Vote Account:{" "}
-                      {movieTmdb.vote_count})
-                    </h6>
-                    {isAuthenticated ? voteForm : null}
-                  </div>
-                </th>
-              </tr>
-
-              <tr>
-                <th>
+                  <h6 className="text-left black">
+                    Runtime: {movieTmdb.runtime} min
+                  </h6>
+                  <h6 className="text-left black">
+                    Release Date: {movieTmdb.release_date}
+                  </h6>
                   <br />
-                  <h1>Casts:</h1>{" "}
-                </th>
-                <th>
+                  <h6
+                    className="text-left black"
+                    style={{ fontSize: "8px", color: "grey" }}
+                  >
+                    Overview: {movieTmdb.overview}
+                  </h6>
                   <br />
-                  <tr>
-                    <th>
-                      {castImg[0]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                    <th>
-                      {castImg[1]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                    <th>
-                      {castImg[2]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                    <th>
-                      {castImg[3]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                    <th>
-                      {castImg[4]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                    <th>
-                      {castImg[5]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                  </tr>
-                  <tr>
-                    <th>
-                      {castName[0]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                    <th>
-                      {castName[1]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                    <th>
-                      {castName[2]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                    <th>
-                      {castName[3]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                    <th>
-                      {castName[4]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                    <th>
-                      {castName[5]}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
-                  </tr>
-                </th>
-              </tr>
-
-              <tr>
-                <th>
-                  <br />
-                  <h1>{movie.title} Trailer: </h1>
-                </th>
-                <th>
-                  <br />
-                  {videoKey !== null ? (
-                    <div className="trailer">
-                      <iframe
-                        title="youtube_trailer"
-                        id="ytplayer"
-                        type="text/html"
-                        width="1280"
-                        height="720"
-                        src={videoUrl}
-                        frameBorder="0"
-                      />
-                    </div>
-                  ) : (
-                    <div className="trailer">
-                      <p5>The trailer of this video has not been collected.</p5>
-                    </div>
-                  )}
-                </th>
-              </tr>
-            </tbody>
-          </table>
-          <hr />
-          <ul className="nav nav-tabs">
-            <li>
-              <a href="#rating">Ratings</a>
-            </li>
-            <li>
-              <a href="#review">Reviews</a>
-            </li>
-          </ul>
-          <div className="tab-content">
-            <div className="review-rating-div" id="rating">
-              {isEmpty(this.state.ratings) ? (
-                <span>
-                  &nbsp;
-                  <i className="fa fa-frown text-dark" />
-                  &nbsp;&nbsp;&nbsp; This movie has not been rated by a
-                  Filmtopia user
-                </span>
-              ) : (
-                <ul className="list-group">{ratings}</ul>
-              )}
-            </div>
-            <div className="review-rating-div" id="review">
-              Reviews
+                  <h6 className="text-left black">
+                    Average Vote: {movieTmdb.vote_average} ( Vote Account:{" "}
+                    {movieTmdb.vote_count})
+                  </h6>
+                  {isAuthenticated ? voteForm : null}
+                </div>
+              </div>
             </div>
           </div>
+          <br />
+          <br />
+          {/* 第2个card */}
+          <div className="card col-md-12 p-3">
+            <h5 class="card-header">- About Casts -</h5>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="card-block">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <div class="card">
+                          <div class="card-img">{castImg[0]}</div>
+                          {castName[0]}
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="card">
+                          <div class="card-img">{castImg[1]}</div>
+                          {castName[1]}
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="card">
+                          <div class="card-img">{castImg[2]}</div>
+                          {castName[2]}
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="card">
+                          <div class="card-img">{castImg[3]}</div>
+                          {castName[3]}
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="card">
+                          <div class="card-img">{castImg[4]}</div>
+                          {castName[4]}
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="card">
+                          <div class="card-img">{castImg[5]}</div>
+                          {castName[5]}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* <a href="https://www.google.com" className="btn btn-primary">
+                    read more...
+                  </a> */}
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* 第3个card */}
+          <div className="card col-md-12 p-3">
+            <h5 class="card-header">- Trailer -</h5>
+            <br />
+            <div className="row">
+              <div className="col-md-1" />
+              <div className="col-md-10">
+                {videoKey !== null ? (
+                  <div className="trailer">
+                    <iframe
+                      title="youtube_trailer"
+                      id="ytplayer"
+                      type="text/html"
+                      width="960"
+                      height="540"
+                      src={videoUrl}
+                      frameBorder="0"
+                    />
+                  </div>
+                ) : (
+                  <div className="trailer">
+                    <p5>The trailer of this video has not been collected.</p5>
+                  </div>
+                )}
+                <div className="col-md-1" />
+              </div>
+            </div>
+            <br />
+          </div>
+          {/* 第4个card */}
+          <div className="card col-md-12 p-3">
+            <h5 class="card-header">- About Casts -</h5>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="card-block">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div className="review-rating-div" id="rating">
+                          {isEmpty(this.state.ratings) ? (
+                            <span>
+                              &nbsp;
+                              <i className="fa fa-frown text-dark" />
+                              &nbsp;&nbsp;&nbsp; This movie has not been rated
+                              by a Filmtopia user
+                            </span>
+                          ) : (
+                            <ul className="list-group">{ratings}</ul>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <br />
         </div>
-        <br />
-        <br />
-        <br />
       </div>
-      //     {/* </div> */}
-      //     {/* </div> */}
-      //   {/* </div> */}
-      // {/* </div> */}
     );
   }
 }
