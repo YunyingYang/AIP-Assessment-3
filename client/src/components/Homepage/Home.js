@@ -16,18 +16,6 @@ class Home extends Component {
     };
 
 
-
-// .then( function(res) {
-//         let array = res.data;
-//         console.log(array);
-//         console.log(_.sample(array, 13));
-//         return _.sample(array, 13);
-//
-//
-//     })
-
-
-
     componentDidMount() {
 
         // randomly get 13 movies from db
@@ -53,13 +41,7 @@ class Home extends Component {
         //     })
         //     .catch(err => console.log("cannot get trending movies"));
 
-        // check if trending movies exist in database
-        // if yes, get movie _id in database
-        // if not, insert movie to database, then get movie _id
-        // const testMovie = this.state.movies[0];
-        // axios.post('/api/movies/trending', testMovie)
-        //     .then(res => console.log(res.data))
-        //     .catch(err => console.log(err));
+
     }
 
     render() {
