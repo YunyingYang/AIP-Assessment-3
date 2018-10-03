@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 import axios from "axios";
 
 import Star from './Star';
-import {Link} from "react-router-dom";
 
 const style = {
     width: '375px',
@@ -19,41 +19,66 @@ class MovieCardMedium extends Component {
         super(props);
 
         this.state = {
+            title: "",
+            rating: "",
             images: {}
         };
     }
 
     componentDidMount() {
-        // get movie stills from fanart.tv api
-        const baseUrl = "https://webservice.fanart.tv/v3/movies/";
-        const id = this.props.movie.id;
-        const key = "?api_key=33f74d6cff548383dab95ca4f8901333";
-        const url = baseUrl + id + key;
+        // bug report: authentication conflicts with tmdb api and fanart.tv api
+        // quick & dirty solution: delete authentication for now and add it back later >_<
+        delete axios.defaults.headers.common["Authorization"];
+
+        // get movie details from tmdb api
+        const tmdbUrl = "https://api.themoviedb.org/3/movie/"
+            + this.props.movie.tmdbId
+            + "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US";
 
         axios
-            .get(url)
+            .get(tmdbUrl)
             .then(res => {
-                console.log(res.data);
-                this.setState({ images: res.data.moviebackground });
+                this.setState({ title: res.data.title });
+                this.setState({ rating: res.data.vote_average });
             })
-            .catch(err => console.log("cannot get movie stills"));
+            .catch(err => console.log("Medium card: tmdb err"));
+
+        // get movie stills from fanart.tv api
+        const fanartUrl = "https://webservice.fanart.tv/v3/movies/"
+            + this.props.movie.tmdbId
+            + "?api_key=33f74d6cff548383dab95ca4f8901333";
+
+        axios
+            .get(fanartUrl)
+            .then(res => {
+                this.setState({ images: res.data.moviebackground[0] });
+                // console.log(this.state.images);
+            })
+            .catch(err => console.log("Medium card: fanart err"));
+
+
+        // add authentication back
+        const authheader = axios.defaults.headers.common["Authorization"] || null;
+        axios.defaults.headers.common["Authorization"] = authheader;
     }
 
     render() {
-        if (!this.state.images[0])
+        if (!this.state.images)
             return <div>Loading...</div>;
 
-        let imgURL = this.state.images[0].url;
+        let imgURL = this.state.images.url;
 
         return (
-            <div className="card bg-light text-black" style={style}>
-                <Link to={`/api/movies/mvdetails/${this.props.movie.id}`}>
-                    <img className="card-img-top" style={imgStyle} src={imgURL} alt="movie poster" />
-                    <div className="card-body">
-                        <h5 className="card-title">{this.props.movie.title}</h5>
-                        <Star className="mr-3" rate={this.props.movie.vote_average} />
-                    </div>
+            <div className="card bg-light text-black" style={style} >
+                {/* redirect to movie details page */}
+                <Link to={`/api/movies/mvdetails/${this.props.movie.id}`} >
+                    <img className="card-img-top" src={imgURL} alt="movie poster" />
                 </Link>
+                <div className="card-body">
+                    <h5 className="card-title">{this.state.title}</h5>
+                    <Star className="mr-3" rate={this.state.rating} />
+                    <p className="card-text">{this.props.movie.genres}</p>
+                </div>
             </div>
         );
     }

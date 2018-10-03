@@ -22,35 +22,29 @@ class MovieCardSmall extends Component {
         delete axios.defaults.headers.common["Authorization"];
 
         // get movie details from tmdb api
-        const tmdbUrl = new URL(
-            "https://api.themoviedb.org/3/movie/" +
-            this.props.movie.tmdbId +
-            "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
-        );
+        const tmdbUrl = "https://api.themoviedb.org/3/movie/"
+            + this.props.movie.tmdbId
+            + "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US";
 
         axios
             .get(tmdbUrl)
             .then(res => {
                 this.setState({ poster: res.data.poster_path });
             })
-            .catch(err => console.log("cannot find movie from tmdb"));
-    }
+            .catch(err => console.log("Small card: tmdb err"));
 
-    componentDidUpdate() {
         // add authentication back
         const authheader = axios.defaults.headers.common["Authorization"] || null;
         axios.defaults.headers.common["Authorization"] = authheader;
     }
 
     render() {
-        const baseUrl = new URL(
-            "http://image.tmdb.org/t/p/w185_and_h278_bestv2/"
-        );
+        const baseUrl = "http://image.tmdb.org/t/p/w185_and_h278_bestv2/";
 
         return (
             <div className="card" style={style}>
                 {/* redirect to movie details page */}
-                <Link to={`/api/movies/mvdetails/${this.props.id}`} >
+                <Link to={`/api/movies/mvdetails/${this.props.movie.id}`} >
                     <img className="card-img-top" src={baseUrl + this.state.poster} alt="movie poster" />
                 </Link>
             </div>
