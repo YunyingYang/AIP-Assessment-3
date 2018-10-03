@@ -35,7 +35,7 @@ class Header extends Component {
           discoverActive: false,
           chatActive: false
         });
-      } else if (this.props.history.location.pathname === "/movieinfo") {
+      } else if (this.props.history.location.pathname === "/profiles") {
         this.setState({
           homeActive: false,
           discoverActive: true,
@@ -141,10 +141,10 @@ class Header extends Component {
           </li>
           <li>
             <Link
-              to="/movieinfo"
+              to="/profiles"
               className={this.state.discoverActive ? "tab-active" : null}
             >
-              Discover
+              Discover Others
             </Link>
           </li>
           <li>
@@ -157,8 +157,12 @@ class Header extends Component {
           </li>
           <li className="search-box">
             {/* <form className="form-wrapper-2 cf" method="GET" action="api/search"> */}
-            <form className="form-wrapper-2 cf" onSubmit={this.onSubmit}>
+            <form
+              className="form-wrapper-2 cf form-inline my-2 my-lg-0"
+              onSubmit={this.onSubmit}
+            >
               <input
+                className="form-control mr-sm-2"
                 type="text"
                 placeholder="Search movies..."
                 name="searchContent"
@@ -166,7 +170,7 @@ class Header extends Component {
                 value={this.state.searchContent}
                 onChange={this.onChange}
               />
-              <button type="submit">
+              <button type="submit" className="btn btn-warning my-2 my-sm-0">
                 <img className="search-icon" src={search} alt="searchicon" />
               </button>
             </form>

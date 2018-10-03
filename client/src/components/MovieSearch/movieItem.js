@@ -79,7 +79,7 @@ class MovieItem extends Component {
                 <div className="card-body">
                   <Link to={`/api/movies/mvdetails/${movie._id}`}>
                     <h5
-                      className="text-left black"
+                      className="text-left black text-info"
                       onClick={this.toggleMovieDetail}
                     >
                       {movie.title}

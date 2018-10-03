@@ -231,19 +231,21 @@ class MovieItemDetail extends Component {
     );
 
     const ratings = this.state.ratings.map((rating, index) => (
-      <li
-        key={index}
-        className="p-3 alert alert-dismissible alert-secondary d-flex justify-content-between"
-      >
+      <li key={index} className="p-3 list-group-item d-flex">
+        <ReactStars
+          count={5}
+          size={22}
+          value={rating.rating / 2}
+          color2={"#ffd700"}
+          edit={false}
+        />
+        <p>&nbsp;&nbsp;by&nbsp;</p>
         <Link to={`/profile/user/${rating.user._id}`}>
-          <span className="text-dark">
-            <i className="fa fa-eye" />
+          <h4 className="text-dark">
             &nbsp;
             {rating.user.name}
-          </span>
+          </h4>
         </Link>
-        <span>&nbsp;rated this film</span>
-        <span className="badge badge-pill badge-dark">{rating.rating}</span>
       </li>
     ));
 

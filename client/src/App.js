@@ -86,6 +86,7 @@ class App extends Component {
                   component={Profile}
                 />
                 <Route exact path="/not-found" component={NotFound} />
+                <Route component={NotFound} />
               </Switch>
             </div>
             <br />
