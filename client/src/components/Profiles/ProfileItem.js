@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import isEmpty from '../../validation/is-empty';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import isEmpty from "../../validation/is-empty";
 
 class ProfileItem extends Component {
   render() {
@@ -10,18 +10,22 @@ class ProfileItem extends Component {
     return (
       <div className="card card-body bg-light mb-3">
         <div className="row">
-          <div className="col-2">
-            <img src={profile.user.avatar} alt="" className="rounded-circle" />
+          <div className="col-3">
+            <img
+              src={profile.user.avatar}
+              alt="avatar"
+              className="rounded-circle"
+            />
           </div>
-          <div className="col-lg-6 col-md-4 col-8">
+          <div className="col-lg-5 col-md-3 col-7">
             <h3>{profile.user.name}</h3>
             <h4>
-              {profile.status}{' '}
+              {profile.status}{" "}
               {isEmpty(profile.location) ? null : (
                 <span>at {profile.location}</span>
               )}
             </h4>
-            <Link to={`/profile/${profile.handle}`} className="btn btn-info">
+            <Link to={`/profile/${profile.handle}`} className="btn btn-dark">
               View Profile
             </Link>
           </div>
@@ -30,7 +34,7 @@ class ProfileItem extends Component {
             <ul className="list-group">
               {profile.prefs.map((pref, index) => (
                 <li key={index} className="list-group-item">
-                  <i className="fa fa-heart pr-1" />
+                  <i className="fa fa-heart pr-1 text-danger" />
                   {pref}
                 </li>
               ))}

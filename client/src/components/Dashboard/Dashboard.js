@@ -133,7 +133,8 @@ class Dashboard extends Component {
                 <div className="d-flex flex-wrap justify-content-center align-items-center">
                   {isEmpty(this.state.usermovieratings) ? (
                     <div className="text-dark text-center">
-                      <i className="fa fa-frown-o" />
+                      &nbsp;
+                      <i className="fa fa-frown text-dark" />
                       &nbsp;&nbsp;
                       {this.state.user.name} has not rated a movie
                     </div>

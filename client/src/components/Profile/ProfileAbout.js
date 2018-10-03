@@ -29,8 +29,10 @@ class ProfileAbout extends Component {
 
     // Skill List
     const prefs = profile.prefs.map((pref, index) => (
-      <div key={index} className="p-3 alert alert-dismissible alert-info">
-        <i className="fa fa-heart" /> {pref}
+      <div key={index} className="p-3 alert alert-dismissible alert-secondary">
+        <i className="fa fa-heart text-danger" /> &nbsp;
+        {pref}
+        &nbsp;
       </div>
     ));
 
@@ -39,7 +41,7 @@ class ProfileAbout extends Component {
         <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}>
           <li
             key={index}
-            className="p-3 alert alert-dismissible alert-warning d-flex justify-content-between"
+            className="p-3 alert alert-dismissible alert-secondary d-flex justify-content-between"
           >
             <span>
               <i className="fa fa-eye" />
@@ -47,7 +49,7 @@ class ProfileAbout extends Component {
               {usermovierating.movie.title}
             </span>
             <span>&nbsp;</span>
-            <span className="badge badge-pill badge-info">
+            <span className="badge badge-pill badge-dark">
               {usermovierating.rating}
             </span>
           </li>
@@ -59,35 +61,45 @@ class ProfileAbout extends Component {
       <div className="row">
         <div className="col-md-12">
           <div className="card card-body bg-light mb-3">
-            <h3 className="text-center text-info">
+            <h3 className="text-center text-dark">
               {firstName}
               's Bio
             </h3>
-            <p className="lead text-info">
+            <p className="lead text-secondary">
               {isEmpty(profile.bio) ? (
-                <span>{firstName} does not have a bio</span>
+                <span>
+                  &nbsp;
+                  <i className="fa fa-frown text-dark" />
+                  &nbsp;&nbsp;
+                  {firstName} does not have a bio
+                </span>
               ) : (
                 <span>{profile.bio}</span>
               )}
             </p>
             <hr />
-            <h3 className="text-center text-info">Tastes</h3>
+            <h3 className="text-center text-dark">Tastes</h3>
             <div className="row">
               <div className="d-flex flex-wrap justify-content-center align-items-center">
                 {prefs}
               </div>
             </div>
             <hr />
-            <h3 className="text-center text-info">Ratings</h3>
+            <h3 className="text-center text-dark">Ratings</h3>
             <div className="row">
               <div className="d-flex flex-wrap justify-content-center align-items-center">
-                {isEmpty(this.state.usermovieratings) ? (
-                  <p className="lead text-info">
-                    <span>{firstName} has not rated a movie</span>
-                  </p>
-                ) : (
-                  <ul className="list-group">{ratings}</ul>
-                )}
+                <p className="lead text-secondary">
+                  {isEmpty(this.state.usermovieratings) ? (
+                    <span>
+                      &nbsp;
+                      <i className="fa fa-frown text-dark" />
+                      &nbsp;&nbsp;&nbsp;
+                      {firstName} has not rated a movie
+                    </span>
+                  ) : (
+                    <ul className="list-group">{ratings}</ul>
+                  )}
+                </p>
               </div>
             </div>
           </div>

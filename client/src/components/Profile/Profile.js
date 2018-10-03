@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import ProfileHeader from './ProfileHeader';
-import ProfileAbout from './ProfileAbout';
-import Spinner from '../common/Spinner';
-import { getProfileByHandle } from '../../actions/profileActions';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import ProfileHeader from "./ProfileHeader";
+import ProfileAbout from "./ProfileAbout";
+import Spinner from "../common/Spinner";
+import { getProfileByHandle } from "../../actions/profileActions";
 
 class Profile extends Component {
   componentDidMount() {
@@ -16,7 +16,7 @@ class Profile extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.profile.profile === null && this.props.profile.loading) {
-      this.props.history.push('/not-found');
+      this.props.history.push("/not-found");
     }
   }
 
@@ -30,7 +30,7 @@ class Profile extends Component {
         <Link to="/edit-profile" className="btn btn-light mb-3 float-left">
           <i className="fa fa-edit" />
           Edit Profile
-          </Link>
+        </Link>
       </div>
     );
 
@@ -44,7 +44,9 @@ class Profile extends Component {
               <Link to="/profiles" className="btn btn-light mb-3 float-left">
                 Back To Profiles
               </Link>
-              {isAuthenticated && user.id === profile.user._id ? editYourProfile : null}
+              {isAuthenticated && user.id === profile.user._id
+                ? editYourProfile
+                : null}
             </div>
             <div className="col-md-6" />
           </div>
@@ -54,9 +56,9 @@ class Profile extends Component {
             education={profile.education}
             experience={profile.experience}
           /> */}
-          {/* {profile.githubusername ? (
-            <ProfileGithub username={profile.githubusername} />
-          ) : null} */}
+          <br />
+          <br />
+          <br />
         </div>
       );
     }
@@ -85,4 +87,7 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getProfileByHandle })(Profile);
+export default connect(
+  mapStateToProps,
+  { getProfileByHandle }
+)(Profile);

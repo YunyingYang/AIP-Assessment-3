@@ -25,6 +25,8 @@ import Profile from "./components/Profile/Profile";
 import Home from "./components/Homepage/Home";
 import Discover from "./components/DiscoverPage/Discover";
 
+import NotFound from "./components/not-found/NotFound";
+
 // Check the token
 if (localStorage.jwtToken) {
   // set auth header token
@@ -78,6 +80,7 @@ class App extends Component {
                 />
                 <Route exact path="/profiles" component={Profiles} />
                 <Route exact path="/profile/:handle" component={Profile} />
+                <Route exact path="/not-found" component={NotFound} />
               </Switch>
             </div>
             <br />
