@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 // import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import ReactStars from "react-stars";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -11,6 +11,7 @@ import {
   getMovieItemTmdb,
   saveSingleTmdb
 } from "../../actions/searchActions";
+import isEmpty from "../../validation/is-empty";
 
 class MovieItemDetail extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class MovieItemDetail extends Component {
       videoKey: null,
       casts: [],
       rating: 0,
+      ratings: [],
       errors: {}
     };
     this.getTmdbData_detail = this.getTmdbData_detail.bind(this);
@@ -35,6 +37,15 @@ class MovieItemDetail extends Component {
     if (this.props.match.params.movie_id) {
       this.props.getMovieByMvId(this.props.match.params.movie_id);
     }
+
+    axios
+      .get(`/api/usermovieratings/users/${this.props.match.params.movie_id}`)
+      .then(res => {
+        this.setState({ ratings: res.data });
+      })
+      .catch(err => {
+        console.log("cannot get movie by get api/movies/mvdetails/:movie_id");
+      });
 
     axios
       .get(`/api/movies/mvdetails/${this.props.match.params.movie_id}`)
@@ -220,141 +231,192 @@ class MovieItemDetail extends Component {
       />
     );
 
+    const ratings = this.state.ratings.map((rating, index) => (
+      <li
+        key={index}
+        className="p-3 alert alert-dismissible alert-secondary d-flex justify-content-between"
+      >
+        <Link to={`/profile/user/${rating.user._id}`}>
+          <span className="text-dark">
+            <i className="fa fa-eye" />
+            &nbsp;
+            {rating.user.name}
+          </span>
+        </Link>
+        <span>&nbsp;rated this film</span>
+        <span className="badge badge-pill badge-dark">{rating.rating}</span>
+      </li>
+    ));
+
     return (
       // {/* <div className="profiles"> */}
       //   {/* <div className="container">
       //     <div className="row">
       //       <div className="col-md-12"> */}
-      <div>
-        <table className="table">
-          <tbody>
-            <tr>
-              <th scope="col" style={{ width: "30%" }}>
-                <br />
-                <img
-                  className="card-img pic_size2"
-                  src={picBaseUrl + movieTmdb.poster_path}
-                  alt="movie poster"
-                />
-              </th>
-              <th scope="row" style={{ width: "70%" }}>
-                <div className="card-body">
-                  <h5 className="text-left black">{movie.title}</h5>{" "}
-                  <h6 className="text-left text-muted">{movie.genres}</h6>
+      <div className="movie-item-detail">
+        <div
+          className="container alert alert-dismissible alert-secondary"
+          style={{ maxWidth: "70rem" }}
+        >
+          <table className="table">
+            <tbody>
+              <tr>
+                <th scope="col" style={{ width: "30%" }}>
                   <br />
-                  <h6 className="text-left black">
-                    Runtime: {movieTmdb.runtime} min
-                  </h6>
-                  <h6 className="text-left black">
-                    Release Date: {movieTmdb.release_date}
-                  </h6>
-                  <br />
-                  <h6
-                    className="text-left black"
-                    style={{ fontSize: "8px", color: "grey" }}
-                  >
-                    Overview: {movieTmdb.overview}
-                  </h6>
-                  <br />
-                  <h6 className="text-left black">
-                    Average Vote: {movieTmdb.vote_average} ( Vote Account:{" "}
-                    {movieTmdb.vote_count})
-                  </h6>
-                  {isAuthenticated ? voteForm : null}
-                </div>
-              </th>
-            </tr>
-
-            <tr>
-              <th>
-                <br />
-                <h1>Casts:</h1>{" "}
-              </th>
-              <th>
-                <br />
-                <tr>
-                  <th>
-                    {castImg[0]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                  <th>
-                    {castImg[1]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                  <th>
-                    {castImg[2]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                  <th>
-                    {castImg[3]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                  <th>
-                    {castImg[4]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                  <th>
-                    {castImg[5]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                </tr>
-                <tr>
-                  <th>
-                    {castName[0]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                  <th>
-                    {castName[1]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                  <th>
-                    {castName[2]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                  <th>
-                    {castName[3]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                  <th>
-                    {castName[4]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                  <th>
-                    {castName[5]}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </th>
-                </tr>
-              </th>
-            </tr>
-
-            <tr>
-              <th>
-                <br />
-                <h1>{movie.title} Trailer: </h1>
-              </th>
-              <th>
-                <br />
-                {videoKey !== null ? (
-                  <div className="trailer">
-                    <iframe
-                      title="youtube_trailer"
-                      id="ytplayer"
-                      type="text/html"
-                      width="1280"
-                      height="720"
-                      src={videoUrl}
-                      frameBorder="0"
-                    />
+                  <img
+                    className="card-img pic_size2"
+                    src={picBaseUrl + movieTmdb.poster_path}
+                    alt="movie poster"
+                  />
+                </th>
+                <th scope="row" style={{ width: "70%" }}>
+                  <div className="card-body">
+                    <h5 className="text-left black">{movie.title}</h5>{" "}
+                    <h6 className="text-left text-muted">{movie.genres}</h6>
+                    <br />
+                    <h6 className="text-left black">
+                      Runtime: {movieTmdb.runtime} min
+                    </h6>
+                    <h6 className="text-left black">
+                      Release Date: {movieTmdb.release_date}
+                    </h6>
+                    <br />
+                    <h6
+                      className="text-left black"
+                      style={{ fontSize: "8px", color: "grey" }}
+                    >
+                      Overview: {movieTmdb.overview}
+                    </h6>
+                    <br />
+                    <h6 className="text-left black">
+                      Average Vote: {movieTmdb.vote_average} ( Vote Account:{" "}
+                      {movieTmdb.vote_count})
+                    </h6>
+                    {isAuthenticated ? voteForm : null}
                   </div>
-                ) : (
-                  <div className="trailer">
-                    <p5>The trailer of this video has not been collected.</p5>
-                  </div>
-                )}
-              </th>
-            </tr>
-          </tbody>
-        </table>
+                </th>
+              </tr>
+
+              <tr>
+                <th>
+                  <br />
+                  <h1>Casts:</h1>{" "}
+                </th>
+                <th>
+                  <br />
+                  <tr>
+                    <th>
+                      {castImg[0]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                      {castImg[1]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                      {castImg[2]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                      {castImg[3]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                      {castImg[4]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                      {castImg[5]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>
+                      {castName[0]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                      {castName[1]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                      {castName[2]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                      {castName[3]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                      {castName[4]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                      {castName[5]}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                  </tr>
+                </th>
+              </tr>
+
+              <tr>
+                <th>
+                  <br />
+                  <h1>{movie.title} Trailer: </h1>
+                </th>
+                <th>
+                  <br />
+                  {videoKey !== null ? (
+                    <div className="trailer">
+                      <iframe
+                        title="youtube_trailer"
+                        id="ytplayer"
+                        type="text/html"
+                        width="1280"
+                        height="720"
+                        src={videoUrl}
+                        frameBorder="0"
+                      />
+                    </div>
+                  ) : (
+                    <div className="trailer">
+                      <p5>The trailer of this video has not been collected.</p5>
+                    </div>
+                  )}
+                </th>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <ul className="nav nav-tabs">
+            <li>
+              <a href="#rating">Ratings</a>
+            </li>
+            <li>
+              <a href="#review">Reviews</a>
+            </li>
+          </ul>
+          <div className="tab-content">
+            <div className="review-rating-div" id="rating">
+              {isEmpty(this.state.ratings) ? (
+                <span>
+                  &nbsp;
+                  <i className="fa fa-frown text-dark" />
+                  &nbsp;&nbsp;&nbsp; This movie has not been rated by a
+                  Filmtopia user
+                </span>
+              ) : (
+                <ul className="list-group">{ratings}</ul>
+              )}
+            </div>
+            <div className="review-rating-div" id="review">
+              Reviews
+            </div>
+          </div>
+        </div>
+        <br />
+        <br />
+        <br />
       </div>
       //     {/* </div> */}
       //     {/* </div> */}

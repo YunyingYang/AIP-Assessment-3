@@ -5,12 +5,18 @@ import { Link } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 import ProfileAbout from "./ProfileAbout";
 import Spinner from "../common/Spinner";
-import { getProfileByHandle } from "../../actions/profileActions";
+import {
+  getProfileByHandle,
+  getProfileByUserId
+} from "../../actions/profileActions";
 
 class Profile extends Component {
   componentDidMount() {
     if (this.props.match.params.handle) {
       this.props.getProfileByHandle(this.props.match.params.handle);
+    }
+    if (this.props.match.params.user_id) {
+      this.props.getProfileByUserId(this.props.match.params.user_id);
     }
   }
 
@@ -77,6 +83,7 @@ class Profile extends Component {
 
 Profile.propTypes = {
   getProfileByHandle: PropTypes.func.isRequired,
+  getProfileByUserId: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired
@@ -89,5 +96,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProfileByHandle }
+  { getProfileByHandle, getProfileByUserId }
 )(Profile);

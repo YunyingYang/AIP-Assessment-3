@@ -17,7 +17,7 @@ class ProfileItem extends Component {
               className="rounded-circle"
             />
           </div>
-          <div className="col-lg-5 col-md-3 col-7">
+          <div className="col-lg-5 col-md-4 col-7 .col-xs-5 col-md-offset-2">
             <h3>{profile.user.name}</h3>
             <h4>
               {profile.status}{" "}
