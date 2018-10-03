@@ -71,7 +71,7 @@ class MovieCardMedium extends Component {
         return (
             <div className="card bg-light text-black" style={style} >
                 {/* redirect to movie details page */}
-                <Link to={`/api/movies/mvdetails/${this.props.movie.id}`} >
+                <Link to={`/api/movies/mvdetails/${this.props.movie._id}`} >
                     <img className="card-img-top" src={imgURL} alt="movie poster" />
                 </Link>
                 <div className="card-body">
