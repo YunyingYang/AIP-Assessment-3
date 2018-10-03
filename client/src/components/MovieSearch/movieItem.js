@@ -92,13 +92,6 @@ class MovieItem extends Component {
                   <h6 className="text-left black">
                     Release Date: {this.state.tmdbDetail.release_date}
                   </h6>
-                  <h6
-                    className="text-left black"
-                    style={{ fontSize: "8px", color: "grey" }}
-                  >
-                    {/* Overview: {this.state.tmdbDetail.overview} */}
-                    Overview: {this.state.genre}
-                  </h6>
                   <h6 className="text-left black">
                     Average Vote: {this.state.tmdbDetail.vote_average} ( Vote
                     Account: {this.state.tmdbDetail.vote_count})
