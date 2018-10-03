@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import MovieItem from "./movieItem"; //写一个给每个电影的UI框架
 import { withRouter } from "react-router-dom";
 
-class MovieSearch extends Component {
+class MovieSearchResult extends Component {
   constructor() {
     super();
     this.state = {
@@ -40,7 +40,7 @@ class MovieSearch extends Component {
   }
 }
 
-MovieSearch.propTypes = {
+MovieSearchResult.propTypes = {
   // logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
   // getMovies: PropTypes.func
@@ -53,4 +53,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {}
-)(withRouter(MovieSearch));
+)(withRouter(MovieSearchResult));

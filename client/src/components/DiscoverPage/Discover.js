@@ -9,7 +9,7 @@ class Discover extends Component {
         super();
         this.state = {
             movies: {},
-            isMounted: false
+            // isMounted: false
         }
     };
 
@@ -18,8 +18,8 @@ class Discover extends Component {
         // quick & dirty solution: delete authentication for now and add it back later >_<
         delete axios.defaults.headers.common["Authorization"];
 
-        this.setState({ isMounted: true }, () => {
-            if (this.state.isMounted) {
+        // this.setState({ isMounted: true }, () => {
+        //     if (this.state.isMounted) {
                 //get the weekly trending movies - for test -
                 const url = new URL(
                     "https://api.themoviedb.org/3/trending/movie/week?api_key=9ff347d908a575c777ebecebe3fdcf6b"
@@ -32,16 +32,18 @@ class Discover extends Component {
                         this.setState({ movies: res.data.results });
                     })
                     .catch(err => console.log("cannot get trending movies"));
-            }
-        });
-    }
+        //     }
+        // });
 
-    componentWillUnmount() {
-        this.setState({ isMounted: false });
         // add authentication back
         const authheader = axios.defaults.headers.common["Authorization"] || null;
         axios.defaults.headers.common["Authorization"] = authheader;
     }
+
+    // componentWillUnmount() {
+    //     this.setState({ isMounted: false });
+    //
+    // }
 
     render() {
         if (!this.state.movies[0])

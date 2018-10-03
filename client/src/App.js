@@ -14,7 +14,7 @@ import ChatPage from "./components/Chat/ChatPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
 import Dashboard from "./components/Dashboard/Dashboard";
-import MovieSearch from "./components/MovieSearch/movieSearch";
+import MovieSearch from "./components/MovieSearch/movieSearchResult";
 import MovieItemDetail from "./components/MovieSearch/movieItemDetail";
 
 import CreateProfile from "./components/EditProfile/CreateProfile";
@@ -80,6 +80,11 @@ class App extends Component {
                 />
                 <Route exact path="/profiles" component={Profiles} />
                 <Route exact path="/profile/:handle" component={Profile} />
+                <Route
+                  exact
+                  path="/profile/user/:user_id"
+                  component={Profile}
+                />
                 <Route exact path="/not-found" component={NotFound} />
               </Switch>
             </div>
