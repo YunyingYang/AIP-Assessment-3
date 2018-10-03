@@ -10,39 +10,40 @@ class Home extends Component {
     constructor() {
         super();
         this.state = {
-            movies: {},
-            isMounted: false
-        };
+            movies: {} // array of 13 movies from db
+        }
     };
 
     componentDidMount() {
-        // bug report: authentication conflicts with tmdb api and fanart.tv api
-        // quick & dirty solution: delete authentication for now and add it back later >_<
-        delete axios.defaults.headers.common["Authorization"];
 
-        this.setState({ isMounted: true }, () => {
-            if (this.state.isMounted) {
-                //get the daily trending movies
-                const url = new URL(
-                    "https://api.themoviedb.org/3/trending/movie/day?api_key=9ff347d908a575c777ebecebe3fdcf6b"
-                );
+        // randomly get 13 movies from db
+        axios.get('/api/movies/today')
+            .then(res => {
+                this.setState({ movies: res.data });
+                // console.log(this.state.movies[0]);
+            })
+            .catch(err => console.log("cannot get homepage movies"))
 
-                axios
-                    .get(url)
-                    .then(res => {
-                        console.log(res.data);
-                        this.setState({ movies: res.data.results });
-                    })
-                    .catch(err => console.log("cannot get trending movies"));
-            }
-        });
-    }
+        //get daily trending movies
+        // const url = new URL(
+        //     "https://api.themoviedb.org/3/trending/movie/day?api_key=9ff347d908a575c777ebecebe3fdcf6b"
+        // );
+        //
+        // axios
+        //     .get(url)
+        //     .then(res => {
+        //         console.log(res.data);
+        //         this.setState({ movies: res.data.results });
+        //     })
+        //     .catch(err => console.log("cannot get trending movies"));
 
-    componentWillUnmount() {
-        this.setState({ isMounted: false });
-        // add authentication back
-        const authheader = axios.defaults.headers.common["Authorization"] || null;
-        axios.defaults.headers.common["Authorization"] = authheader;
+        // check if trending movies exist in database
+        // if yes, get movie _id in database
+        // if not, insert movie to database, then get movie _id
+        // const testMovie = this.state.movies[0];
+        // axios.post('/api/movies/trending', testMovie)
+        //     .then(res => console.log(res.data))
+        //     .catch(err => console.log(err));
     }
 
     render() {
@@ -58,18 +59,18 @@ class Home extends Component {
                 <br />
                 <br />
 
-                {/*<h5>Trending Movies</h5>*/}
-                {/*<div className="card-deck">*/}
-                    {/*<MovieCardLarge movie={this.state.movies[0]} />*/}
-                    {/*<MovieCardLarge movie={this.state.movies[1]} />*/}
-                {/*</div>*/}
-                {/*<br />*/}
-                {/*<br />*/}
+                <h5>Trending Movies</h5>
+                <div className="card-deck">
+                    <MovieCardLarge id={this.state.movies[0]._id} movie={this.state.movies[0]} />
+                    <MovieCardLarge id={this.state.movies[1]._id} movie={this.state.movies[1]} />
+                </div>
+                <br />
+                <br />
 
                 {/*<div className="card-deck">*/}
-                    {/*<MovieCardMedium movie={this.state.movies[2]} />*/}
-                    {/*<MovieCardMedium movie={this.state.movies[3]} />*/}
-                    {/*<MovieCardMedium movie={this.state.movies[4]} />*/}
+                {/*<MovieCardMedium id={this.state.movies[2]._id} movie={this.state.movies[2]} />*/}
+                {/*<MovieCardMedium id={this.state.movies[3]._id} movie={this.state.movies[3]} />*/}
+                {/*<MovieCardMedium id={this.state.movies[4]._id} movie={this.state.movies[4]} />*/}
                 {/*</div>*/}
                 {/*<br />*/}
                 {/*<h6 className="text-right">More...</h6>*/}
@@ -78,18 +79,18 @@ class Home extends Component {
 
                 {/*<h5>People also like...</h5>*/}
                 {/*<div className="card-deck">*/}
-                    {/*<MovieCardLarge movie={this.state.movies[5]} />*/}
-                    {/*<MovieCardLarge movie={this.state.movies[6]} />*/}
+                {/*<MovieCardLarge id={this.state.movies[5]._id} movie={this.state.movies[5]} />*/}
+                {/*<MovieCardLarge id={this.state.movies[6]._id} movie={this.state.movies[6]} />*/}
                 {/*</div>*/}
-                {/*<br />*/}
+                <br />
                 <br />
                 <div className="card-deck">
-                    <MovieCardSmall movie={this.state.movies[7]} />
-                    <MovieCardSmall movie={this.state.movies[8]} />
-                    <MovieCardSmall movie={this.state.movies[9]} />
-                    <MovieCardSmall movie={this.state.movies[10]} />
-                    <MovieCardSmall movie={this.state.movies[11]} />
-                    <MovieCardSmall movie={this.state.movies[12]} />
+                    <MovieCardSmall id={this.state.movies[7]._id} movie={this.state.movies[7]} />
+                    <MovieCardSmall id={this.state.movies[8]._id} movie={this.state.movies[8]} />
+                    <MovieCardSmall id={this.state.movies[9]._id} movie={this.state.movies[9]} />
+                    <MovieCardSmall id={this.state.movies[10]._id} movie={this.state.movies[10]} />
+                    <MovieCardSmall id={this.state.movies[11]._id} movie={this.state.movies[11]} />
+                    <MovieCardSmall id={this.state.movies[12]._id} movie={this.state.movies[12]} />
                 </div>
                 <br />
                 <h6 className="text-right">More...</h6>
@@ -102,3 +103,6 @@ class Home extends Component {
 }
 
 export default Home;
+
+
+

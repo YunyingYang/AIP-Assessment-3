@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
+import axios from "axios";
 
 const style = {
     width: '180px',
@@ -8,6 +10,36 @@ const style = {
 class MovieCardSmall extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            poster: {}
+        };
+    }
+
+    componentDidMount() {
+        // bug report: authentication conflicts with tmdb api and fanart.tv api
+        // quick & dirty solution: delete authentication for now and add it back later >_<
+        delete axios.defaults.headers.common["Authorization"];
+
+        // get movie details from tmdb api
+        const tmdbUrl = new URL(
+            "https://api.themoviedb.org/3/movie/" +
+            this.props.movie.tmdbId +
+            "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
+        );
+
+        axios
+            .get(tmdbUrl)
+            .then(res => {
+                this.setState({ poster: res.data.poster_path });
+            })
+            .catch(err => console.log("cannot find movie from tmdb"));
+    }
+
+    componentDidUpdate() {
+        // add authentication back
+        const authheader = axios.defaults.headers.common["Authorization"] || null;
+        axios.defaults.headers.common["Authorization"] = authheader;
     }
 
     render() {
@@ -17,7 +49,10 @@ class MovieCardSmall extends Component {
 
         return (
             <div className="card" style={style}>
-                <img className="card-img-top" src={baseUrl + this.props.movie.poster_path} alt="movie poster" />
+                {/* redirect to movie details page */}
+                <Link to={`/api/movies/mvdetails/${this.props.id}`} >
+                    <img className="card-img-top" src={baseUrl + this.state.poster} alt="movie poster" />
+                </Link>
             </div>
         );
     }
