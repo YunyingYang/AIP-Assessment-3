@@ -58,39 +58,39 @@ class Discover extends Component {
                                 <a className="nav-link">Browse By</a>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Year
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a className="dropdown-item" href="#">All</a>
+                                    <a className="dropdown-item" >All</a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">1990s</a>
-                                    <a className="dropdown-item" href="#">1980s</a>
+                                    <a className="dropdown-item" >1990s</a>
+                                    <a className="dropdown-item" >1980s</a>
                                 </div>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Rating
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a className="dropdown-item" href="#">All</a>
+                                    <a className="dropdown-item" >All</a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">5 stars</a>
-                                    <a className="dropdown-item" href="#">4 stars</a>
+                                    <a className="dropdown-item" >5 stars</a>
+                                    <a className="dropdown-item" >4 stars</a>
                                 </div>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Genres
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a className="dropdown-item" href="#">All</a>
+                                    <a className="dropdown-item" >All</a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">Action</a>
-                                    <a className="dropdown-item" href="#">Comedy</a>
+                                    <a className="dropdown-item" >Action</a>
+                                    <a className="dropdown-item" >Comedy</a>
                                 </div>
                             </li>
                         </ul>

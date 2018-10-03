@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import _ from "underscore";
 
 import Carousel from './Carousel';
 import MovieCardLarge from './MovieCardLarge';
@@ -14,13 +15,28 @@ class Home extends Component {
         }
     };
 
+
+
+// .then( function(res) {
+//         let array = res.data;
+//         console.log(array);
+//         console.log(_.sample(array, 13));
+//         return _.sample(array, 13);
+//
+//
+//     })
+
+
+
     componentDidMount() {
 
         // randomly get 13 movies from db
-        axios.get('/api/movies/today')
+        axios.get('/api/movies/home')
             .then(res => {
-                this.setState({ movies: res.data });
-                // console.log(this.state.movies[0]);
+                // shuffle the response and get get sub-array of first 13 results
+                const shuffled = res.data.sort(() => 0.5 - Math.random());
+                let selected =shuffled.slice(0,13);
+                this.setState({ movies: selected });
             })
             .catch(err => console.log("cannot get homepage movies"))
 

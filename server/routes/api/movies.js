@@ -72,6 +72,46 @@ router.post("/save", (req, res) => {
     .catch(err => console.log(err));
 });
 
+
+// test homepage movie cards link to detail page feature
+// @route   GET api/movies/trending
+// @desc    Get a specific movie
+// @access  Public
+// router.post('/trending', (req, res) => {
+//
+//     const tID = req.body.id;
+//     const title = req.body.title;
+//     let doesExist = true;
+//
+//     // find a movie in the movies collection where the tmdbId field contains tID
+//     // only return _id and genres
+//     Movie.findOne(
+//         { tmdbId: tID },
+//         { _id: 1, genres: 1 }
+//     )
+//         .then(movie => {
+//             if (movie) { // find movie in db
+//                 console.log("movie found!");
+//                 return res.json(movie);
+//             } else {  // movie not exist in db
+//                 const newMovie = new Movie({
+//                     "title": title,
+//                     "genres": "test_Genres",
+//                     "tmdbId": tID
+//                 });
+//                 newMovie
+//                     .save()
+//                     .then(movie => res.json(movie))
+//                     .catch(err => console.log("cannot add new movie into db"))
+//             }
+//         })
+//         .catch(err => {
+//             doesExist = false;
+//             console.log("cannot find movie, or cannot add to db");
+//         });
+// });
+
+
 // @route   GET api/movies
 // @desc    Get movies
 // @access  Public
@@ -82,4 +122,28 @@ router.get("/today", (req, res) => {
         .catch(err => res.status(404).json({ home: "No movies found" }));
 });
 
+//    "title": "Toy Story (1995)",
+//db.products.find( { description: { $regex: /S/ } } )
+
+router.get("/home", (req, res) => {
+    Movie.find(
+            { title: { $regex: /(2016)/ } },
+            { _id: 1, genres: 1, tmdbId: 1 }
+        )
+        .then(movies => res.json(movies))
+        .catch(err => res.status(404).json({ home: "No movies found" }));
+});
+
 module.exports = router;
+
+//
+// {
+//     "_id": {
+//     "$oid": "5bafbdd2ebb8030b5cc4e02d"
+// },
+//     "movieId": 1,
+//     "title": "Toy Story (1995)",
+//     "genres": "Adventure|Animation|Children|Comedy|Fantasy",
+//     "imdbId": 114709,
+//     "tmdbId": 862
+// }
