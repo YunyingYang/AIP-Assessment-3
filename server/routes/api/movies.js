@@ -72,4 +72,14 @@ router.post("/save", (req, res) => {
     .catch(err => console.log(err));
 });
 
+// @route   GET api/movies
+// @desc    Get movies
+// @access  Public
+// test - randomly get 13 movies from db
+router.get("/today", (req, res) => {
+    Movie.aggregate([ { $sample: { size: 13 } } ])
+        .then(movies => res.json(movies))
+        .catch(err => res.status(404).json({ home: "No movies found" }));
+});
+
 module.exports = router;
