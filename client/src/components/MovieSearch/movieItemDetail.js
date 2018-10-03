@@ -253,153 +253,162 @@ class MovieItemDetail extends Component {
       <div className="container">
         <div className="row">
           {/* 第一个card */}
-          <div className="card col-md-12 p-3">
-            <div className="row">
-              <div className="col-md-4">
-                <img
-                  className="card-img pic_size2 w-100"
-                  src={picBaseUrl + movieTmdb.poster_path}
-                  alt="movie poster"
-                />
-                {/* <img
+          <div className="col-md-12">
+            <div className="card col-md-12 p-3">
+              <div className="row">
+                <div className="col-md-4">
+                  <img
+                    className="card-img pic_size2 w-100"
+                    src={picBaseUrl + movieTmdb.poster_path}
+                    alt="movie poster"
+                  />
+                  {/* <img
                   className="w-100"
                   src="https://via.placeholder.com/350x350"
                 /> */}
-              </div>
-              <div className="col-md-8">
-                <div className="card-block">
-                  <h5 className="text-left black">{movie.title}</h5>{" "}
-                  <h6 className="text-left text-muted">{movie.genres}</h6>
-                  <br />
-                  <h6 className="text-left black">
-                    Runtime: {movieTmdb.runtime} min
-                  </h6>
-                  <h6 className="text-left black">
-                    Release Date: {movieTmdb.release_date}
-                  </h6>
-                  <br />
-                  <h6
-                    className="text-left black"
-                    style={{ fontSize: "8px", color: "grey" }}
-                  >
-                    Overview: {movieTmdb.overview}
-                  </h6>
-                  <br />
-                  <h6 className="text-left black">
-                    Average Vote: {movieTmdb.vote_average} ( Vote Account:{" "}
-                    {movieTmdb.vote_count})
-                  </h6>
-                  {isAuthenticated ? voteForm : null}
+                </div>
+                <div className="col-md-8">
+                  <div className="card-block">
+                    <h5 className="text-left black">{movie.title}</h5>{" "}
+                    <h6 className="text-left text-muted">{movie.genres}</h6>
+                    <br />
+                    <h6 className="text-left black">
+                      Runtime: {movieTmdb.runtime} min
+                    </h6>
+                    <h6 className="text-left black">
+                      Release Date: {movieTmdb.release_date}
+                    </h6>
+                    <br />
+                    <h6
+                      className="text-left black"
+                      style={{ fontSize: "8px", color: "grey" }}
+                    >
+                      Overview: {movieTmdb.overview}
+                    </h6>
+                    <br />
+                    <h6 className="text-left black">
+                      Average Vote: {movieTmdb.vote_average} ( Vote Account:{" "}
+                      {movieTmdb.vote_count})
+                    </h6>
+                    {isAuthenticated ? voteForm : null}
+                  </div>
                 </div>
               </div>
             </div>
+            <br />
           </div>
-          <br />
-          <br />
           {/* 第2个card */}
-          <div className="card col-md-12 p-3">
-            <h5 class="card-header">- About Casts -</h5>
+          <div className="col-md-12">
+            <div className="card col-md-12 p-3">
+              <h5 class="card-header">- About Casts -</h5>
 
-            <div className="row">
-              <div className="col-md-12">
-                <div className="card-block">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-2">
-                        <div class="card">
-                          <div class="card-img">{castImg[0]}</div>
-                          {castName[0]}
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="card-block">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-2">
+                          <div class="card">
+                            <div class="card-img">{castImg[0]}</div>
+                            {castName[0]}
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="card">
-                          <div class="card-img">{castImg[1]}</div>
-                          {castName[1]}
+                        <div class="col-md-2">
+                          <div class="card">
+                            <div class="card-img">{castImg[1]}</div>
+                            {castName[1]}
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="card">
-                          <div class="card-img">{castImg[2]}</div>
-                          {castName[2]}
+                        <div class="col-md-2">
+                          <div class="card">
+                            <div class="card-img">{castImg[2]}</div>
+                            {castName[2]}
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="card">
-                          <div class="card-img">{castImg[3]}</div>
-                          {castName[3]}
+                        <div class="col-md-2">
+                          <div class="card">
+                            <div class="card-img">{castImg[3]}</div>
+                            {castName[3]}
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="card">
-                          <div class="card-img">{castImg[4]}</div>
-                          {castName[4]}
+                        <div class="col-md-2">
+                          <div class="card">
+                            <div class="card-img">{castImg[4]}</div>
+                            {castName[4]}
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="card">
-                          <div class="card-img">{castImg[5]}</div>
-                          {castName[5]}
+                        <div class="col-md-2">
+                          <div class="card">
+                            <div class="card-img">{castImg[5]}</div>
+                            {castName[5]}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  {/* <a href="https://www.google.com" className="btn btn-primary">
+                    {/* <a href="https://www.google.com" className="btn btn-primary">
                     read more...
                   </a> */}
+                  </div>
                 </div>
               </div>
             </div>
+            <br />
           </div>
           {/* 第3个card */}
-          <div className="card col-md-12 p-3">
-            <h5 class="card-header">- Trailer -</h5>
-            <br />
-            <div className="row">
-              <div className="col-md-1" />
-              <div className="col-md-10">
-                {videoKey !== null ? (
-                  <div className="trailer">
-                    <iframe
-                      title="youtube_trailer"
-                      id="ytplayer"
-                      type="text/html"
-                      width="960"
-                      height="540"
-                      src={videoUrl}
-                      frameBorder="0"
-                    />
-                  </div>
-                ) : (
-                  <div className="trailer">
-                    <p5>The trailer of this video has not been collected.</p5>
-                  </div>
-                )}
+          <div className="col-md-12">
+            <div className="card col-md-12 p-3">
+              <h5 class="card-header">- Trailer -</h5>
+              <br />
+              <div className="row">
                 <div className="col-md-1" />
+                <div className="col-md-10">
+                  {videoKey !== null ? (
+                    <div className="trailer">
+                      <iframe
+                        title="youtube_trailer"
+                        id="ytplayer"
+                        type="text/html"
+                        width="960"
+                        height="540"
+                        src={videoUrl}
+                        frameBorder="0"
+                      />
+                    </div>
+                  ) : (
+                    <div className="trailer">
+                      <p5>The trailer of this video has not been collected.</p5>
+                    </div>
+                  )}
+                  <div className="col-md-1" />
+                </div>
               </div>
+              <br />
             </div>
             <br />
           </div>
           {/* 第4个card */}
-          <div className="card col-md-12 p-3">
-            <h5 class="card-header">- About Casts -</h5>
+          <div className="col-md-12">
+            <div className="card col-md-12 p-3">
+              <h5 class="card-header">- Users' rating -</h5>
 
-            <div className="row">
-              <div className="col-md-12">
-                <div className="card-block">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div className="review-rating-div" id="rating">
-                          {isEmpty(this.state.ratings) ? (
-                            <span>
-                              &nbsp;
-                              <i className="fa fa-frown text-dark" />
-                              &nbsp;&nbsp;&nbsp; This movie has not been rated
-                              by a Filmtopia user
-                            </span>
-                          ) : (
-                            <ul className="list-group">{ratings}</ul>
-                          )}
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="card-block">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div className="review-rating-div" id="rating">
+                            {isEmpty(this.state.ratings) ? (
+                              <span>
+                                &nbsp;
+                                <i className="fa fa-frown text-dark" />
+                                &nbsp;&nbsp;&nbsp; This movie has not been rated
+                                by a Filmtopia user
+                              </span>
+                            ) : (
+                              <ul className="list-group">{ratings}</ul>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -407,10 +416,15 @@ class MovieItemDetail extends Component {
                 </div>
               </div>
             </div>
+            <br />
           </div>
-          <br />
-          <br />
         </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     );
   }
