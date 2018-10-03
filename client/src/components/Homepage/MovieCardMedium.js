@@ -9,10 +9,10 @@ const style = {
     height: '300px'
 };
 
-const imgStyle = {
-    width: '350px',
-    height: '210px'
-};
+// const imgStyle = {
+//     width: '350px',
+//     height: '210px'
+// };
 
 class MovieCardMedium extends Component {
     constructor(props) {
