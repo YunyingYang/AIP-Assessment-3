@@ -119,14 +119,16 @@ class Header extends Component {
     const { isAuthenticated, user } = this.props.auth;
 
     const suggests = this.state.suggests.map((suggest, index) => (
-      <a
-        className="dropdown-item"
-        key={index}
-        onClick={this.onClickTitle}
-        value={suggest.title}
-      >
-        {suggest.title}
-      </a>
+      <div>
+          <span
+            className="dropdown-item"
+            key={index}
+            onClick={this.onClickTitle}
+            value={suggest.title}
+          >
+            {suggest.title}
+          </span>
+      </div>
     ));
 
     const authLinks = (
@@ -223,9 +225,9 @@ class Header extends Component {
                   style={{
                     position: "absolute",
                     willChange: "transform",
-                    top: "0px",
-                    left: "0px",
-                    transform: "translate3d(0px, 40px, 0px)"
+                      width: "226px",
+                      top: "43px",
+                      left: "3px",
                   }}
                 >
                   {suggests}
