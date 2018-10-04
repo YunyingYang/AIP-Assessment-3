@@ -34,6 +34,8 @@ class ChatPage extends Component {
         author: this.state.username,
         message: this.state.message
       });
+      // var div = document.getElementsByClassName("messages");
+      // div.scrollTop = div.scrollHeight;
       const messageData = {
         text: this.state.message
       };
@@ -102,27 +104,34 @@ class ChatPage extends Component {
                 </div>
                 <hr />
                 <div>
-                  <form onSubmit={this.sendMessage}>
+                  <form
+                    className="form-horizontal form-inline"
+                    onSubmit={this.sendMessage}
+                  >
                     {/* <input type="text" placeholder="Username" value={this.state.username} onChange={ev => this.setState({ username: ev.target.value })} className="form-control" />
                                 <br /> */}
-                    <input
-                      type="text"
-                      placeholder="Message"
-                      className="form-control"
-                      required
-                      value={this.state.message}
-                      onChange={ev =>
-                        this.setState({
-                          username: user.name,
-                          message: ev.target.value
-                        })
-                      }
-                    />
-                    <br />
-                    <button type="submit" className="btn btn-secondary">
-                      Send
-                    </button>
-                    <br />
+                    <div className="form-group col-md-12 col-lg-13 m-auto form-inline">
+                      <input
+                        type="text"
+                        placeholder="Message"
+                        className="form-control input-group mb-3 col-md-10 col-lg-10"
+                        required
+                        value={this.state.message}
+                        onChange={ev =>
+                          this.setState({
+                            username: user.name,
+                            message: ev.target.value
+                          })
+                        }
+                      />
+                      &nbsp;&nbsp;
+                      <input
+                        type="submit"
+                        className="btn btn-secondary input-group-append"
+                        style={{ minWidth: "3rem" }}
+                        value="Send"
+                      />
+                    </div>
                   </form>
                 </div>
               </div>

@@ -83,6 +83,7 @@ class Header extends Component {
   }
 
   onClickTitle(e) {
+    console.log(e.target.getAttribute("value"));
     this.setState({
       searchContent: e.target.getAttribute("value"),
       suggests: []
@@ -90,9 +91,16 @@ class Header extends Component {
   }
 
   onFocusOut(e) {
-    this.setState({
-      suggests: []
-    });
+    // this.setState({
+    //   suggests: []
+    // });
+    setTimeout(
+      function() {
+        //Start the timer
+        this.setState({ suggests: [] }); //After 1 second, set render to true
+      }.bind(this),
+      400
+    );
   }
   //抄过来的还没改完
   onSubmit(e) {
@@ -118,18 +126,21 @@ class Header extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
-    let suggests = this.state.suggests.map((suggest, index) => {
-        return(
-            <li
-                className="dropdown-item list-item-group"
-                key={index}
-                onClick={this.onClickTitle}
-                value={suggest.title}
-            >
-            {suggest.title}
-            </li>
-        );
-    });
+    let suggests = this.state.suggests.map((suggest, index) => (
+      <li
+        className="dropdown-item list-item-group"
+        key={index}
+        onClick={this.onClickTitle}
+        value={suggest.title}
+        style={{
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
+          overflow: "hidden"
+        }}
+      >
+        {suggest.title}
+      </li>
+    ));
 
     const authLinks = (
       <div className="auth-view">
@@ -225,9 +236,9 @@ class Header extends Component {
                   style={{
                     position: "absolute",
                     willChange: "transform",
-                      width: "226px",
-                      top: "43px",
-                      left: "3px",
+                    width: "185px",
+                    top: "43px",
+                    left: "3px"
                   }}
                 >
                   {suggests}
