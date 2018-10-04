@@ -17,7 +17,8 @@ This project is created for AIP assessment 3.
 
 ### Version
 
-v0.01: It illustrates the overall structure of the app, contains basic components but is not fully functional.
+v 1.0.0: It illustrates the overall structure of the app, contains basic components but is not fully functional.
+v 1.0.1:
 
 ### Components
 
@@ -78,7 +79,7 @@ We use React.js, Express and MongoDB for this project.
 
 ### Credit
 
-Film data is from iMDB and MovieLens dataset.
+This product uses the TMDb API but is not endorsed or certified by TMDb.
 
 
 
