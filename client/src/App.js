@@ -75,12 +75,10 @@ class App extends Component {
                   path="/create-profile"
                   component={CreateProfile}
                 />
-                <Route exact path="/profiles" component={Profiles} />
 
+                  {/* test */}
+                <Route path="/profiles" component={Profiles} />
                   {/*<Route exact path="/profiles/:page" component={Profiles} />*/}
-
-
-
 
 
                 <Route exact path="/profile/:handle" component={Profile} />

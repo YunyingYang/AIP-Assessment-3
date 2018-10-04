@@ -8,7 +8,9 @@ import {
 const initialState = {
   profile: null,
   profiles: null,
-  loading: false
+  loading: false,
+    currentPage: null,
+    totalPages: null
 };
 
 export default function (state = initialState, action) {
@@ -27,8 +29,11 @@ export default function (state = initialState, action) {
     case GET_PROFILES:
       return {
         ...state,
-        profiles: action.payload,
-        loading: false
+          loading: false,
+          // for pagination
+          profiles: action.payload.userProfiles,
+          currentPage: action.payload.currentPage,
+          totalPages: action.payload.totalPages
       };
     case CLEAR_CURRENT_PROFILE:
       return {

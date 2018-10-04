@@ -42,22 +42,67 @@ router.get(
 
 // @route   GET api/profile/all
 // @desc    Get all profiles
+// // @access  Public
+// router.get("/all", (req, res) => {
+//   const errors = {};
+//
+//   Profile.find()
+//     .populate("user", ["name", "avatar"])
+//     .then(profiles => {
+//       if (!profiles) {
+//         errors.noprofile = "There are no profiles";
+//         return res.status(404).json(errors);
+//       }
+//
+//       res.json(profiles);
+//     })
+//     .catch(err => res.status(404).json({ profile: "There are no profiles" }));
+// });
+
+
+
+
+
+/////////////////////////////
+// test profile pagination //
+/////////////////////////////
+
+// @route   GET api/profile/all
+// @desc    Get all profiles
 // @access  Public
-router.get("/all", (req, res) => {
-  const errors = {};
+router.get("/allProfiles/:pages", function(req, res) {
+    var itemsPerPage = 2;
+    var currentPage = req.params.page || 1;
 
-  Profile.find()
-    .populate("user", ["name", "avatar"])
-    .then(profiles => {
-      if (!profiles) {
-        errors.noprofile = "There are no profiles";
-        return res.status(404).json(errors);
-      }
+    /////////////////////////////
+    /////////////////////////////
+    /////////////////////////////
+    // for test - need to fix action to pass page to req.params.page - currently it's undefined
+    // !!! webpack会提示黄色warning，但是不能改，改了就直接compile err
+    console.log("server--routes--test");
+    console.log(req.params.page);
 
-      res.json(profiles);
-    })
-    .catch(err => res.status(404).json({ profile: "There are no profiles" }));
+    Profile
+        .find()
+        .skip((itemsPerPage * currentPage) - itemsPerPage)
+        .limit(itemsPerPage)
+        .populate("user", ["name", "avatar"])
+        .then(function(profiles) {
+            Profile
+                .countDocuments()
+                .then(function(count) {
+                    res.json({
+                        userProfiles: profiles,
+                        currentPage: currentPage,
+                        totalPages: Math.ceil(count / itemsPerPage)
+                    });
+                });
+        });
 });
+
+
+
+
 
 // @route   GET api/profile/handle/:handle
 // @desc    Get profile by handle
