@@ -118,18 +118,18 @@ class Header extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
-    const suggests = this.state.suggests.map((suggest, index) => (
-      <div>
-          <span
-            className="dropdown-item"
-            key={index}
-            onClick={this.onClickTitle}
-            value={suggest.title}
-          >
+    let suggests = this.state.suggests.map((suggest, index) => {
+        return(
+            <li
+                className="dropdown-item list-item-group"
+                key={index}
+                onClick={this.onClickTitle}
+                value={suggest.title}
+            >
             {suggest.title}
-          </span>
-      </div>
-    ));
+            </li>
+        );
+    });
 
     const authLinks = (
       <div className="auth-view">
@@ -219,8 +219,8 @@ class Header extends Component {
               />
               {this.state.searchContent.length > 1 &&
               this.state.suggests.length > 0 ? (
-                <div
-                  className="dropdown-menu alert alert-dismissible alert-muted d-flex"
+                <ul
+                  className="dropdown-menu alert alert-dismissible alert-muted d-flex list-group"
                   x-placement="bottom-start"
                   style={{
                     position: "absolute",
@@ -231,7 +231,7 @@ class Header extends Component {
                   }}
                 >
                   {suggests}
-                </div>
+                </ul>
               ) : null}
               <button type="submit" className="btn btn-warning my-2 my-sm-0">
                 <img className="search-icon" src={search} alt="searchicon" />
