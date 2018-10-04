@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
 import { getMovies } from "../../actions/searchActions";
+import axios from "axios";
 
 class Header extends Component {
   constructor(props) {
@@ -17,13 +18,17 @@ class Header extends Component {
       homeActive: false,
       discoverActive: false,
       chatActive: false,
-      searchContent: ""
+      searchContent: "",
+      suggests: []
     };
     // this.toggleHomeClass = this.toggleHomeClass.bind(this);
     // this.toggleDiscoverClass = this.toggleDiscoverClass.bind(this);
     // this.toggleChatClass = this.toggleChatClass.bind(this);
     this.onSubmit = this.onSubmit.bind(this); //！
     this.onChange = this.onChange.bind(this); //！
+    this.onLogoutClick = this.onLogoutClick.bind(this);
+    this.onClickTitle = this.onClickTitle.bind(this);
+    this.onFocusOut = this.onFocusOut.bind(this);
   }
 
   componentDidMount() {
@@ -65,6 +70,29 @@ class Header extends Component {
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+    const newSuggest = {
+      searchContent: e.target.value //movie title keyword
+    };
+    axios
+      .post("/api/movies/suggest", newSuggest)
+      .then(res => {
+        console.log(res.data);
+        this.setState({ suggests: res.data });
+      })
+      .catch(err => this.setState(console.log("cannot search")));
+  }
+
+  onClickTitle(e) {
+    this.setState({
+      searchContent: e.target.getAttribute("value"),
+      suggests: []
+    });
+  }
+
+  onFocusOut(e) {
+    this.setState({
+      suggests: []
+    });
   }
   //抄过来的还没改完
   onSubmit(e) {
@@ -72,6 +100,10 @@ class Header extends Component {
     const newSearch = {
       searchContent: this.state.searchContent //movie title keyword
     };
+
+    this.setState({
+      suggests: []
+    });
 
     this.props.getMovies(newSearch, this.props.history);
     // axios
@@ -85,6 +117,18 @@ class Header extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
+
+    const suggests = this.state.suggests.map((suggest, index) => (
+      <a
+        className="dropdown-item"
+        key={index}
+        onClick={this.onClickTitle}
+        value={suggest.title}
+      >
+        {suggest.title}
+      </a>
+    ));
+
     const authLinks = (
       <div className="auth-view">
         <li className="user-mgmt">
@@ -155,7 +199,7 @@ class Header extends Component {
               Share Your Feelings
             </Link>
           </li>
-          <li className="search-box">
+          <li className="search-box nav-item dropdown">
             {/* <form className="form-wrapper-2 cf" method="GET" action="api/search"> */}
             <form
               className="form-wrapper-2 cf form-inline my-2 my-lg-0"
@@ -163,13 +207,30 @@ class Header extends Component {
             >
               <input
                 className="form-control mr-sm-2"
-                type="text"
                 placeholder="Search movies..."
                 name="searchContent"
+                autoComplete="off"
                 required
                 value={this.state.searchContent}
                 onChange={this.onChange}
+                onBlur={this.onFocusOut}
               />
+              {this.state.searchContent.length > 1 &&
+              this.state.suggests.length > 0 ? (
+                <div
+                  className="dropdown-menu alert alert-dismissible alert-muted d-flex"
+                  x-placement="bottom-start"
+                  style={{
+                    position: "absolute",
+                    willChange: "transform",
+                    top: "0px",
+                    left: "0px",
+                    transform: "translate3d(0px, 40px, 0px)"
+                  }}
+                >
+                  {suggests}
+                </div>
+              ) : null}
               <button type="submit" className="btn btn-warning my-2 my-sm-0">
                 <img className="search-icon" src={search} alt="searchicon" />
               </button>

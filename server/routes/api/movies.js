@@ -39,7 +39,7 @@ router.get("/mvdetails/:movie_id", (req, res) => {
 ///api/movie/search
 //写一个find movie的router
 router.post("/search", (req, res) => {
-  const searchContent = req.body.searchContent;
+  const searchContent = req.body.searchContent.trim();
 
   // Find movie by searchContent
   // Movie.findOne({ movie_title: searchContent })
@@ -57,6 +57,27 @@ router.post("/search", (req, res) => {
     .catch(err => res.status(404).json({ nomoviesfound: "No movie searched" }));
 });
 
+//Search suggest router
+//api/movies/suggest
+//Public
+router.post("/suggest", (req, res) => {
+  const searchContent = req.body.searchContent.trim();
+  Movie.find({
+    title: { $regex: searchContent + ".*", $options: "i" }
+  })
+    .sort({ _id: -1 })
+    .limit(10)
+    .then(movie => {
+      // check movie exist
+      if (!movie) {
+        errors.movieSuggest = "movie not found";
+        return res.status(404).json(errors);
+      }
+      res.json(movie);
+    })
+    .catch(err => res.status(404).json({ nomoviesfound: "No movie found" }));
+});
+
 // just for test !!!
 // post存一个看看collection叫啥:叫movies
 // 这个post测试用，注意title是必输项
@@ -71,7 +92,6 @@ router.post("/save", (req, res) => {
     .then(movie => res.json(movie))
     .catch(err => console.log(err));
 });
-
 
 // test homepage movie cards link to detail page feature
 // @route   GET api/movies/trending
@@ -111,27 +131,23 @@ router.post("/save", (req, res) => {
 //         });
 // });
 
-
 // @route   GET api/movies
 // @desc    Get movies
 // @access  Public
 // test - randomly get 13 movies from db
 router.get("/today", (req, res) => {
-    Movie.aggregate([ { $sample: { size: 13 } } ])
-        .then(movies => res.json(movies))
-        .catch(err => res.status(404).json({ home: "No movies found" }));
+  Movie.aggregate([{ $sample: { size: 13 } }])
+    .then(movies => res.json(movies))
+    .catch(err => res.status(404).json({ home: "No movies found" }));
 });
 
 //    "title": "Toy Story (1995)",
 //db.products.find( { description: { $regex: /S/ } } )
 
 router.get("/home", (req, res) => {
-    Movie.find(
-            { title: { $regex: /(2016)/ } },
-            { _id: 1, genres: 1, tmdbId: 1 }
-        )
-        .then(movies => res.json(movies))
-        .catch(err => res.status(404).json({ home: "No movies found" }));
+  Movie.find({ title: { $regex: /(2016)/ } }, { _id: 1, genres: 1, tmdbId: 1 })
+    .then(movies => res.json(movies))
+    .catch(err => res.status(404).json({ home: "No movies found" }));
 });
 
 module.exports = router;

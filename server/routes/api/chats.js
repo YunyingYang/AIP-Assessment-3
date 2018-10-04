@@ -20,10 +20,10 @@ router.get("/test", (req, res) => res.json({ msg: "Chats Works" }));
 // @desc    Get chats
 // @access  Public
 router.get("/", (req, res) => {
-    Chat.find()
-        .sort({ date: 1 })
-        .then(chats => res.json(chats))
-        .catch(err => res.status(404).json({ nochatsfound: "No chats found" }));
+  Chat.find()
+    .sort({ date: 1 })
+    .then(chats => res.json(chats))
+    .catch(err => res.status(404).json({ nochatsfound: "No chats found" }));
 });
 
 // // @route   GET api/chats/:id
@@ -41,26 +41,26 @@ router.get("/", (req, res) => {
 // @desc    Create chat
 // @access  Private
 router.post(
-    "/",
-    passport.authenticate("jwt", { session: false }),
-    (req, res) => {
-        const { errors, isValid } = validateChatInput(req.body);
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateChatInput(req.body);
 
-        // Check Validation
-        if (!isValid) {
-            // If any errors, send 400 with errors object
-            return res.status(400).json(errors);
-        }
-
-        const newChat = new Chat({
-            text: req.body.text,
-            name: req.body.name,
-            avatar: req.body.avatar,
-            user: req.user.id
-        });
-
-        newChat.save().then(chat => res.json(chat));
+    // Check Validation
+    if (!isValid) {
+      // If any errors, send 400 with errors object
+      return res.status(400).json(errors);
     }
+
+    const newChat = new Chat({
+      text: req.body.text,
+      name: req.body.name,
+      avatar: req.body.avatar,
+      user: req.user.id
+    });
+
+    newChat.save().then(chat => res.json(chat));
+  }
 );
 
 // // @route   DELETE api/chats/:id
