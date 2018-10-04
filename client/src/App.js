@@ -23,7 +23,6 @@ import Profiles from "./components/Profiles/Profiles";
 import Profile from "./components/Profile/Profile";
 
 import Home from "./components/Homepage/Home";
-import Discover from "./components/DiscoverPage/Discover";
 
 import NotFound from "./components/not-found/NotFound";
 
@@ -56,13 +55,11 @@ class App extends Component {
             <div className="container w-90">
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/movieinfo" component={Discover} />
                 <PrivateRoute exact path="/chat" component={ChatPage} />
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/signup" component={RegisterPage} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/mvsearchresult" component={MovieSearch} />
-                {/* <Route exact path="/mvdetails" component={MovieItemDetail} /> */}
+                <Route path="/mvsearchresult" component={MovieSearch} />
                 <Route
                   exact
                   path="/api/movies/mvdetails/:movie_id"
@@ -79,6 +76,13 @@ class App extends Component {
                   component={CreateProfile}
                 />
                 <Route exact path="/profiles" component={Profiles} />
+
+                  {/*<Route exact path="/profiles/:page" component={Profiles} />*/}
+
+
+
+
+
                 <Route exact path="/profile/:handle" component={Profile} />
                 <Route
                   exact

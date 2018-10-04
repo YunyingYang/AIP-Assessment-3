@@ -300,46 +300,46 @@ class MovieItemDetail extends Component {
           {/* 第2个card */}
           <div className="col-md-12">
             <div className="card col-md-12 p-3">
-              <h5 class="card-header">- About Casts -</h5>
+              <h5 className="card-header">- About Casts -</h5>
 
               <div className="row">
                 <div className="col-md-12">
                   <div className="card-block">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-2">
-                          <div class="card">
-                            <div class="card-img">{castImg[0]}</div>
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-md-2">
+                          <div className="card">
+                            <div className="card-img">{castImg[0]}</div>
                             {castName[0]}
                           </div>
                         </div>
-                        <div class="col-md-2">
-                          <div class="card">
-                            <div class="card-img">{castImg[1]}</div>
+                        <div className="col-md-2">
+                          <div className="card">
+                            <div className="card-img">{castImg[1]}</div>
                             {castName[1]}
                           </div>
                         </div>
-                        <div class="col-md-2">
-                          <div class="card">
-                            <div class="card-img">{castImg[2]}</div>
+                        <div className="col-md-2">
+                          <div className="card">
+                            <div className="card-img">{castImg[2]}</div>
                             {castName[2]}
                           </div>
                         </div>
-                        <div class="col-md-2">
-                          <div class="card">
-                            <div class="card-img">{castImg[3]}</div>
+                        <div className="col-md-2">
+                          <div className="card">
+                            <div className="card-img">{castImg[3]}</div>
                             {castName[3]}
                           </div>
                         </div>
-                        <div class="col-md-2">
-                          <div class="card">
-                            <div class="card-img">{castImg[4]}</div>
+                        <div className="col-md-2">
+                          <div className="card">
+                            <div className="card-img">{castImg[4]}</div>
                             {castName[4]}
                           </div>
                         </div>
-                        <div class="col-md-2">
-                          <div class="card">
-                            <div class="card-img">{castImg[5]}</div>
+                        <div className="col-md-2">
+                          <div className="card">
+                            <div className="card-img">{castImg[5]}</div>
                             {castName[5]}
                           </div>
                         </div>
@@ -357,7 +357,7 @@ class MovieItemDetail extends Component {
           {/* 第3个card */}
           <div className="col-md-12">
             <div className="card col-md-12 p-3">
-              <h5 class="card-header">- Trailer -</h5>
+              <h5 className="card-header">- Trailer -</h5>
               <br />
               <div className="row">
                 <div className="col-md-1" />
@@ -376,7 +376,7 @@ class MovieItemDetail extends Component {
                     </div>
                   ) : (
                     <div className="trailer">
-                      <p5>The trailer of this video has not been collected.</p5>
+                      <p>The trailer of this video has not been collected.</p>
                     </div>
                   )}
                   <div className="col-md-1" />
@@ -389,14 +389,14 @@ class MovieItemDetail extends Component {
           {/* 第4个card */}
           <div className="col-md-12">
             <div className="card col-md-12 p-3">
-              <h5 class="card-header">- Users' rating -</h5>
+              <h5 className="card-header">- Users' rating -</h5>
 
               <div className="row">
                 <div className="col-md-12">
                   <div className="card-block">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-12">
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-md-12">
                           <div className="review-rating-div" id="rating">
                             {isEmpty(this.state.ratings) ? (
                               <span>
@@ -433,9 +433,9 @@ class MovieItemDetail extends Component {
 MovieItemDetail.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
-  movie: PropTypes.object.isRequired,
-  movieTmdb: PropTypes.object.isRequired,
-  loading: PropTypes.object.isRequired,
+  movie: PropTypes.object,
+  movieTmdb: PropTypes.object,
+  loading: PropTypes.object,
   // search: PropTypes.object.isRequired,
   getMovieByMvId: PropTypes.func.isRequired,
   getMovieItemTmdb: PropTypes.func,

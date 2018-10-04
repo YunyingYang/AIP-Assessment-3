@@ -44,7 +44,7 @@ class MovieCardSmall extends Component {
         return (
             <div className="card" style={style}>
                 {/* redirect to movie details page */}
-                <Link to={`/api/movies/mvdetails/${this.props.movie.id}`} >
+                <Link to={`/api/movies/mvdetails/${this.props.movie._id}`} >
                     <img className="card-img-top" src={baseUrl + this.state.poster} alt="movie poster" />
                 </Link>
             </div>
