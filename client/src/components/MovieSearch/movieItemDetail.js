@@ -157,7 +157,6 @@ class MovieItemDetail extends Component {
       movieID: this.props.match.params.movie_id,
       rating: newRating * 2
     };
-    console.log(userRatingData);
     axios
       .post("/api/usermovieratings", userRatingData)
       .then(res => console.log(res.data))

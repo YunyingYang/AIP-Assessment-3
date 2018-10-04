@@ -26,6 +26,18 @@ router.get("/", (req, res) => {
     .catch(err => res.status(404).json({ nochatsfound: "No chats found" }));
 });
 
+// @route   GET api/chats/latest
+// @desc    Get latest 5 chats
+// @access  Public
+router.get("/latest", (req, res) => {
+  Chat.find()
+    .sort({ date: -1 })
+    .limit(3)
+    .populate("user", ["name", "avatar"])
+    .then(chats => res.json(chats))
+    .catch(err => res.status(404).json({ nochatsfound: "No chats found" }));
+});
+
 // // @route   GET api/chats/:id
 // // @desc    Get chat by id
 // // @access  Public
@@ -52,14 +64,12 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    const newChat = new Chat({
-      text: req.body.text,
-      name: req.body.name,
-      avatar: req.body.avatar,
-      user: req.user.id
-    });
+    // Get fields
+    const chatFields = {};
+    chatFields.user = req.user.id;
+    chatFields.text = req.body.text;
 
-    newChat.save().then(chat => res.json(chat));
+    new Chat(chatFields).save().then(chat => res.json(chat));
   }
 );
 

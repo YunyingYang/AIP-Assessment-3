@@ -4,6 +4,8 @@ import io from "socket.io-client";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import axios from "axios";
+
 import "./ChatPage.css";
 
 class ChatPage extends Component {
@@ -32,9 +34,32 @@ class ChatPage extends Component {
         author: this.state.username,
         message: this.state.message
       });
+      const messageData = {
+        text: this.state.message
+      };
+      console.log(messageData);
+      axios
+        .post("/api/chats", messageData)
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err));
       this.setState({ message: "" });
     };
   }
+
+  componentDidMount() {
+    this.setState({ username: this.props.auth.user.name });
+    axios
+      .get("/api/chats/latest")
+      .then(res => {
+        var data = res.data.map(entry => ({
+          author: entry.user.name,
+          message: entry.text
+        }));
+        this.setState({ messages: data.reverse() });
+      })
+      .catch(err => console.log(err));
+  }
+
   render() {
     const { user } = this.props.auth;
     return (
@@ -46,38 +71,36 @@ class ChatPage extends Component {
           <div className="row">
             <div className="col-sm-12" style={{ padding: "10px" }}>
               <div>
-                <div>
-                  <h2>Let's share feelings about movies!</h2>
-                  <hr />
-                  <div
-                    className="messages"
-                    style={{
-                      width: "100%",
-                      maxHeight: "20rem",
-                      minHeight: "15rem",
-                      overflowY: "auto"
-                    }}
-                  >
-                    {this.state.messages.map((message, index) => {
-                      return (
-                        <p
-                          className={
-                            this.state.username === message.author
-                              ? "alert alert-dismissible alert-success"
-                              : "alert alert-dismissible alert-info"
-                          }
-                          key={index}
-                          style={{ wordBreak: "break-all" }}
-                        >
-                          <strong>{message.author}:</strong>
-                          &nbsp;
-                          {message.message}
-                        </p>
-                      );
-                    })}
-                  </div>
-                  <hr />
+                <h2>Let's share feelings about movies!</h2>
+                <hr />
+                <div
+                  className="messages"
+                  style={{
+                    width: "100%",
+                    maxHeight: "20rem",
+                    minHeight: "15rem",
+                    overflowY: "auto"
+                  }}
+                >
+                  {this.state.messages.map((message, index) => {
+                    return (
+                      <p
+                        className={
+                          this.state.username === message.author
+                            ? "alert alert-dismissible alert-success"
+                            : "alert alert-dismissible alert-info"
+                        }
+                        key={index}
+                        style={{ wordBreak: "break-all" }}
+                      >
+                        <strong>{message.author}:</strong>
+                        &nbsp;
+                        {message.message}
+                      </p>
+                    );
+                  })}
                 </div>
+                <hr />
                 <div>
                   <form onSubmit={this.sendMessage}>
                     {/* <input type="text" placeholder="Username" value={this.state.username} onChange={ev => this.setState({ username: ev.target.value })} className="form-control" />
