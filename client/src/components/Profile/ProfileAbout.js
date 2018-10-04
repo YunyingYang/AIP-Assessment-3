@@ -16,7 +16,6 @@ class ProfileAbout extends Component {
     axios
       .get(`/api/usermovieratings/user/${this.props.user._id}`)
       .then(res => {
-        console.log(res.data);
         this.setState({ usermovieratings: res.data });
       })
       .catch(err => console.log(err));
@@ -38,11 +37,11 @@ class ProfileAbout extends Component {
 
     const ratings = this.state.usermovieratings.map(
       (usermovierating, index) => (
-        <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}>
-          <li
-            key={index}
-            className="p-3 alert alert-dismissible alert-secondary d-flex justify-content-between"
-          >
+        <Link
+          to={`/api/movies/mvdetails/${usermovierating.movie._id}`}
+          key={index}
+        >
+          <li className="p-3 alert alert-dismissible alert-secondary d-flex justify-content-between">
             <span>
               <i className="fa fa-eye" />
               &nbsp;
@@ -88,7 +87,7 @@ class ProfileAbout extends Component {
             <h3 className="text-center text-dark">Ratings</h3>
             <div className="row">
               <div className="d-flex flex-wrap justify-content-center align-items-center">
-                <p className="lead text-secondary">
+                <div className="lead text-secondary">
                   {isEmpty(this.state.usermovieratings) ? (
                     <span>
                       &nbsp;
@@ -99,7 +98,7 @@ class ProfileAbout extends Component {
                   ) : (
                     <ul className="list-group">{ratings}</ul>
                   )}
-                </p>
+                </div>
               </div>
             </div>
           </div>
