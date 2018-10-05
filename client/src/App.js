@@ -64,8 +64,12 @@ class App extends Component {
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/signup" component={RegisterPage} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                <Route
-                  exact
+
+
+
+
+                  <Route
+                      exact
                   path="/api/movies/search/:search_content"
                   render={props => (
                     <Redirect
@@ -76,6 +80,8 @@ class App extends Component {
                     />
                   )}
                 />
+
+
                 <Route
                   exact
                   path="/api/movies/search/:search_content/:page"
@@ -89,6 +95,9 @@ class App extends Component {
                     />
                   )}
                 />
+
+
+
                 <Route
                   exact
                   path="/api/movies/mvdetails/:movie_id"

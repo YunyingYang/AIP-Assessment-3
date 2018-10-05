@@ -9,7 +9,9 @@ const initialState = {
   movie: null,
   movieTmdb: null,
   movies: null,
-  loading: false
+  loading: false,
+    currentPage: null,
+    totalPages: null
 };
 
 export default function(state = initialState, action) {
@@ -22,8 +24,10 @@ export default function(state = initialState, action) {
     case POST_SEARCHRESULT:
       return {
         ...state,
-        movies: action.payload
-        // loading: false
+        movies: action.payload.movies,
+          // for pagination
+          currentPage: action.payload.currentPage,
+          totalPages: action.payload.totalPages
       };
     case GET_CURRENTMV:
       return {
@@ -35,23 +39,6 @@ export default function(state = initialState, action) {
         ...state,
         movieTmdb: action.payload
       };
-    // case GET_PROFILE:
-    //   return {
-    //     ...state,
-    //     profile: action.payload,
-    //     loading: false
-    //   };
-    // case GET_PROFILES:
-    //   return {
-    //     ...state,
-    //     profiles: action.payload,
-    //     loading: false
-    //   };
-    // case CLEAR_CURRENT_PROFILE:
-    //   return {
-    //     ...state,
-    //     profile: null
-    //   };
     default:
       return state;
   }

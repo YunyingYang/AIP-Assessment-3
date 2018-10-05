@@ -6,36 +6,23 @@ import ProfileItem from "./ProfileItem";
 import { getProfiles } from "../../actions/profileActions";
 import { Link, withRouter } from "react-router-dom";
 
-// style 貌似不好用？明天再调一下
-const paginationStyle = {
-  width: "10px"
-};
+
 
 class Profiles extends Component {
   constructor(props) {
     super(props);
 
+    //  not used -----
     this.state = {
-      currentPage: 2
+      currentPage: 1
     };
   }
 
   componentDidMount() {
-    if (this.props.page) {
-      this.props.getProfiles(this.props.page);
-    }
-    ////////////////////////////////////
-    ////////////////////////////////////
-    ////////////////////////////////////
-    //这地方要改一下，把current page的值传过去 （一个redux没学好的人说道）
-    //this.props.getProfiles(this.props.profile.currentPage);
+      if (this.props.page) {
+          this.props.getProfiles(this.props.page);
+      }
   }
-
-  //   componentWillReceiveProps(nextProps) {
-  //     if (nextProps.page) {
-  //       this.props.getProfiles(nextProps.page);
-  //     }
-  //   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.profile.profiles === null && this.props.profile.loading) {
@@ -59,18 +46,8 @@ class Profiles extends Component {
       }
     }
 
-    ////////////////////////////////////
-    ////////////////////////////////////
-    ////////////////////////////////////
+
     // test pagination ------------------
-    console.log("component");
-    console.log(this.props.profile);
-    // currentPage: 1
-    // loading: false
-    // profile: null
-    // profiles: (2) [{…}, {…}]
-    // totalPages: 3
-    // __proto__: Object
 
     let pagination = null;
     // display pagination only if there are more than one page
@@ -80,17 +57,17 @@ class Profiles extends Component {
       //the first button <<
       if (currentPage === 1) {
         first = (
-          <li className="page-item disabled" style={paginationStyle}>
+          <li className="page-item disabled">
             <span aria-hidden="true">&laquo;</span>
-            <span className="sr-only">First</span>
+            <span className="sr-only"> First </span>
           </li>
         );
       } else {
         first = (
-          <li className="page-item" style={paginationStyle}>
+          <li className="page-item">
             <Link to="/profiles/1">
               <span aria-hidden="true">&laquo;</span>
-              <span className="sr-only">First</span>
+              <span className="sr-only"> First </span>
             </Link>
           </li>
         );
@@ -98,17 +75,17 @@ class Profiles extends Component {
       // the last button >>
       if (currentPage === totalPages) {
         last = (
-          <li className="page-item disabled" style={paginationStyle}>
+          <li className="page-item disabled">
             <span aria-hidden="true">&raquo;</span>
-            <span className="sr-only">Last</span>
+            <span className="sr-only"> Last </span>
           </li>
         );
       } else {
         last = (
-          <li className="page-item" style={paginationStyle}>
+          <li className="page-item">
             <Link to={`/profiles/${totalPages}`}>
               <span aria-hidden="true">&raquo;</span>
-              <span className="sr-only">Last</span>
+              <span className="sr-only"> Last </span>
             </Link>
           </li>
         );
@@ -120,8 +97,8 @@ class Profiles extends Component {
         .map((v, i) => i + 1);
       // map array to create each button in pagination
       let pages = pageArray.map(page => (
-        <li className="page-item" style={paginationStyle} key={page}>
-          <Link to={`/profiles/${page}`}>{page}</Link>
+        <li className="page-item" key={page}>
+          <Link to={`/profiles/${page}`}> {page} </Link>
         </li>
       ));
 

@@ -73,7 +73,6 @@ class Header extends Component {
     axios
       .post("/api/movies/suggest", newSuggest)
       .then(res => {
-        console.log(res.data);
         this.setState({ suggests: res.data });
       })
       .catch(err => this.setState(console.log("cannot search")));

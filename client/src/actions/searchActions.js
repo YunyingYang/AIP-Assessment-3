@@ -1,44 +1,38 @@
 import axios from "axios";
 
 import {
-  // GET_ERRORS,
   MOVIE_LOADING,
   POST_SEARCHRESULT,
   GET_CURRENTMV,
   GET_CURRENTMVTMDB
 } from "./types";
 
-// Get Post
-// export const getMovies = (searchContent, history) => dispatch => {
-//   dispatch(setMovieLoading());
-//   axios
-//     .post("/api/movies/search", searchContent)
-//     .then(res => {
-//       dispatch({
-//         type: POST_SEARCHRESULT,
-//         payload: res.data
-//       });
-//       // console.log(res.data);
-//       history.push("/mvsearchresult");
-//     })
-//     .catch(err => console.log("cannot search"));
-// };
 
-export const getMovies = searchContent => dispatch => {
+//////////////////////////////
+// return search result
+export const getMovies = (searchContent, currentPage) => dispatch => {
   dispatch(setMovieLoading());
-  const keywords = searchContent;
   axios
-    .post(`/api/movies/search/${keywords}`)
+    .post(`/api/movies/search/${searchContent}/${currentPage}`)
     .then(res => {
       dispatch({
         type: POST_SEARCHRESULT,
         payload: res.data
       });
       console.log("get movies by searching keywords");
-      // history.push(`/api/movies/search/${searchContent}`);
     })
     .catch(err => console.log("cannot search"));
 };
+
+
+
+
+
+
+
+
+
+
 
 // Get profile by movie._id
 export const getMovieByMvId = mvId => dispatch => {
@@ -100,8 +94,6 @@ export const getMovieItemTmdb = movie => dispatch => {
       console.log("cannot find from tmdb");
       axios.defaults.headers.common["Authorization"] = authheader;
     });
-
-  // axios.defaults.headers.common["Authorization"] = authheader;
 };
 
 // Save single tmdb movieItem info

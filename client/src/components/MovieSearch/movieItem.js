@@ -35,7 +35,6 @@ class MovieItem extends Component {
     axios
       .get(url)
       .then(res => {
-        console.log(res.data);
         this.setState({ tmdbDetail: res.data });
         this.setState({ genre: res.data.genres[0].name });
       })
