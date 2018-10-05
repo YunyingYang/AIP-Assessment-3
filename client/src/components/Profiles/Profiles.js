@@ -12,6 +12,14 @@ const paginationStyle = {
 };
 
 class Profiles extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentPage: 2
+    };
+  }
+
   componentDidMount() {
     if (this.props.match.params.page) {
       this.props.getProfiles(this.props.match.params.page);
@@ -36,7 +44,7 @@ class Profiles extends Component {
   }
 
   render() {
-    const { profiles, loading, currentPage, totalPages } = this.props.profile;
+    const { profiles, loading, totalPages } = this.props.profile;
     let profileItems;
 
     if (profiles === null || loading) {

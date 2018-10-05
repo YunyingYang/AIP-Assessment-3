@@ -165,6 +165,7 @@ export const deleteEducation = id => dispatch => {
 /////////////////////////////
 
 // Get all profiles
+<<<<<<< HEAD
 export const getProfiles = page => dispatch => {
   dispatch(setProfileLoading());
   axios
@@ -172,6 +173,15 @@ export const getProfiles = page => dispatch => {
     .then(function(res) {
       console.log("action");
       console.log(res.data);
+=======
+export const getProfiles = currentPage => dispatch => {
+    dispatch(setProfileLoading());
+    axios
+        .get(`/api/profile/${currentPage}`)
+        .then(function(res) {
+            console.log("action");
+            console.log(res.data);
+>>>>>>> acff68535ccc95d8d862e12253396bcc879a7511
 
       dispatch({
         type: GET_PROFILES,

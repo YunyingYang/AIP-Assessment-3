@@ -66,6 +66,7 @@ router.get(
 // @route   GET api/profile/allProfiles/:page
 // @desc    Get all profiles by page info
 // @access  Public
+<<<<<<< HEAD
 router.get("/allProfiles/:page", function(req, res) {
   var itemsPerPage = 2;
   var currentPage = req.params.page || 1;
@@ -88,6 +89,35 @@ router.get("/allProfiles/:page", function(req, res) {
           userProfiles: profiles,
           currentPage: currentPage,
           totalPages: Math.ceil(count / itemsPerPage)
+=======
+router.get("/:pages", function(req, res) {
+    var itemsPerPage = 2;
+    var currentPage = req.params.pages || 1;
+
+    /////////////////////////////
+    /////////////////////////////
+    /////////////////////////////
+    // for test - need to fix action to pass page to req.params.page - currently it's undefined
+    // !!! webpack会提示黄色warning，但是不能改，改了就直接compile err
+    console.log("server--routes--test");
+    console.log(req.params.pages);
+
+    Profile
+        .find()
+        .skip((itemsPerPage * currentPage) - itemsPerPage)
+        .limit(itemsPerPage)
+        .populate("user", ["name", "avatar"])
+        .then(function(profiles) {
+            Profile
+                .countDocuments()
+                .then(function(count) {
+                    res.json({
+                        userProfiles: profiles,
+                        currentPage: currentPage,
+                        totalPages: Math.ceil(count / itemsPerPage)
+                    });
+                });
+>>>>>>> acff68535ccc95d8d862e12253396bcc879a7511
         });
       });
     });
