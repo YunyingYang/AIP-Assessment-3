@@ -35,14 +35,13 @@ router.get("/mvdetails/:movie_id", (req, res) => {
     );
 });
 
-//接UI的 搜索router⬇️ (((能搜出了整个名字，等下让他搜部分也可以【已完成✅】)))
+//接UI的 搜索router⬇️ //**让搜索内容加入url, 完成_🐹 **//
 ///api/movie/search
 //写一个find movie的router
-router.post("/search", (req, res) => {
-  const searchContent = req.body.searchContent.trim();
-
-  // Find movie by searchContent
-  // Movie.findOne({ movie_title: searchContent })
+router.post("/search/:search_content", (req, res) => {
+  // const searchContent = req.body.searchContent.trim();
+  let searchContent = req.params.search_content.trim();
+  // console.log("This is searchContent: " + searchContent);
   Movie.find({
     title: { $regex: ".*" + searchContent + ".*", $options: "i" }
   })
@@ -52,10 +51,33 @@ router.post("/search", (req, res) => {
         errors.movieSearch = "movie not found";
         return res.status(404).json(errors);
       }
+      // console.log("This is movies from db: " + res.json);
       res.json(movie);
     })
     .catch(err => res.status(404).json({ nomoviesfound: "No movie searched" }));
 });
+
+//接UI的 搜索router⬇️ (((能搜出了整个名字，等下让他搜部分也可以【已完成✅】)))
+///api/movie/search
+//写一个find movie的router
+// router.post("/search", (req, res) => {
+//   const searchContent = req.body.searchContent.trim();
+
+//   // Find movie by searchContent
+//   // Movie.findOne({ movie_title: searchContent })
+//   Movie.find({
+//     title: { $regex: ".*" + searchContent + ".*", $options: "i" }
+//   })
+//     .then(movie => {
+//       // check movie exist
+//       if (!movie) {
+//         errors.movieSearch = "movie not found";
+//         return res.status(404).json(errors);
+//       }
+//       res.json(movie);
+//     })
+//     .catch(err => res.status(404).json({ nomoviesfound: "No movie searched" }));
+// });
 
 //Search suggest router
 //api/movies/suggest

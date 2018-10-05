@@ -64,7 +64,16 @@ class App extends Component {
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/signup" component={RegisterPage} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                <Route path="/mvsearchresult" component={MovieSearch} />
+                <Route
+                  exact
+                  path="/api/movies/search/:search_content"
+                  render={props => (
+                    <MovieSearch
+                      {...props.match.params}
+                      key={props.match.params.search_content}
+                    />
+                  )}
+                />
                 <Route
                   exact
                   path="/api/movies/mvdetails/:movie_id"

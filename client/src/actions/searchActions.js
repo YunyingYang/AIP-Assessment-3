@@ -9,17 +9,33 @@ import {
 } from "./types";
 
 // Get Post
-export const getMovies = (searchContent, history) => dispatch => {
+// export const getMovies = (searchContent, history) => dispatch => {
+//   dispatch(setMovieLoading());
+//   axios
+//     .post("/api/movies/search", searchContent)
+//     .then(res => {
+//       dispatch({
+//         type: POST_SEARCHRESULT,
+//         payload: res.data
+//       });
+//       // console.log(res.data);
+//       history.push("/mvsearchresult");
+//     })
+//     .catch(err => console.log("cannot search"));
+// };
+
+export const getMovies = searchContent => dispatch => {
   dispatch(setMovieLoading());
+  const keywords = searchContent;
   axios
-    .post("/api/movies/search", searchContent)
+    .post(`/api/movies/search/${keywords}`)
     .then(res => {
       dispatch({
         type: POST_SEARCHRESULT,
         payload: res.data
       });
-      // console.log(res.data);
-      history.push("/mvsearchresult");
+      console.log("get movies by searching keywords");
+      // history.push(`/api/movies/search/${searchContent}`);
     })
     .catch(err => console.log("cannot search"));
 };

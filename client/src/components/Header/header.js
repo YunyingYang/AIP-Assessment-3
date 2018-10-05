@@ -21,9 +21,6 @@ class Header extends Component {
       searchContent: "",
       suggests: []
     };
-    // this.toggleHomeClass = this.toggleHomeClass.bind(this);
-    // this.toggleDiscoverClass = this.toggleDiscoverClass.bind(this);
-    // this.toggleChatClass = this.toggleChatClass.bind(this);
     this.onSubmit = this.onSubmit.bind(this); //！
     this.onChange = this.onChange.bind(this); //！
     this.onLogoutClick = this.onLogoutClick.bind(this);
@@ -105,15 +102,18 @@ class Header extends Component {
   //抄过来的还没改完
   onSubmit(e) {
     e.preventDefault();
-    const newSearch = {
-      searchContent: this.state.searchContent //movie title keyword
-    };
+    // const newSearch = {
+    //   searchContent: this.state.searchContent //movie title keyword
+    // };
+    const newSearch = this.state.searchContent;
 
     this.setState({
       suggests: []
     });
 
-    this.props.getMovies(newSearch, this.props.history);
+    this.props.history.push(`/api/movies/search/${newSearch}`);
+
+    // this.props.getMovies(newSearch);
     // axios
     //   .post("/api/movies/search", newSearch)
     //   .then(res => {
