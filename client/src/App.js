@@ -68,9 +68,24 @@ class App extends Component {
                   exact
                   path="/api/movies/search/:search_content"
                   render={props => (
+                    <Redirect
+                      {...props.match.params}
+                      to={`/api/movies/search/${
+                        props.match.params.search_content
+                      }/1`}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/api/movies/search/:search_content/:page"
+                  render={props => (
                     <MovieSearch
                       {...props.match.params}
-                      key={props.match.params.search_content}
+                      key={
+                        props.match.params.search_content +
+                        props.match.params.page
+                      }
                     />
                   )}
                 />

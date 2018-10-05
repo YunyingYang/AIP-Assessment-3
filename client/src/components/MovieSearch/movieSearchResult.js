@@ -17,8 +17,8 @@ class MovieSearchResult extends Component {
 
   componentDidMount() {
     // 下面三行用来set redux state
-    if (this.props.match.params.search_content) {
-      this.props.getMovies(this.props.match.params.search_content);
+    if (this.props.search_content && this.props.page) {
+      this.props.getMovies(this.props.search_content, this.props.page);
     }
 
     //axios用来获取数据库数据，然后付给this.state

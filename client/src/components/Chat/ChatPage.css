@@ -1,4 +1,4 @@
-.form-control {
+/* .form-control {
   font-weight: 100;
   font-size: 1.7rem;
 }
@@ -12,11 +12,11 @@
 .jumbotron {
   padding: 20px 0;
   background-color: #ffeb8b;
-}
+} */
 
 /**  chat-display **/
 
-.chat-display {
+/* .chat-display {
   min-height: 150px;
   max-height: 40vh;
   overflow: scroll;
@@ -26,4 +26,11 @@
 .chat-display p {
   font-size: 0.9em;
   padding: 0 10px;
+} */
+.input-group-append {
+  padding-bottom: 5px;
+}
+
+.input-group {
+  padding-bottom: -5px;
 }
