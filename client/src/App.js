@@ -91,8 +91,12 @@ class App extends Component {
                 <Route
                   exact
                   path="/profiles/:page"
-                  key={route.path}
-                  component={Profiles}
+                  render={props => (
+                    <Profiles
+                      {...props.match.params}
+                      key={props.match.params.page}
+                    />
+                  )}
                 />
 
                 <Route exact path="/profile/:handle" component={Profile} />

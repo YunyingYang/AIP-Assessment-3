@@ -21,8 +21,8 @@ class Profiles extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.page) {
-      this.props.getProfiles(this.props.match.params.page);
+    if (this.props.page) {
+      this.props.getProfiles(this.props.page);
     }
     ////////////////////////////////////
     ////////////////////////////////////
@@ -32,16 +32,19 @@ class Profiles extends Component {
   }
 
   //   componentWillReceiveProps(nextProps) {
-  //     if (nextProps.match.params.page) {
-  //       this.props.getProfiles(nextProps.match.params.page);
+  //     if (nextProps.page) {
+  //       this.props.getProfiles(nextProps.page);
   //     }
   //   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.profile.profiles === null && this.props.profile.loading) {
-      this.props.history.push("/not-found");
-    }
-  }
+  //   componentWillReceiveProps(nextProps) {
+  // if (nextProps.profile.profiles === null && this.props.profile.loading) {
+  //   this.props.history.push("/not-found");
+  // }
+  // if (nextProps.match.params.page) {
+  //   this.props.getProfiles(nextProps.match.params.page);
+  // }
+  //   }
 
   render() {
     const { profiles, loading, totalPages } = this.props.profile;
@@ -76,7 +79,7 @@ class Profiles extends Component {
     // display pagination only if there are more than one page
     if (totalPages > 1 && totalPages <= 5) {
       let first, last;
-
+      let currentPage = this.state.currentPage;
       //the first button <<
       if (currentPage === 1) {
         first = (
