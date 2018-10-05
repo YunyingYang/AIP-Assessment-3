@@ -70,9 +70,9 @@ router.get(
 // @route   GET api/profile/all
 // @desc    Get all profiles
 // @access  Public
-router.get("/allProfiles/:pages", function(req, res) {
+router.get("/:pages", function(req, res) {
     var itemsPerPage = 2;
-    var currentPage = req.params.page || 1;
+    var currentPage = req.params.pages || 1;
 
     /////////////////////////////
     /////////////////////////////
@@ -80,7 +80,7 @@ router.get("/allProfiles/:pages", function(req, res) {
     // for test - need to fix action to pass page to req.params.page - currently it's undefined
     // !!! webpack会提示黄色warning，但是不能改，改了就直接compile err
     console.log("server--routes--test");
-    console.log(req.params.page);
+    console.log(req.params.pages);
 
     Profile
         .find()

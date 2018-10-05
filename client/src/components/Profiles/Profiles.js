@@ -14,16 +14,27 @@ const paginationStyle = {
 
 
 class Profiles extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            currentPage: 2
+
+        }
+    }
+
+
   componentDidMount() {
+
       ////////////////////////////////////
       ////////////////////////////////////
       ////////////////////////////////////
       //这地方要改一下，把current page的值传过去 （一个redux没学好的人说道）
-      this.props.getProfiles(this.props.profile.currentPage);
+      this.props.getProfiles(this.state.currentPage);
   }
 
   render() {
-    const { profiles, loading, currentPage, totalPages } = this.props.profile;
+    const { profiles, loading, totalPages } = this.props.profile;
     let profileItems;
 
     if (profiles === null || loading) {
@@ -58,7 +69,7 @@ class Profiles extends Component {
           let first, last;
 
           //the first button <<
-          if (currentPage === 1) {
+          if (this.state.currentPage === 1) {
               first = <li className="page-item disabled" style={paginationStyle}>
                   <span aria-hidden="true">&laquo;</span>
                   <span className="sr-only">First</span>
@@ -72,7 +83,7 @@ class Profiles extends Component {
               </li>;
           }
           // the last button >>
-          if (currentPage === totalPages) {
+          if (this.state.currentPage === totalPages) {
               last = <li className="page-item disabled" style={paginationStyle}>
                   <span aria-hidden="true">&raquo;</span>
                   <span className="sr-only">Last</span>

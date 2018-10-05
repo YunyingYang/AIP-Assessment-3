@@ -167,10 +167,10 @@ export const deleteEducation = id => dispatch => {
 /////////////////////////////
 
 // Get all profiles
-export const getProfiles = page => dispatch => {
+export const getProfiles = currentPage => dispatch => {
     dispatch(setProfileLoading());
     axios
-        .get(`/api/profile/allProfiles/${page}`)
+        .get(`/api/profile/${currentPage}`)
         .then(function(res) {
             console.log("action");
             console.log(res.data);
