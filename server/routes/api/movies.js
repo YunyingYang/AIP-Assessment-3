@@ -36,14 +36,19 @@ router.get("/mvdetails/:movie_id", (req, res) => {
 });
 
 //接UI的 搜索router⬇️ //**让搜索内容加入url, 完成_🐹 **//
-///api/movie/search
+///api/movies/search
 //写一个find movie的router
 router.post("/search/:search_content", (req, res) => {
   // const searchContent = req.body.searchContent.trim();
   let searchContent = req.params.search_content.trim();
+  //   var re = /\(/gi;
+  // var str = "Apples are round, and apples are juicy.";
+  // var newstr = str.replace(re, "oranges");
+  let searchContent1 = searchContent.replace(/\(/gi, "\\(");
+  let searchContent2 = searchContent1.replace(/\)/gi, "\\)");
   // console.log("This is searchContent: " + searchContent);
   Movie.find({
-    title: { $regex: ".*" + searchContent + ".*", $options: "i" }
+    title: { $regex: ".*" + searchContent2 + ".*", $options: "i" }
   })
     .then(movie => {
       // check movie exist
