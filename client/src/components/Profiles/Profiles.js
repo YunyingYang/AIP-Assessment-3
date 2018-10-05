@@ -120,7 +120,7 @@ class Profiles extends Component {
         .map((v, i) => i + 1);
       // map array to create each button in pagination
       let pages = pageArray.map(page => (
-        <li className="page-item" style={paginationStyle}>
+        <li className="page-item" style={paginationStyle} key={page}>
           <Link to={`/profiles/${page}`}>{page}</Link>
         </li>
       ));
