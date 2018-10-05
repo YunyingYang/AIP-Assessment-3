@@ -40,7 +40,7 @@ class Header extends Component {
           discoverActive: false,
           chatActive: false
         });
-      } else if (this.props.history.location.pathname === "/profiles") {
+      } else if (this.props.history.location.pathname === "/profiles/1") {
         this.setState({
           homeActive: false,
           discoverActive: true,
@@ -198,7 +198,7 @@ class Header extends Component {
           </li>
           <li>
             <Link
-              to="/profiles"
+              to="/profiles/1"
               className={this.state.discoverActive ? "tab-active" : null}
             >
               Discover Others

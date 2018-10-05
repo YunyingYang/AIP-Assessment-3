@@ -32,7 +32,7 @@ class MovieSearchResult extends Component {
           </div>
         ));
       } else {
-        movieItems = <h4>No movies found...</h4>;
+        movieItems = <h4 className="text-muted">No movies found...</h4>;
       }
     }
 

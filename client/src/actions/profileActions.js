@@ -160,36 +160,31 @@ export const deleteEducation = id => dispatch => {
 //     );
 // };
 
-
-
 /////////////////////////////
 // test profile pagination //
 /////////////////////////////
 
 // Get all profiles
 export const getProfiles = page => dispatch => {
-    dispatch(setProfileLoading());
-    axios
-        .get(`/api/profile/allProfiles/${page}`)
-        .then(function(res) {
-            console.log("action");
-            console.log(res.data);
+  dispatch(setProfileLoading());
+  axios
+    .get(`/api/profile/allProfiles/${page}`)
+    .then(function(res) {
+      console.log("action");
+      console.log(res.data);
 
-            dispatch({
-                type: GET_PROFILES,
-                payload: res.data
-            })
-        })
-        .catch(err =>
-            dispatch({
-                type: GET_PROFILES,
-                payload: null
-            })
-        );
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
 };
-
-
-
 
 // Profile loading
 export const setProfileLoading = () => {

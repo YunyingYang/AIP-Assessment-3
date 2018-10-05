@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
@@ -76,10 +81,19 @@ class App extends Component {
                   component={CreateProfile}
                 />
 
-                  {/* test */}
-                <Route path="/profiles" component={Profiles} />
-                  {/*<Route exact path="/profiles/:page" component={Profiles} />*/}
-
+                {/* test */}
+                {/* <Route exact path="/profiles" component={Profiles} /> */}
+                <Route
+                  exact
+                  path="/profiles"
+                  render={() => <Redirect to="/profiles/1" />}
+                />
+                <Route
+                  exact
+                  path="/profiles/:page"
+                  key={route.path}
+                  component={Profiles}
+                />
 
                 <Route exact path="/profile/:handle" component={Profile} />
                 <Route
