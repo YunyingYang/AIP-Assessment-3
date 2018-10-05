@@ -37,14 +37,11 @@ class Profiles extends Component {
   //     }
   //   }
 
-  //   componentWillReceiveProps(nextProps) {
-  // if (nextProps.profile.profiles === null && this.props.profile.loading) {
-  //   this.props.history.push("/not-found");
-  // }
-  // if (nextProps.match.params.page) {
-  //   this.props.getProfiles(nextProps.match.params.page);
-  // }
-  //   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.profile.profiles === null && this.props.profile.loading) {
+      this.props.history.push("/not-found");
+    }
+  }
 
   render() {
     const { profiles, loading, totalPages } = this.props.profile;
