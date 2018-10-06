@@ -178,29 +178,6 @@ class MovieItemDetail extends Component {
     let castImg;
     let castName;
 
-    // if (casts === null) {
-    //   //删了||loading
-    //   // movieItems = <Spinner />;
-    // } else {
-    //   if (casts.length > 0) {
-    //     castImg = casts.map(
-    //       cast =>
-    //       (  <img
-    //           key={cast.cast_id}
-    //           src={picBaseUrl + cast.profile_path}
-    //           alt={cast.name}
-    //           style={{ width: "140px", height: "195px" }}
-    //         />
-    //       ),
-    //       cast => {
-    //         console.log("测试：" + cast.profile_path);
-    //       }
-    //     );
-    //   } else {
-    //     castImg = <h4>No casts found...</h4>;
-    //   }
-    // }
-
     if (casts === null) {
       //删了||loading
       // movieItems = <Spinner />;

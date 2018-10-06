@@ -6,6 +6,7 @@ import { getCurrentProfile } from "../../actions/profileActions";
 import Spinner from "../common/Spinner";
 import axios from "axios";
 import isEmpty from "../../validation/is-empty";
+import ReactStars from "react-stars";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -107,8 +108,14 @@ class Dashboard extends Component {
             </button>
             <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}>
               <span>&nbsp;&nbsp;&nbsp;</span>
-              <span className="badge badge-pill badge-info">
-                {usermovierating.rating}
+              <span className="badge badge-pill badge-dark">
+                {/* {usermovierating.rating} */}
+                <ReactStars
+                  count={5}
+                  size={24}
+                  value={usermovierating.rating / 2}
+                  color2={"#ffd700"}
+                />
               </span>
               <span>&nbsp;&nbsp;&nbsp;</span>
               <span className="text-muted">
@@ -133,7 +140,7 @@ class Dashboard extends Component {
               <hr />
               {dashboardContent}
               <hr />
-              <h3 className="text-info">&nbsp;&nbsp;Manage Your Ratings:</h3>
+              <h2 className="text-info">&nbsp;&nbsp;Manage Your Ratings:</h2>
               <br />
               <div className="row">
                 <div className="d-flex flex-wrap justify-content-center align-items-center w-100">
