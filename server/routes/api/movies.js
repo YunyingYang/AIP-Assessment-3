@@ -55,7 +55,6 @@ router.post("/search/:search_content/:page", function(req, res) {
         return res.status(404).json(errors);
       } else {
         // if has result
-
         numOfResults = Object.keys(movies).length; // get number of all results
 
         Movie.find({
@@ -76,31 +75,6 @@ router.post("/search/:search_content/:page", function(req, res) {
     .catch(err => res.status(404).json({ nomoviesfound: "No movie searched" }));
 });
 
-//       .skip((itemsPerPage * currentPage) - itemsPerPage)
-//       .limit(itemsPerPage)
-//       .then(function(movies) {
-//           res.json({
-//               movies: movies,
-//               currentPage: currentPage,
-//               totalPages: Math.ceil(count / itemsPerPage)
-//           });
-//
-//           console.log("server-api- test-totalpage");
-//           console.log(totalPages);
-//       })
-//
-// });
-
-// if (!movies) {
-//     errors.movieSearch = "movie not found";
-//     return res.status(404).json(errors);
-// } else {
-//     allSearchResults = Object.keys(movies).length;
-//
-//     console.log("server -- api -- test --- count value");
-//     console.log(allSearchResults);
-// }
-
 //Search suggest router
 //api/movies/suggest
 //Public
@@ -112,7 +86,6 @@ router.post("/suggest", (req, res) => {
     .sort({ _id: -1 })
     .limit(10)
     .then(movie => {
-      // check movie exist
       if (!movie) {
         errors.movieSuggest = "movie not found";
         return res.status(404).json(errors);

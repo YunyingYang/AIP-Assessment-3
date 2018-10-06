@@ -6,7 +6,9 @@ import Star from './Star';
 
 const style = {
     width: '400px',
-    height: '500px'
+    height: '500px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
 };
 
 class MovieCardLarge extends Component {
@@ -39,8 +41,7 @@ class MovieCardLarge extends Component {
             .get(tmdbUrl)
             .then(res => {
                 this.setState({ title: res.data.title });
-                //如果评论太长就截取前面的，找到长度350之前第一个空格，截取空格前面的，加上"..."，以后再修
-                this.setState({ overview: res.data.overview.substring(0, 300) });
+                this.setState({ overview: res.data.overview });
                 this.setState({ rating: res.data.vote_average });
             })
             .catch(err => console.log("Large card: tmdb err"));
@@ -56,27 +57,12 @@ class MovieCardLarge extends Component {
             .get(fanartUrl)
             .then(res => {
                 this.setState({ images: res.data.moviebackground[0] });
-                // console.log(this.state.images);
             })
             .catch(err => console.log("Large card: fanart err"));
-
 
         // add authentication back
         axios.defaults.headers.common["Authorization"] = authheader;
     }
-    //
-    // modifyMovieDetail() {
-    //     // cut movie overview if it's too long
-    //     let movieOverview = this.state.overview;
-    //     if (movieOverview.length > 350) {
-    //         let newOverview = movieOverview.substring(0, 350) + "...";
-    //         this.setState({ overview: newOverview });
-    //     }
-    //
-    //
-    // }
-
-
 
     render() {
         if (!this.state.images) {

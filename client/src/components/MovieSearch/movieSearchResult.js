@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import axios from "axios";
+// import axios from "axios";
 
 import { getMovies } from "../../actions/searchActions";
 import MovieItem from "./movieItem"; //写一个给每个电影的UI框架
-import ProfileItem from "../Profiles/ProfileItem";
-import Spinner from "../common/Spinner";
+// import ProfileItem from "../Profiles/ProfileItem";
+// import Spinner from "../common/Spinner";
 
 class MovieSearchResult extends Component {
   constructor(props) {
@@ -15,10 +15,22 @@ class MovieSearchResult extends Component {
   }
 
   componentDidMount() {
-    // 下面三行用来set redux state
+    // set redux state
     if (this.props.search_content && this.props.page) {
       this.props.getMovies(this.props.search_content, this.props.page);
     }
+
+    //axios用来获取数据库数据，然后付给this.state
+    //这个大概没用，我还没想清楚，先留着 _🐹
+    // axios
+    //   .post(`/api/movies/search/${this.props.match.search_content}`)
+    //   .then(res => {
+    //     this.setState({ movies: res.data });
+    //   })
+    //   .catch(err => {
+    //     console.log("cannot get movie by get api/movies/mvdetails/:movie_id");
+    //   });
+    //
   }
 
   render() {
@@ -150,7 +162,6 @@ class MovieSearchResult extends Component {
 }
 
 MovieSearchResult.propTypes = {
-  // logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object,
   getMovies: PropTypes.func
 };

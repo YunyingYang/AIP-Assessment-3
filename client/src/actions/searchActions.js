@@ -7,7 +7,10 @@ import {
   GET_CURRENTMVTMDB
 } from "./types";
 
+<<<<<<< HEAD
 //////////////////////////////
+=======
+>>>>>>> cb593dd9770f02c88009b113a7564d7c28221280
 // return search result
 export const getMovies = (searchContent, currentPage) => dispatch => {
   dispatch(setMovieLoading());
@@ -32,7 +35,6 @@ export const getMovieByMvId = mvId => dispatch => {
         type: GET_CURRENTMV,
         payload: res.data
       });
-      console.log("save movie state by get api/movies/mvdetails/:movie_id");
     })
     .catch(err =>
       console.log(
