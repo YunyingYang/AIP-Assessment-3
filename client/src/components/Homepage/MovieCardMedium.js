@@ -2,17 +2,10 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
 
-import Star from './Star';
-
 const style = {
     width: '375px',
     height: '300px'
 };
-
-// const imgStyle = {
-//     width: '350px',
-//     height: '210px'
-// };
 
 class MovieCardMedium extends Component {
     constructor(props) {
@@ -26,8 +19,6 @@ class MovieCardMedium extends Component {
     }
 
     componentDidMount() {
-        // bug report: authentication conflicts with tmdb api and fanart.tv api
-        // quick & dirty solution: delete authentication for now and add it back later >_<
         const authheader = axios.defaults.headers.common["Authorization"] || null;
         delete axios.defaults.headers.common["Authorization"];
 
@@ -40,7 +31,7 @@ class MovieCardMedium extends Component {
             .get(tmdbUrl)
             .then(res => {
                 this.setState({ title: res.data.title });
-                this.setState({ rating: res.data.vote_average });
+                this.setState({ rating: parseFloat(res.data.vote_average) });
             })
             .catch(err => console.log("Medium card: tmdb err"));
 
@@ -56,7 +47,6 @@ class MovieCardMedium extends Component {
                 // console.log(this.state.images);
             })
             .catch(err => console.log("Medium card: fanart err"));
-
 
         // add authentication back
         axios.defaults.headers.common["Authorization"] = authheader;
@@ -76,7 +66,6 @@ class MovieCardMedium extends Component {
                 </Link>
                 <div className="card-body">
                     <h5 className="card-title">{this.state.title}</h5>
-                    <Star className="mr-3" rate={this.state.rating} />
                     <p className="card-text">{this.props.movie.genres}</p>
                 </div>
             </div>

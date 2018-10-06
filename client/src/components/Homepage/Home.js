@@ -9,7 +9,7 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      movies: {} // array of 13 movies
+      movies: {}
     };
   }
 
@@ -23,47 +23,18 @@ class Home extends Component {
         let selected = shuffled.slice(0, 13);
         this.setState({ movies: selected });
       })
-      .catch(err => console.log("Home: cannot get movies from mongoDB"));
-
-    //get daily trending movies from tmdb
-    // const url = new URL(
-    //     "https://api.themoviedb.org/3/trending/movie/day?api_key=9ff347d908a575c777ebecebe3fdcf6b"
-    // );
-    //
-    // axios
-    //     .get(url)
-    //     .then(res => {
-    //         this.setState({ movies: res.data.results });
-    //     })
-    //     .catch(err => console.log("cannot get trending movies"));
+      .catch(err => console.log("Homepage - mongoDB error: cannot find movies"));
   }
 
   render() {
-    // it's gonna render the 1st time when page loads & will re-render after getting response
-    // only after getting response can it pass data to child
-    // so at the 1st time this.state is undefined
-    if (!this.state.movies[0]) return <div>Loading...</div>;
+    if (!this.state.movies[0])
+        return <div>Loading...</div>;
 
     return (
       <div>
         <Carousel />
         <br />
         <br />
-
-        {/*登录以后就消失最上面的carousel，改成recom for you -- 测试 --*/}
-        {/*<h5 className="text-white">Recommend For You</h5>*/}
-        {/*<div className="card-deck">*/}
-        {/*<MovieCardSmall movie={this.state.movies[7]} />*/}
-        {/*<MovieCardSmall movie={this.state.movies[8]} />*/}
-        {/*<MovieCardSmall movie={this.state.movies[9]} />*/}
-        {/*<MovieCardSmall movie={this.state.movies[10]} />*/}
-        {/*<MovieCardSmall movie={this.state.movies[11]} />*/}
-        {/*<MovieCardSmall movie={this.state.movies[12]} />*/}
-        {/*</div>*/}
-        {/*<br />*/}
-        {/*<h6 className="text-right">More...</h6>*/}
-        {/*<br />*/}
-        {/*<br />*/}
 
         <h5 className="text-white">Trending Movies</h5>
         <div className="card-deck">
@@ -77,8 +48,6 @@ class Home extends Component {
           <MovieCardMedium movie={this.state.movies[3]} />
           <MovieCardMedium movie={this.state.movies[4]} />
         </div>
-        <br />
-        <h6 className="text-right text-white">More...</h6>
         <br />
         <br />
 
@@ -97,8 +66,6 @@ class Home extends Component {
           <MovieCardSmall movie={this.state.movies[11]} />
           <MovieCardSmall movie={this.state.movies[12]} />
         </div>
-        <br />
-        <h6 className="text-right text-white">More...</h6>
         <br />
         <br />
       </div>
