@@ -1,29 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-// import axios from "axios";
 
 import { getMovies } from "../../actions/searchActions";
 import MovieItem from "./movieItem"; //写一个给每个电影的UI框架
+
+// import axios from "axios";
 // import ProfileItem from "../Profiles/ProfileItem";
 // import Spinner from "../common/Spinner";
 
 class MovieSearchResult extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      errors: {},
-      movies: {},
-    };
   }
 
   componentDidMount() {
-    // set redux state
-    if (this.props.search_content && this.props.page) {
-      this.props.getMovies(this.props.search_content, this.props.page);
-    }
+      // set redux state
+      if (this.props.search_content && this.props.page) {
+          this.props.getMovies(this.props.search_content, this.props.page);
+      }
+  }
 
     //axios用来获取数据库数据，然后付给this.state
     //这个大概没用，我还没想清楚，先留着 _🐹
@@ -36,28 +33,27 @@ class MovieSearchResult extends Component {
     //     console.log("cannot get movie by get api/movies/mvdetails/:movie_id");
     //   });
     //
-  }
 
   render() {
     const { movies, totalPages } = this.props.search;
 
     // display movie items
-      let movieItems;
-      if (movies === null) {
-        //删了||loading
-        // movieItems = <Spinner />;
+    let movieItems;
+
+    if (movies === null) {
+      return <div>Loading...</div>;
+    } else {
+      if (movies.length > 0) {
+        movieItems = movies.map(movie => (
+          <div key={movie._id}>
+            <MovieItem key={movie._id} movie={movie} />
+            <br />
+          </div>
+        ));
       } else {
-        if (movies.length > 0) {
-          movieItems = movies.map(movie => (
-            <div key={movie._id}>
-              <MovieItem key={movie._id} movie={movie} />
-              <br />
-            </div>
-          ));
-        } else {
-          movieItems = <h4 className="text-muted">No movies found...</h4>;
-        }
+        movieItems = <h4 className="text-muted">No movies found...</h4>;
       }
+    }
 
       // display pagination only if there are more than one page
       let pagination = null;
@@ -129,19 +125,19 @@ class MovieSearchResult extends Component {
 
           // other pages displayed
           for (i; i <= parseInt(currentPage, 10) + 3 && i <= parseInt(totalPages, 10); i++) {
-            if (i === parseInt(currentPage, 10)) {
-              pageArray.push(
-                  <li className="page-item active" key={i}>
-                      <a className="page-link">{i}</a>
-                  </li>
-              );
-            } else {
-              pageArray.push(
-                  <li className="page-item" key={i}>
-                      <a className="page-link" href={`/api/movies/search/${this.props.search_content}/${i}`}>{i}</a>
-                  </li>
-              );
-            }
+              if (i === parseInt(currentPage, 10)) {
+                  pageArray.push(
+                      <li className="page-item active" key={i}>
+                          <a className="page-link">{i}</a>
+                      </li>
+                  );
+              } else {
+                  pageArray.push(
+                      <li className="page-item" key={i}>
+                          <a className="page-link" href={`/api/movies/search/${this.props.search_content}/${i}`}>{i}</a>
+                      </li>
+                  );
+              }
           }
 
           // the whole pagination bar
@@ -157,11 +153,11 @@ class MovieSearchResult extends Component {
       }
 
     return (
-        <div className="col-md-12 container-fluid">
-            {movieItems}
-            <br />
-            {pagination}
-        </div>
+      <div className="col-md-12 container-fluid">
+        {movieItems}
+        <br />
+        {pagination}
+      </div>
     );
   }
 }
