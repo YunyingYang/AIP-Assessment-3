@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
+import defaultImage from "../../images/noimagefound-dog.png";
 
 const style = {
     width: '375px',
@@ -62,7 +63,19 @@ class MovieCardMedium extends Component {
             <div className="card bg-light text-black" style={style} >
                 {/* redirect to movie details page */}
                 <Link to={`/api/movies/mvdetails/${this.props.movie._id}`} >
-                    <img className="card-img-top" src={imgURL} alt="movie poster" />
+                    {imgURL ? (
+                        <img
+                            className="card-img-top"
+                            src={imgURL}
+                            alt="movie poster"
+                        />
+                    ) : (
+                        <img
+                            className="card-img-top"
+                            src={defaultImage}
+                            alt="movie poster"
+                        />
+                    )}
                 </Link>
                 <div className="card-body">
                     <h5 className="card-title">{this.state.title}</h5>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
+import defaultImage from "../../images/noimagefound-dog.png";
 
 const style = {
     width: '180px',
@@ -39,13 +40,25 @@ class MovieCardSmall extends Component {
     }
 
     render() {
-        const baseUrl = "http://image.tmdb.org/t/p/w185_and_h278_bestv2/";
+        const imgUrl = "http://image.tmdb.org/t/p/w185_and_h278_bestv2/" + this.state.poster;
 
         return (
             <div className="card" style={style}>
                 {/* redirect to movie details page */}
                 <Link to={`/api/movies/mvdetails/${this.props.movie._id}`} >
-                    <img className="card-img-top" src={baseUrl + this.state.poster} alt="movie poster" />
+                    {imgUrl ? (
+                        <img
+                            className="card-img-top"
+                            src={imgUrl}
+                            alt="movie poster"
+                        />
+                    ) : (
+                        <img
+                            className="card-img-top"
+                            src={defaultImage}
+                            alt="movie poster"
+                        />
+                    )}
                 </Link>
             </div>
         );

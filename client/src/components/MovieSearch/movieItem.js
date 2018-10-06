@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./movieSearch.css";
 import { getMovieItem, getMovieItemTmdb } from "../../actions/searchActions";
-import nopic from "../../images/nopic.jpg";
+import defaultImage from "../../images/cat-small.png";
 
 class MovieItem extends Component {
   constructor(props) {
@@ -61,7 +61,7 @@ class MovieItem extends Component {
                 ) : (
                   <img
                     className="card-img pic_size1"
-                    src={nopic}
+                    src={defaultImage}
                     alt="movie_poster"
                   />
                 )}
