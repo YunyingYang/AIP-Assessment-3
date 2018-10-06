@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import PropTypes from "prop-types";
 // import axios from "axios";
 
@@ -70,18 +70,20 @@ class MovieSearchResult extends Component {
           //the first page button <<
           if (currentPage === "1") {
               firstPage = (
-                  <li className="page-item disabled" >
-                      <span aria-hidden="true">&laquo;</span>
-                      <span className="sr-only"> First </span>
+                  <li className="page-item disabled">
+                      <a className="page-link">
+                          <span aria-hidden="true">&laquo;</span>
+                          <span className="sr-only"> First </span>
+                      </a>
                   </li>
               );
           } else {
               firstPage = (
                   <li className="page-item">
-                      <Link to={`/api/movies/search/${this.props.search_content}/1`}>
+                      <a className="page-link" href={`/api/movies/search/${this.props.search_content}/1`}>
                           <span aria-hidden="true">&laquo;</span>
                           <span className="sr-only"> First </span>
-                      </Link>
+                      </a>
                   </li>
               );
           }
@@ -89,18 +91,20 @@ class MovieSearchResult extends Component {
           //the last page button >>
           if (parseInt(currentPage, 10) === parseInt(totalPages, 10)) {
               lastPage = (
-                  <li className="page-item disabled" >
-                      <span aria-hidden="true">&raquo;</span>
-                      <span className="sr-only"> Last </span>
+                  <li className="page-item disabled">
+                      <a className="page-link">
+                          <span aria-hidden="true">&raquo;</span>
+                          <span className="sr-only"> Last </span>
+                      </a>
                   </li>
               );
           } else {
               lastPage = (
                   <li className="page-item">
-                      <Link to={`/api/movies/search/${this.props.search_content}/${totalPages}`}>
+                      <a className="page-link" href={`/api/movies/search/${this.props.search_content}/${totalPages}`}>
                           <span aria-hidden="true">&raquo;</span>
                           <span className="sr-only"> Last </span>
-                      </Link>
+                      </a>
                   </li>
               );
           }
@@ -110,7 +114,7 @@ class MovieSearchResult extends Component {
           if (i !== 1) {
               previousPages = (
                   <li className="page-item disabled">
-                      <span>...</span>
+                      <a className="page-link">...</a>
                   </li>
               );
           }
@@ -118,7 +122,7 @@ class MovieSearchResult extends Component {
           if (i < totalPages - 6) {
               nextPages = (
                   <li className="page-item disabled">
-                      <span>...</span>
+                      <a className="page-link">...</a>
                   </li>
               );
           }
@@ -128,13 +132,13 @@ class MovieSearchResult extends Component {
             if (i === parseInt(currentPage, 10)) {
               pageArray.push(
                   <li className="page-item active" key={i}>
-                      <span>{i}</span>
+                      <a className="page-link">{i}</a>
                   </li>
               );
             } else {
               pageArray.push(
                   <li className="page-item" key={i}>
-                      <Link to={`/api/movies/search/${this.props.search_content}/${i}`}>{i}</Link>
+                      <a className="page-link" href={`/api/movies/search/${this.props.search_content}/${i}`}>{i}</a>
                   </li>
               );
             }

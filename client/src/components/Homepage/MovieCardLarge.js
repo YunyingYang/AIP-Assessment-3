@@ -21,7 +21,6 @@ class MovieCardLarge extends Component {
             overview: "",
             images: {}
         };
-        // this.modifyMovieDetail = this.modifyMovieDetail.bind(this);
     }
 
     componentDidMount() {
@@ -85,8 +84,13 @@ class MovieCardLarge extends Component {
                 </Link>
                 <div className="card-body">
                     <h5 className="card-title">{this.state.title}</h5>
-                    <Star className="mr-3" rate={this.state.rating} />
-                    <p className="card-text">{this.props.movie.genres}</p>
+
+                    <ul>
+                        <li className="card-text">{this.props.movie.genres}</li>
+                        <li><Star className="mr-3" rate={this.state.rating} /></li>
+                    </ul>
+                    {/*<Star className="mr-3" rate={this.state.rating} />*/}
+                    {/*<p className="card-text">{this.props.movie.genres}</p>*/}
                     <p className="card-text">{this.state.overview}</p>
                 </div>
             </div>
