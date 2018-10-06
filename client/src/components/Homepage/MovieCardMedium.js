@@ -28,6 +28,7 @@ class MovieCardMedium extends Component {
     componentDidMount() {
         // bug report: authentication conflicts with tmdb api and fanart.tv api
         // quick & dirty solution: delete authentication for now and add it back later >_<
+        const authheader = axios.defaults.headers.common["Authorization"] || null;
         delete axios.defaults.headers.common["Authorization"];
 
         // get movie details from tmdb api
@@ -58,7 +59,6 @@ class MovieCardMedium extends Component {
 
 
         // add authentication back
-        const authheader = axios.defaults.headers.common["Authorization"] || null;
         axios.defaults.headers.common["Authorization"] = authheader;
     }
 

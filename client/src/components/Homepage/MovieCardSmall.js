@@ -19,6 +19,7 @@ class MovieCardSmall extends Component {
     componentDidMount() {
         // bug report: authentication conflicts with tmdb api and fanart.tv api
         // quick & dirty solution: delete authentication for now and add it back later >_<
+        const authheader = axios.defaults.headers.common["Authorization"] || null;
         delete axios.defaults.headers.common["Authorization"];
 
         // get movie details from tmdb api
@@ -34,7 +35,6 @@ class MovieCardSmall extends Component {
             .catch(err => console.log("Small card: tmdb err"));
 
         // add authentication back
-        const authheader = axios.defaults.headers.common["Authorization"] || null;
         axios.defaults.headers.common["Authorization"] = authheader;
     }
 

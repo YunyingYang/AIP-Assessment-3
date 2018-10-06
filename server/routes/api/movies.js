@@ -49,11 +49,6 @@ router.post("/search/:search_content/:page", function(req, res) {
     let currentPage = req.params.page || 1;
     let numOfResults;
 
-    // for test
-    console.log("movie - -server--routes--test");
-    console.log(req.params.page);
-
-
     Movie
         .find({title: {$regex: ".*" + searchContent2 + ".*", $options: "i"}})  // find all movies match keyword
         .then(function (movies) {
@@ -63,9 +58,6 @@ router.post("/search/:search_content/:page", function(req, res) {
             } else {  // if has result
 
                 numOfResults = Object.keys(movies).length;  // get number of all results
-
-                console.log("server -- api -- test --- count value");
-                console.log(numOfResults);
 
                 Movie
                     .find({title: {$regex: ".*" + searchContent2 + ".*", $options: "i"}})  // find all movies match keyword
