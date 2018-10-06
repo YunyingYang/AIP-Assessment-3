@@ -30,7 +30,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
           loading: false,
-          // for pagination
           profiles: action.payload.userProfiles,
           currentPage: action.payload.currentPage,
           totalPages: action.payload.totalPages
