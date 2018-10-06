@@ -63,14 +63,13 @@ class MovieSearchResult extends Component {
 
       // display pagination only if there are more than one page
       let pagination = null;
+
       if (totalPages > 1) {
-          let firstPage, lastPage, previousPages, nextPages;
           let currentPage = this.props.page;
+          let firstPage, lastPage, previousPages, nextPages;
+          let pageArray = [];
 
-          console.log("current page");
-          console.log(currentPage);
-
-          //the first button <<
+          //the first page button <<
           if (currentPage === "1") {
               firstPage = (
                   <li className="page-item disabled" >
@@ -88,11 +87,11 @@ class MovieSearchResult extends Component {
                   </li>
               );
           }
-          // the last button >>
-          // !!! should use == don't change to ===   by Mio
+
+          //the last page button >>
           if (currentPage == totalPages) {
               lastPage = (
-                  <li className="page-item disabled">
+                  <li className="page-item disabled" >
                       <span aria-hidden="true">&raquo;</span>
                       <span className="sr-only"> Last </span>
                   </li>
@@ -108,50 +107,44 @@ class MovieSearchResult extends Component {
               );
           }
 
-          let pageArray = [];
-          let i = currentPage > 5 ? currentPage - 4 : 1;
-          // add a "..." button between "<<" and "currentPage - 4"  to indicate there are other pages
+          // other pages displayed
+          var i = currentPage > 4 ? currentPage - 3 : 1;
           if (i !== 1) {
-            previousPages = (
-                <li className="page-item disabled">
-                  <span>...</span>
-                </li>
-            );
+              previousPages = (
+                  <li className="page-item disabled">
+                      <span>prev...</span>
+                  </li>
+              );
           }
 
-          // create an array of all pages will be showed in pagination bar
-          for (; i <= currentPage + 4 && i < totalPages; i++) {
-            pageArray.push(i);
+          if (i < totalPages - 6) {
+              nextPages = (
+                  <li className="page-item disabled">
+                      <span>next...</span>
+                  </li>
+              );
           }
 
-          console.log("test - page array");
-          console.log(pageArray);
+          for (; i <= parseInt(currentPage) + 3 && i <= parseInt(totalPages); i++) {
+            if (i == currentPage) {
+              pageArray.push(
+                  <li className="page-item active" key={i}>
+                      <span>{i}</span>
+                  </li>
+              );
+            } else {
+              pageArray.push(
+                  <li className="page-item" key={i}>
+                      <Link to={`/api/movies/search/${this.props.search_content}/${i}`}>{i}</Link>
+                  </li>
+              );
+            }
+          }
 
-          // // map array to create each button in pagination
-          // let pages = pageArray.map(function(page) {
-          //
-          //   // if (pageArray.indexOf(page) === currentPage + 4 && pageArray.indexOf(page) < totalPages) {
-          //   //   nextPages = (
-          //   //       <li className="page-item disabled">
-          //   //           <span>...</span>
-          //   //       </li>
-          //   //   );
-          //   // }
-          //
-          //   if (page === currentPage) {
-          //     return (
-          //         <li className="page-item disabled" key={page}>
-          //             <span>{page}</span>
-          //         </li>
-          //     );
-          //   } else {
-          //     return (
-          //         <li className="page-item" key={page}>
-          //             <Link to={`/api/movies/search/${this.props.search_content}/${page}`}>{page}</Link>
-          //         </li>
-          //     );
-          //   }
-          // });
+
+
+
+
 
 
 
@@ -160,13 +153,12 @@ class MovieSearchResult extends Component {
               <ul className="pagination text-center justify-content-center">
                   {firstPage}
                   {previousPages}
-                  {/*{pages}*/}
+                  {pageArray}
                   {nextPages}
                   {lastPage}
               </ul>
           );
       }
-
 
 
     return (
