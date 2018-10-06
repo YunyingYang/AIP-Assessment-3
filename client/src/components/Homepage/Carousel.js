@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import pic1 from "../../images/1.jpg";
-import pic2 from "../../images/2.jpg";
-import pic3 from "../../images/3.jpg";
+import pic1 from "../../images/venom.png";
+import pic2 from "../../images/antman.jpg";
+import pic3 from "../../images/aqua.jpeg";
 
 class Carousel extends Component {
   render() {
@@ -18,21 +18,21 @@ class Carousel extends Component {
             <div className="carousel-item active">
               <img
                 className="d-block w-100 h-100"
-                src={pic3}
+                src={pic1}
                 alt="First slide"
               />
             </div>
             <div className="carousel-item">
               <img
                 className="d-block w-100 h-100"
-                src={pic1}
+                src={pic2}
                 alt="Second slide"
               />
             </div>
             <div className="carousel-item">
               <img
                 className="d-block w-100 h-100"
-                src={pic2}
+                src={pic3}
                 alt="Third slide"
               />
             </div>
