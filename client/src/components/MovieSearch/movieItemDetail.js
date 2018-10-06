@@ -220,13 +220,17 @@ class MovieItemDetail extends Component {
     }
 
     const voteForm = (
-      <ReactStars
-        count={5}
-        onChange={this.changeRating}
-        size={24}
-        value={this.state.rating / 2}
-        color2={"#ffd700"}
-      />
+      <div>
+        <br />
+        <h6 className="text-left black">Rating for this movie: </h6>
+        <ReactStars
+          count={5}
+          onChange={this.changeRating}
+          size={24}
+          value={this.state.rating / 2}
+          color2={"#ffd700"}
+        />
+      </div>
     );
 
     const ratings = this.state.ratings.map((rating, index) => (
@@ -280,7 +284,7 @@ class MovieItemDetail extends Component {
                     <br />
                     <h6
                       className="text-left black"
-                      style={{ fontSize: "8px", color: "grey" }}
+                      style={{ fontSize: "14px", color: "grey" }}
                     >
                       Overview: {movieTmdb.overview}
                     </h6>
