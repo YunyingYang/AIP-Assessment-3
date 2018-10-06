@@ -11,9 +11,6 @@ import MovieItem from "./movieItem"; //写一个给每个电影的UI框架
 // import Spinner from "../common/Spinner";
 
 class MovieSearchResult extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
       // set redux state
@@ -175,3 +172,4 @@ export default connect(
   mapStateToProps,
   { getMovies }
 )(withRouter(MovieSearchResult));
+

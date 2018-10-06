@@ -8,9 +8,6 @@ import Spinner from "../common/Spinner";
 import ProfileItem from "./ProfileItem";
 
 class Profiles extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
       if (this.props.page) {
