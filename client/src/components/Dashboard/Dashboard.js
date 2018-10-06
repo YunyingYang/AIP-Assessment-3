@@ -112,7 +112,7 @@ class Dashboard extends Component {
                 {/* {usermovierating.rating} */}
                 <ReactStars
                   count={5}
-                  size={24}
+                  size={15}
                   value={usermovierating.rating / 2}
                   color2={"#ffd700"}
                 />

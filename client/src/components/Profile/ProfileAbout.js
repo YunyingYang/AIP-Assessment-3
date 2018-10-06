@@ -44,7 +44,7 @@ class ProfileAbout extends Component {
               <span className="badge badge-pill badge-dark">
                 <ReactStars
                   count={5}
-                  size={24}
+                  size={15}
                   value={usermovierating.rating / 2}
                   color2={"#ffd700"}
                 />
