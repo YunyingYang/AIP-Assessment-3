@@ -337,9 +337,6 @@ class MovieItemDetail extends Component {
                         </div>
                       </div>
                     </div>
-                    {/* <a href="https://www.google.com" className="btn btn-primary">
-                    read more...
-                  </a> */}
                   </div>
                 </div>
               </div>
@@ -355,16 +352,18 @@ class MovieItemDetail extends Component {
                 <div className="col-md-1" />
                 <div className="col-md-10">
                   {videoKey !== null ? (
-                    <div className="trailer">
-                      <iframe
-                        title="youtube_trailer"
-                        id="ytplayer"
-                        type="text/html"
-                        width="960"
-                        height="540"
-                        src={videoUrl}
-                        frameBorder="0"
-                      />
+                    <div className="trailer auto-resizable-iframe">
+                      <div>
+                        <iframe
+                          title="youtube_trailer"
+                          id="ytplayer"
+                          type="text/html"
+                          width="960"
+                          height="540"
+                          src={videoUrl}
+                          frameBorder="0"
+                        />
+                      </div>
                     </div>
                   ) : (
                     <div className="trailer">
