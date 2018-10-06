@@ -69,7 +69,7 @@ class MovieCardLarge extends Component {
     }
 
     render() {
-        if (!this.state.images || !this.state.rating) {
+        if (!this.state.images) {
             return (<div>Loading...</div>);
         }
 
