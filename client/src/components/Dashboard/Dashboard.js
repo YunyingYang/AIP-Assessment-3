@@ -6,6 +6,7 @@ import { getCurrentProfile } from "../../actions/profileActions";
 import Spinner from "../common/Spinner";
 import axios from "axios";
 import isEmpty from "../../validation/is-empty";
+import ReactStars from "react-stars";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -64,11 +65,13 @@ class Dashboard extends Component {
         dashboardContent = (
           <div className="text-center">
             <p className="lead text-secondary">
-              Welcome,&nbsp;
+              Welcome {this.state.user.name} ,&nbsp;click&nbsp;
               <Link to={`/profile/${profile.handle}`}>
-                <span className="text-dark">{this.state.user.name}</span>
+                <span className="text-info">HERE</span>
               </Link>
+              &nbsp;to view your profile page.
             </p>
+            <br />
             <Link to="/edit-profile" className="btn btn-light">
               <i className="fas fa-user-circle text-dark mr-1" /> Edit Profile
             </Link>
@@ -94,24 +97,33 @@ class Dashboard extends Component {
     }
     const ratings = this.state.usermovieratings.map(
       (usermovierating, index) => (
-        <div key={index} className="p-3 card bg-light mb-3">
-          <button
-            type="button"
-            className="close"
-            onClick={() => this.onClickDelete(usermovierating.movie._id)}
-          >
-            <i className="fa fa-minus-circle" />
-          </button>
-          <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}>
-            <span className="text-muted">
-              &nbsp;
-              {usermovierating.movie.title}
-            </span>
-            <span>&nbsp;</span>
-            <span className="badge badge-pill badge-secondary">
-              {usermovierating.rating}
-            </span>
-          </Link>
+        <div className="col-md-12">
+          <div key={index} className="card p-3 bg-light mb-3 col-md-12 w-100">
+            <button
+              type="button"
+              className="close"
+              onClick={() => this.onClickDelete(usermovierating.movie._id)}
+            >
+              <i className="fa fa-minus-circle" />
+            </button>
+            <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}>
+              <span>&nbsp;&nbsp;&nbsp;</span>
+              <span className="badge badge-pill badge-dark">
+                {/* {usermovierating.rating} */}
+                <ReactStars
+                  count={5}
+                  size={15}
+                  value={usermovierating.rating / 2}
+                  color2={"#ffd700"}
+                />
+              </span>
+              <span>&nbsp;&nbsp;&nbsp;</span>
+              <span className="text-muted">
+                &nbsp;
+                {usermovierating.movie.title}
+              </span>
+            </Link>
+          </div>
         </div>
       )
     );
@@ -128,9 +140,10 @@ class Dashboard extends Component {
               <hr />
               {dashboardContent}
               <hr />
-              <h3 className="text-center text-dark">Manage Your Ratings</h3>
+              <h2 className="text-info">&nbsp;&nbsp;Manage Your Ratings:</h2>
+              <br />
               <div className="row">
-                <div className="d-flex flex-wrap justify-content-center align-items-center">
+                <div className="d-flex flex-wrap justify-content-center align-items-center w-100">
                   {isEmpty(this.state.usermovieratings) ? (
                     <div className="text-dark text-center">
                       &nbsp;
@@ -139,7 +152,7 @@ class Dashboard extends Component {
                       {this.state.user.name} has not rated a movie
                     </div>
                   ) : (
-                    <ul className="list-group">{ratings}</ul>
+                    <ul className="list-group w-100">{ratings}</ul>
                   )}
                 </div>
               </div>

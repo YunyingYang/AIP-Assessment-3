@@ -12,6 +12,7 @@ import {
   saveSingleTmdb
 } from "../../actions/searchActions";
 import isEmpty from "../../validation/is-empty";
+import nopic from "../../images/nopic.jpg";
 
 class MovieItemDetail extends Component {
   constructor(props) {
@@ -155,8 +156,6 @@ class MovieItemDetail extends Component {
   render() {
     const { movie, movieTmdb, videoKey } = this.state;
 
-    // const { errors } = this.state;
-
     const { isAuthenticated } = this.props.auth;
     // const { isAuthenticated, user } = this.props.auth;
 
@@ -184,14 +183,27 @@ class MovieItemDetail extends Component {
       // movieItems = <Spinner />;
     } else {
       if (casts.length > 0) {
-        castImg = casts.map(cast => (
-          <img
-            key={cast.cast_id}
-            src={picBaseUrl + cast.profile_path}
-            alt={cast.name}
-            style={{ width: "140px", height: "195px" }}
-          />
-        ));
+        castImg = casts.map(cast => {
+          if (cast.profile_path === null) {
+            return (
+              <img
+                key={cast.cast_id}
+                src={nopic}
+                alt={cast.name}
+                style={{ width: "140px", height: "195px" }}
+              />
+            );
+          } else {
+            return (
+              <img
+                key={cast.cast_id}
+                src={picBaseUrl + cast.profile_path}
+                alt={cast.name}
+                style={{ width: "140px", height: "195px" }}
+              />
+            );
+          }
+        });
       } else {
         castImg = <h4>No casts found...</h4>;
       }

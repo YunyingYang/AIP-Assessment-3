@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./movieSearch.css";
 import { getMovieItem, getMovieItemTmdb } from "../../actions/searchActions";
+import nopic from "../../images/nopic.jpg";
 
 class MovieItem extends Component {
   constructor(props) {
@@ -51,11 +52,19 @@ class MovieItem extends Component {
           <tbody>
             <tr>
               <th scope="col" style={{ width: "30%" }}>
-                <img
-                  className="card-img pic_size1"
-                  src={picBaseUrl + this.state.tmdbDetail.poster_path}
-                  alt="movie_poster"
-                />
+                {this.state.tmdbDetail.poster_path ? (
+                  <img
+                    className="card-img pic_size1"
+                    src={picBaseUrl + this.state.tmdbDetail.poster_path}
+                    alt="movie_poster"
+                  />
+                ) : (
+                  <img
+                    className="card-img pic_size1"
+                    src={nopic}
+                    alt="movie_poster"
+                  />
+                )}
               </th>
               <th scope="row" style={{ width: "70%" }}>
                 <div className="card-body">
