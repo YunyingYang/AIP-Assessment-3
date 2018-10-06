@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import isEmpty from "../../validation/is-empty";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ReactStars from "react-stars";
 
 class ProfileAbout extends Component {
   constructor(props) {
@@ -26,7 +27,6 @@ class ProfileAbout extends Component {
     // Get first name
     const firstName = profile.user.name.trim().split(" ")[0];
 
-    // Skill List
     const prefs = profile.prefs.map((pref, index) => (
       <div key={index} className="p-3 alert alert-dismissible alert-secondary">
         <i className="fa fa-heart text-danger" /> &nbsp;
@@ -37,22 +37,26 @@ class ProfileAbout extends Component {
 
     const ratings = this.state.usermovieratings.map(
       (usermovierating, index) => (
-        <Link
-          to={`/api/movies/mvdetails/${usermovierating.movie._id}`}
-          key={index}
-        >
-          <li className="p-3 alert alert-dismissible alert-secondary d-flex justify-content-between">
-            <span>
-              <i className="fa fa-eye" />
-              &nbsp;
-              {usermovierating.movie.title}
-            </span>
-            <span>&nbsp;</span>
-            <span className="badge badge-pill badge-dark">
-              {usermovierating.rating}
-            </span>
-          </li>
-        </Link>
+        <div className="col-md-12">
+          <div key={index} className="card p-3 bg-light mb-3 col-md-12 w-100">
+            <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}>
+              <span>&nbsp;&nbsp;&nbsp;</span>
+              <span className="badge badge-pill badge-dark">
+                <ReactStars
+                  count={5}
+                  size={24}
+                  value={usermovierating.rating / 2}
+                  color2={"#ffd700"}
+                />
+              </span>
+              <span>&nbsp;&nbsp;&nbsp;</span>
+              <span className="text-muted">
+                &nbsp;
+                {usermovierating.movie.title}
+              </span>
+            </Link>
+          </div>
+        </div>
       )
     );
 
@@ -79,14 +83,14 @@ class ProfileAbout extends Component {
             <hr />
             <h3 className="text-center text-dark">Tastes</h3>
             <div className="row">
-              <div className="d-flex flex-wrap justify-content-center align-items-center">
+              <div className="d-flex flex-wrap justify-content-center align-items-center w-100">
                 {prefs}
               </div>
             </div>
             <hr />
             <h3 className="text-center text-dark">Ratings</h3>
             <div className="row">
-              <div className="d-flex flex-wrap justify-content-center align-items-center">
+              <div className="d-flex flex-wrap justify-content-center align-items-center w-100">
                 <div className="lead text-secondary">
                   {isEmpty(this.state.usermovieratings) ? (
                     <span>
