@@ -35,47 +35,46 @@ router.get("/mvdetails/:movie_id", (req, res) => {
     );
 });
 
-
 //接UI的 搜索router⬇️ //**让搜索内容加入url, 完成_🐹 **//
 ///api/movies/search
 //写一个find movie的router
 router.post("/search/:search_content/:page", function(req, res) {
+  let searchContent = req.params.search_content.trim();
+  let searchContent1 = searchContent.replace(/\(/gi, "\\(");
+  let searchContent2 = searchContent1.replace(/\)/gi, "\\)");
 
-    let searchContent = req.params.search_content.trim();
-    let searchContent1 = searchContent.replace(/\(/gi, "\\(");
-    let searchContent2 = searchContent1.replace(/\)/gi, "\\)");
+  let itemsPerPage = 10;
+  let currentPage = req.params.page || 1;
+  let numOfResults;
 
-    let itemsPerPage = 10;
-    let currentPage = req.params.page || 1;
-    let numOfResults;
+  Movie.find({ title: { $regex: ".*" + searchContent2 + ".*", $options: "i" } }) // find all movies match keyword
+    .then(function(movies) {
+      if (!movies) {
+        // if no result then return
+        errors.movieSearch = "movie not found";
+        return res.status(404).json(errors);
+      } else {
+        // if has result
 
-    Movie
-        .find({title: {$regex: ".*" + searchContent2 + ".*", $options: "i"}})  // find all movies match keyword
-        .then(function (movies) {
-            if (!movies) {  // if no result then return
-                errors.movieSearch = "movie not found";
-                return res.status(404).json(errors);
-            } else {  // if has result
+        numOfResults = Object.keys(movies).length; // get number of all results
 
-                numOfResults = Object.keys(movies).length;  // get number of all results
-
-                Movie
-                    .find({title: {$regex: ".*" + searchContent2 + ".*", $options: "i"}})  // find all movies match keyword
-                    .skip((itemsPerPage * currentPage) - itemsPerPage)
-                    .limit(itemsPerPage) // only return items for current page
-                    .then(function (movies) {
-                        res.json({
-                            movies: movies,
-                            currentPage: currentPage,
-                            totalPages: Math.ceil(numOfResults / itemsPerPage)
-                        });
-                    })
-            }
-        })
-        .catch(err => res.status(404).json({nomoviesfound: "No movie searched"}))
+        Movie.find({
+          title: { $regex: ".*" + searchContent2 + ".*", $options: "i" }
+        }) // find all movies match keyword
+          .sort([["imdbId", -1]])
+          .skip(itemsPerPage * currentPage - itemsPerPage)
+          .limit(itemsPerPage) // only return items for current page
+          .then(function(movies) {
+            res.json({
+              movies: movies,
+              currentPage: currentPage,
+              totalPages: Math.ceil(numOfResults / itemsPerPage)
+            });
+          });
+      }
+    })
+    .catch(err => res.status(404).json({ nomoviesfound: "No movie searched" }));
 });
-
-
 
 //       .skip((itemsPerPage * currentPage) - itemsPerPage)
 //       .limit(itemsPerPage)
@@ -101,16 +100,6 @@ router.post("/search/:search_content/:page", function(req, res) {
 //     console.log("server -- api -- test --- count value");
 //     console.log(allSearchResults);
 // }
-
-
-
-
-
-
-
-
-
-
 
 //Search suggest router
 //api/movies/suggest
@@ -148,8 +137,6 @@ router.post("/save", (req, res) => {
     .catch(err => console.log(err));
 });
 
-
-
 // @route   GET api/movies
 // @desc    Get movies
 // @access  Public
@@ -159,7 +146,6 @@ router.get("/today", (req, res) => {
     .then(movies => res.json(movies))
     .catch(err => res.status(404).json({ home: "No movies found" }));
 });
-
 
 router.get("/home", (req, res) => {
   Movie.find({ title: { $regex: /(2016)/ } }, { _id: 1, genres: 1, tmdbId: 1 })
