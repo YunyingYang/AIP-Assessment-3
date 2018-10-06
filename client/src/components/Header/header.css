@@ -109,7 +109,7 @@ li.dropdown {
 
 .form-wrapper-2 {
   width: 100%;
-  padding: 4px;
+  padding: 4px 0 0 0;
   background: #555;
   /* -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
