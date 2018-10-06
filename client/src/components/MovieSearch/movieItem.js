@@ -11,17 +11,12 @@ class MovieItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tmdbDetail: {},
-      genre: ""
-      // movie: {}
+      tmdbDetail: {}
     };
-    // this.toggleMovieDetail = this.toggleMovieDetail.bind(this);
-    // this.props.getMovieItem = this.props.getMovieItem.bind(this); //??
   }
 
   componentDidMount() {
     const { movie } = this.props;
-    // this.setState({ movie: movie });
 
     const url = new URL(
       "https://api.themoviedb.org/3/movie/" +
@@ -36,24 +31,11 @@ class MovieItem extends Component {
       .get(url)
       .then(res => {
         this.setState({ tmdbDetail: res.data });
-        this.setState({ genre: res.data.genres[0].name });
       })
-      .catch(err => this.setState(console.log("cannot find from tmdb")));
+      .catch(err => console.log("tmdb api - data missing"));
 
     axios.defaults.headers.common["Authorization"] = authheader;
   }
-
-  // After click link, switch to mv detail page.
-  // toggleMovieDetail() {
-  // const { movie } = this.props;
-  // const movie = this.state.movie;
-  //在里面写action
-  // this.props.getMovieItem(movie, this.props.history); // get from our api
-  //TODO: add if statement here to see if movieState is null.
-  // const movieState = this.props.search.movie;
-  // this.props.getMovieItemTmdb(movie, this.props.history);
-  //   this.props.history.push(`api/movies/mvdetails/${movie._id}`);
-  // }
 
   render() {
     const { movie } = this.props;
@@ -61,6 +43,7 @@ class MovieItem extends Component {
     const picBaseUrl = new URL(
       "http://image.tmdb.org/t/p/w185_and_h278_bestv2/"
     );
+    if (!this.state.tmdbDetail) return <div>Loading...</div>;
 
     return (
       <div className="card w-100 border-warning">
@@ -85,6 +68,7 @@ class MovieItem extends Component {
                     </h5>
                   </Link>
                   <h6 className="text-left text-muted">{movie.genres}</h6>
+                  <br />
                   <h6 className="text-left black">
                     Runtime: {this.state.tmdbDetail.runtime} min
                   </h6>
