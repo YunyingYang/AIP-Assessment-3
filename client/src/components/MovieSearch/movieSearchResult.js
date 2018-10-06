@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {Link, withRouter} from "react-router-dom";
 import PropTypes from "prop-types";
-import axios from "axios";
+// import axios from "axios";
 
 import { getMovies } from "../../actions/searchActions";
 import MovieItem from "./movieItem"; //写一个给每个电影的UI框架
-import ProfileItem from "../Profiles/ProfileItem";
-import Spinner from "../common/Spinner";
-
+// import ProfileItem from "../Profiles/ProfileItem";
+// import Spinner from "../common/Spinner";
 
 class MovieSearchResult extends Component {
   constructor(props) {
@@ -21,11 +20,10 @@ class MovieSearchResult extends Component {
   }
 
   componentDidMount() {
-    // 下面三行用来set redux state
+    // set redux state
     if (this.props.search_content && this.props.page) {
       this.props.getMovies(this.props.search_content, this.props.page);
     }
-
 
     //axios用来获取数据库数据，然后付给this.state
     //这个大概没用，我还没想清楚，先留着 _🐹
@@ -89,7 +87,7 @@ class MovieSearchResult extends Component {
           }
 
           //the last page button >>
-          if (currentPage == totalPages) {
+          if (parseInt(currentPage, 10) === parseInt(totalPages, 10)) {
               lastPage = (
                   <li className="page-item disabled" >
                       <span aria-hidden="true">&raquo;</span>
@@ -107,26 +105,27 @@ class MovieSearchResult extends Component {
               );
           }
 
-          // other pages displayed
+          // previous button ...
           var i = currentPage > 4 ? currentPage - 3 : 1;
           if (i !== 1) {
               previousPages = (
                   <li className="page-item disabled">
-                      <span>prev...</span>
+                      <span>...</span>
                   </li>
               );
           }
-
+          // next button ...
           if (i < totalPages - 6) {
               nextPages = (
                   <li className="page-item disabled">
-                      <span>next...</span>
+                      <span>...</span>
                   </li>
               );
           }
 
-          for (; i <= parseInt(currentPage) + 3 && i <= parseInt(totalPages); i++) {
-            if (i == currentPage) {
+          // other pages displayed
+          for (i; i <= parseInt(currentPage, 10) + 3 && i <= parseInt(totalPages, 10); i++) {
+            if (i === parseInt(currentPage, 10)) {
               pageArray.push(
                   <li className="page-item active" key={i}>
                       <span>{i}</span>
@@ -141,13 +140,6 @@ class MovieSearchResult extends Component {
             }
           }
 
-
-
-
-
-
-
-
           // the whole pagination bar
           pagination = (
               <ul className="pagination text-center justify-content-center">
@@ -160,7 +152,6 @@ class MovieSearchResult extends Component {
           );
       }
 
-
     return (
         <div className="col-md-12 container-fluid">
             {movieItems}
@@ -172,7 +163,6 @@ class MovieSearchResult extends Component {
 }
 
 MovieSearchResult.propTypes = {
-  // logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object,
   getMovies: PropTypes.func
 };

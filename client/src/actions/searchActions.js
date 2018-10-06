@@ -7,8 +7,6 @@ import {
   GET_CURRENTMVTMDB
 } from "./types";
 
-
-//////////////////////////////
 // return search result
 export const getMovies = (searchContent, currentPage) => dispatch => {
   dispatch(setMovieLoading());
@@ -19,20 +17,9 @@ export const getMovies = (searchContent, currentPage) => dispatch => {
         type: POST_SEARCHRESULT,
         payload: res.data
       });
-      console.log("get movies by searching keywords");
     })
     .catch(err => console.log("cannot search"));
 };
-
-
-
-
-
-
-
-
-
-
 
 // Get profile by movie._id
 export const getMovieByMvId = mvId => dispatch => {
@@ -44,7 +31,6 @@ export const getMovieByMvId = mvId => dispatch => {
         type: GET_CURRENTMV,
         payload: res.data
       });
-      console.log("save movie state by get api/movies/mvdetails/:movie_id");
     })
     .catch(err =>
       console.log(

@@ -25,7 +25,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         movies: action.payload.movies,
-          // for pagination
           currentPage: action.payload.currentPage,
           totalPages: action.payload.totalPages
       };
