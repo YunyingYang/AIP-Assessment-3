@@ -25,20 +25,20 @@ module.exports = function validateRegisterInput(data) {
     errors.email = "Email is invalid";
   }
 
-  if (Validator.isEmpty(data.password)) {
-    errors.password = "Password field is required";
-  }
-
-  if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.password = "Password must be at least 6 characters";
-  }
-
   if (
     Validator.isAlpha(data.password) ||
     Validator.isNumeric(data.password) ||
     !Validator.isAlphanumeric(data.password)
   ) {
     errors.password = "Password must be a mix of letters and numbers";
+  }
+
+  if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+    errors.password = "Password must be at least 6 characters";
+  }
+
+  if (Validator.isEmpty(data.password)) {
+    errors.password = "Password field is required";
   }
 
   if (Validator.isEmpty(data.password2)) {
