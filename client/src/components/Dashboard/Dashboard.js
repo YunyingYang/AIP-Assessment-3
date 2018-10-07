@@ -23,7 +23,7 @@ class Dashboard extends Component {
     axios
       .get(`/api/usermovieratings/user/${this.state.user.id}`)
       .then(res => {
-        console.log(res.data);
+        //console.log(res.data);
         this.setState({ usermovieratings: res.data });
       })
       .catch(err => console.log(err));
@@ -33,11 +33,11 @@ class Dashboard extends Component {
     axios
       .delete(`/api/usermovieratings/${id}`)
       .then(res => {
-        console.log(res.data);
+        //console.log(res.data);
         axios
           .get(`/api/usermovieratings/user/${this.state.user.id}`)
           .then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             this.setState({ usermovieratings: res.data });
           })
           .catch(err => console.log(err));
@@ -97,8 +97,8 @@ class Dashboard extends Component {
     }
     const ratings = this.state.usermovieratings.map(
       (usermovierating, index) => (
-        <div className="col-md-12">
-          <div key={index} className="card p-3 bg-light mb-3 col-md-12 w-100">
+        <div key={index} className="col-md-12">
+          <div className="card p-3 bg-light mb-3 col-md-12 w-100">
             <button
               type="button"
               className="close"

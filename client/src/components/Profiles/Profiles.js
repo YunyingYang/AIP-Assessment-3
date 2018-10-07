@@ -8,11 +8,10 @@ import Spinner from "../common/Spinner";
 import ProfileItem from "./ProfileItem";
 
 class Profiles extends Component {
-
   componentDidMount() {
-      if (this.props.page) {
-          this.props.getProfiles(this.props.page);
-      }
+    if (this.props.page) {
+      this.props.getProfiles(this.props.page);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,101 +38,107 @@ class Profiles extends Component {
       }
     }
 
-      // display pagination only if there are more than one page
-      let pagination = null;
+    // display pagination only if there are more than one page
+    let pagination = null;
 
-      if (totalPages > 1) {
-          let currentPage = this.props.page;
-          let firstPage, lastPage, previousPages, nextPages;
-          let pageArray = [];
+    if (totalPages > 1) {
+      let currentPage = this.props.page;
+      let firstPage, lastPage, previousPages, nextPages;
+      let pageArray = [];
 
-          //the first page button <<
-          if (currentPage === "1") {
-              firstPage = (
-                  <li className="page-item disabled" >
-                      <a className="page-link">
-                          <span aria-hidden="true">&laquo;</span>
-                          <span className="sr-only"> First </span>
-                      </a>
-                  </li>
-              );
-          } else {
-              firstPage = (
-                  <li className="page-item">
-                      <a className="page-link" href={"/profiles/1"}>
-                          <span aria-hidden="true">&laquo;</span>
-                          <span className="sr-only"> First </span>
-                      </a>
-                  </li>
-              );
-          }
-          //the last page button >>
-          if (parseInt(currentPage, 10) === parseInt(totalPages, 10)) {
-              lastPage = (
-                  <li className="page-item disabled" >
-                      <a className="page-link">
-                          <span aria-hidden="true">&raquo;</span>
-                          <span className="sr-only"> Last </span>
-                      </a>
-                  </li>
-              );
-          } else {
-              lastPage = (
-                  <li className="page-item">
-                      <a className="page-link" href={`/profiles/${totalPages}`}>
-                          <span aria-hidden="true">&raquo;</span>
-                          <span className="sr-only"> Last </span>
-                      </a>
-                  </li>
-              );
-          }
-
-          // previous button ...
-          var i = currentPage > 4 ? currentPage - 3 : 1;
-          if (i !== 1) {
-              previousPages = (
-                  <li className="page-item disabled">
-                      <a className="page-link">...</a>
-                  </li>
-              );
-          }
-          // next button ...
-          if (i < totalPages - 6) {
-              nextPages = (
-                  <li className="page-item disabled">
-                      <a className="page-link">...</a>
-                  </li>
-              );
-          }
-
-          // other pages displayed
-          for (i; i <= parseInt(currentPage, 10) + 3 && i <= parseInt(totalPages, 10); i++) {
-              if (i === parseInt(currentPage, 10)) {
-                  pageArray.push(
-                      <li className="page-item active" key={i}>
-                          <a className="page-link">{i}</a>
-                      </li>
-                  );
-              } else {
-                  pageArray.push(
-                      <li className="page-item" key={i}>
-                          <a className="page-link" href={`/profiles/${i}`}>{i}</a>
-                      </li>
-                  );
-              }
-          }
-
-          // the whole pagination bar
-          pagination = (
-              <ul className="pagination text-center justify-content-center">
-                  {firstPage}
-                  {previousPages}
-                  {pageArray}
-                  {nextPages}
-                  {lastPage}
-              </ul>
-          );
+      //the first page button <<
+      if (currentPage === "1") {
+        firstPage = (
+          <li className="page-item disabled">
+            <a className="page-link text-dark">
+              <span aria-hidden="true">&laquo;</span>
+              <span className="sr-only"> First </span>
+            </a>
+          </li>
+        );
+      } else {
+        firstPage = (
+          <li className="page-item">
+            <a className="page-link text-dark" href={"/profiles/1"}>
+              <span aria-hidden="true">&laquo;</span>
+              <span className="sr-only"> First </span>
+            </a>
+          </li>
+        );
       }
+      //the last page button >>
+      if (parseInt(currentPage, 10) === parseInt(totalPages, 10)) {
+        lastPage = (
+          <li className="page-item disabled">
+            <a className="page-link text-dark">
+              <span aria-hidden="true">&raquo;</span>
+              <span className="sr-only"> Last </span>
+            </a>
+          </li>
+        );
+      } else {
+        lastPage = (
+          <li className="page-item">
+            <a className="page-link text-dark" href={`/profiles/${totalPages}`}>
+              <span aria-hidden="true">&raquo;</span>
+              <span className="sr-only"> Last </span>
+            </a>
+          </li>
+        );
+      }
+
+      // previous button ...
+      var i = currentPage > 4 ? currentPage - 3 : 1;
+      if (i !== 1) {
+        previousPages = (
+          <li className="page-item disabled">
+            <a className="page-link text-dark">...</a>
+          </li>
+        );
+      }
+      // next button ...
+      if (i < totalPages - 6) {
+        nextPages = (
+          <li className="page-item disabled">
+            <a className="page-link text-dark">...</a>
+          </li>
+        );
+      }
+
+      // other pages displayed
+      for (
+        i;
+        i <= parseInt(currentPage, 10) + 3 && i <= parseInt(totalPages, 10);
+        i++
+      ) {
+        if (i === parseInt(currentPage, 10)) {
+          pageArray.push(
+            <li className="page-item active" key={i}>
+              <a className="page-link text-dark">{i}</a>
+            </li>
+          );
+        } else {
+          pageArray.push(
+            <li className="page-item" key={i}>
+              <a className="page-link text-dark" href={`/profiles/${i}`}>
+                {i}
+              </a>
+            </li>
+          );
+        }
+      }
+
+      // the whole pagination bar
+      pagination = (
+        <ul className="pagination text-center justify-content-center">
+          {firstPage}
+          {previousPages}
+          {pageArray}
+          {nextPages}
+          {lastPage}
+        </ul>
+      );
+    }
 
     return (
       <div className="profiles">

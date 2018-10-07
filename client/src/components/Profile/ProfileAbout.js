@@ -37,8 +37,8 @@ class ProfileAbout extends Component {
 
     const ratings = this.state.usermovieratings.map(
       (usermovierating, index) => (
-        <div className="col-md-12">
-          <div key={index} className="card p-3 bg-light mb-3 col-md-12 w-100">
+        <div key={index} className="col-md-12">
+          <div className="card p-3 bg-light mb-3 col-md-12 w-100">
             <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}>
               <span>&nbsp;&nbsp;&nbsp;</span>
               <span className="badge badge-pill badge-dark">

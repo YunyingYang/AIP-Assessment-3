@@ -4,6 +4,7 @@ import Carousel from "./Carousel";
 import MovieCardLarge from "./MovieCardLarge";
 import MovieCardMedium from "./MovieCardMedium";
 import MovieCardSmall from "./MovieCardSmall";
+import Spinner from "../common/Spinner";
 
 class Home extends Component {
   constructor() {
@@ -23,12 +24,13 @@ class Home extends Component {
         let selected = shuffled.slice(0, 13);
         this.setState({ movies: selected });
       })
-      .catch(err => console.log("Homepage - mongoDB error: cannot find movies"));
+      .catch(err =>
+        console.log("Homepage - mongoDB error: cannot find movies")
+      );
   }
 
   render() {
-    if (!this.state.movies[0])
-        return <div>Loading...</div>;
+    if (!this.state.movies[0]) return <Spinner />;
 
     return (
       <div>
