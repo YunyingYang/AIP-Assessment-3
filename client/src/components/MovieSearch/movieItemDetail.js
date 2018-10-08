@@ -44,7 +44,7 @@ class MovieItemDetail extends Component {
         this.setState({ ratings: res.data });
       })
       .catch(err => {
-        console.log("cannot get movie ratings");
+        console.log("this user has not rated any movies");
       });
 
     axios
@@ -56,7 +56,7 @@ class MovieItemDetail extends Component {
         this.getTmdbData_cast(res.data);
       })
       .catch(err => {
-        console.log("cannot get movie by get api/movies/mvdetails/:movie_id");
+        console.log("this movie do not exist in database");
       });
 
     axios
@@ -64,7 +64,7 @@ class MovieItemDetail extends Component {
       .then(res => {
         this.setState({ rating: res.data.rating });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log("this user has not rated any movies"));
 
     getMovieItemTmdb(this.state.movie);
   }
@@ -87,11 +87,10 @@ class MovieItemDetail extends Component {
     axios
       .get(url)
       .then(res => {
-        console.log(res.data);
         this.setState({ movieTmdb: res.data });
         this.props.saveSingleTmdb(res.data);
       })
-      .catch(err => this.setState(console.log("cannot find from tmdb")));
+      .catch(err => this.setState(console.log("Tmdb error: tmdb database does not have this movie")));
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
@@ -107,11 +106,10 @@ class MovieItemDetail extends Component {
     axios
       .get(url)
       .then(res => {
-        console.log(res.data);
         this.setState({ videoKey: res.data.results[0].key });
         // this.props.saveSingleTmdb(res.data);
       })
-      .catch(err => this.setState(console.log("cannot find from tmdb")));
+      .catch(err => console.log("cannot find from tmdb"));
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
@@ -127,7 +125,6 @@ class MovieItemDetail extends Component {
     axios
       .get(url)
       .then(res => {
-        console.log(res.data);
         this.setState({ casts: res.data.cast });
         // this.props.saveSingleTmdb(res.data);
       })
