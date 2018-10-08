@@ -110,16 +110,6 @@ li.dropdown {
 .form-wrapper-2 {
   width: 100%;
   padding: 4px 0 0 0;
-  background: #555;
-  /* -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4) inset,
-    0 1px 0 rgba(255, 255, 255, 0.2);
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4) inset,
-    0 1px 0 rgba(255, 255, 255, 0.2);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4) inset,
-    0 1px 0 rgba(255, 255, 255, 0.2); */
 }
 
 .form-wrapper-2 input {
@@ -159,7 +149,6 @@ li.dropdown {
 .search-icon {
   padding: 0.2rem 0.2rem;
   width: 2rem;
-  /* height: 30px; */
 }
 
 .form-wrapper-2 button {
@@ -174,10 +163,6 @@ li.dropdown {
   font: bold 15px/40px "Raleway", sans-serif;
   color: #fff;
   text-transform: uppercase;
-  /* -moz-border-radius: 0 3px 3px 0;
-  -webkit-border-radius: 0 3px 3px 0;
-  border-radius: 0 3px 3px 0;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3); */
 }
 .form-wrapper-2 button:hover {
   background: #fa8807;

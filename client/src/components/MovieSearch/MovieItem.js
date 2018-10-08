@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import axios from "axios";
-// import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import "./movieSearch.css";
+import axios from "axios";
+
 import { getMovieItem, getMovieItemTmdb } from "../../actions/searchActions";
+import "./MovieSearch.css";
 import defaultImage from "../../images/cat-small.png";
 
 class MovieItem extends Component {
@@ -24,7 +24,6 @@ class MovieItem extends Component {
         movie.tmdbId +
         "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
     );
-    // To prevent the Authorization fighting with tmdb api, delete it before axios get.
     const authheader = axios.defaults.headers.common["Authorization"] || null;
     delete axios.defaults.headers.common["Authorization"];
 
@@ -33,14 +32,13 @@ class MovieItem extends Component {
       .then(res => {
         this.setState({ tmdbDetail: res.data });
       })
-      .catch(err => console.log("tmdb api - data missing"));
+      .catch(err => console.log("Error: tmdb database does not contain details of this movie"));
 
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
   render() {
     const { movie } = this.props;
-
     const picBaseUrl = new URL(
       "http://image.tmdb.org/t/p/w185_and_h278_bestv2/"
     );
@@ -105,7 +103,6 @@ MovieItem.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  // auth: state.auth
   search: state.search
 });
 

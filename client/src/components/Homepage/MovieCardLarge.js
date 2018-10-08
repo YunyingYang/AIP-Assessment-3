@@ -48,7 +48,7 @@ class MovieCardLarge extends Component {
                 this.setState({ overview: res.data.overview });
                 this.setState({ rating: parseFloat(res.data.vote_average) });
             })
-            .catch(err => console.log("Large card - tmdb error: cannot get movie details"));
+            .catch(err => console.log("Error: tmdb database does not contain details of this movie"));
 
         // get movie stills from fanart.tv api
         const fanartUrl = new URL(
@@ -62,7 +62,7 @@ class MovieCardLarge extends Component {
             .then(res => {
                 this.setState({ images: res.data.moviebackground[0] });
             })
-            .catch(err => console.log("Large card - fanart error: cannot get movie stills"));
+            .catch(err => console.log("Error: movie stills do not exist in Fanart database, will display a default image instead"));
 
         // add authentication back
         axios.defaults.headers.common["Authorization"] = authheader;

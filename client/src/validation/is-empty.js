@@ -3,6 +3,6 @@ const isEmpty = value =>
     value === null ||
     (typeof value === "object" && Object.keys(value).length === 0) ||
     (typeof value === "string" && value.trim().length === 0) ||
-    (Array.isArray(value) && value.length === 0);//to see if value is an empty array
+    (Array.isArray(value) && value.length === 0);
 
 export default isEmpty;

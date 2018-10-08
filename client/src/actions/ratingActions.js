@@ -6,7 +6,6 @@ import {
     RATING_LOADING,
     CLEAR_CURRENT_RATING,
     GET_ERRORS,
-    SET_CURRENT_USER
 } from './types';
 
 // Get current rating
@@ -40,7 +39,6 @@ export const createRating = (userRatingData, history) => dispatch => {
             })
         );
 };
-
 
 // Get all ratings
 export const getRatings = () => dispatch => {

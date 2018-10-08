@@ -1,21 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
-const passport = require("passport");
 
-// Movie model
 const Movie = require("../../models/Movie");
-
-// @route   GET api/movies
-// @desc    Get movies
-// @access  Public
-// For test！！！ 用这个得到目前movies里所有电影（并用时间排序）
-router.get("/", (req, res) => {
-  Movie.find()
-    .sort({ date: -1 })
-    .then(movies => res.json(movies))
-    .catch(err => res.status(404).json({ nomoviesfound: "No movies found" }));
-});
 
 // @route   GET api/movies/mvdetails/:movie_id
 // @desc    Get movies
@@ -25,19 +11,19 @@ router.get("/mvdetails/:movie_id", (req, res) => {
   Movie.findById(req.params.movie_id)
     .then(movie => {
       if (!movie) {
-        errors.noMovie = "There is no movie for this movie_id";
+        errors.noMovie = "Error: this movie id does not exist in database";
         res.status(404).json(errors);
       }
       res.json(movie);
     })
     .catch(err =>
-      res.status(404).json({ movieSearch: "There is no movie for this user" })
+      res.status(404).json({ nomoviesfound: "This movie id does not exist in database" })
     );
 });
 
-//接UI的 搜索router⬇️ //**让搜索内容加入url, 完成_🐹 **//
-///api/movies/search
-//写一个find movie的router
+// @route   GET api/movies/search/:search_content/:page
+// @desc    Get movies
+// @access  Public
 router.post("/search/:search_content/:page", function(req, res) {
   let searchContent = req.params.search_content.trim();
   let searchContent1 = searchContent.replace(/\(/gi, "\\(");
@@ -47,22 +33,20 @@ router.post("/search/:search_content/:page", function(req, res) {
   let currentPage = req.params.page || 1;
   let numOfResults;
 
-  Movie.find({ title: { $regex: ".*" + searchContent2 + ".*", $options: "i" } }) // find all movies match keyword
+  // find all movies match the search keyword
+  Movie.find({ title: { $regex: ".*" + searchContent2 + ".*", $options: "i" } })
     .then(function(movies) {
       if (!movies) {
-        // if no result then return
         errors.movieSearch = "movie not found";
         return res.status(404).json(errors);
       } else {
-        // if has result
-        numOfResults = Object.keys(movies).length; // get number of all results
-
-        Movie.find({
-          title: { $regex: ".*" + searchContent2 + ".*", $options: "i" }
-        }) // find all movies match keyword
+        numOfResults = Object.keys(movies).length;
+        // sort search result and only return items displayed on current page
+        Movie
+          .find({ title: { $regex: ".*" + searchContent2 + ".*", $options: "i" } })
           .sort([["imdbId", -1]])
           .skip(itemsPerPage * currentPage - itemsPerPage)
-          .limit(itemsPerPage) // only return items for current page
+          .limit(itemsPerPage)
           .then(function(movies) {
             res.json({
               movies: movies,
@@ -72,12 +56,12 @@ router.post("/search/:search_content/:page", function(req, res) {
           });
       }
     })
-    .catch(err => res.status(404).json({ nomoviesfound: "No movie searched" }));
+    .catch(err => res.status(404).json({ nomoviesfound: "There are no movies that matched the query" }));
 });
 
-//Search suggest router
-//api/movies/suggest
-//Public
+// @route   POST api/movies/suggest
+// @desc    Search suggest router
+// @access  Public
 router.post("/suggest", (req, res) => {
   const searchContent = req.body.searchContent.trim();
   Movie.find({
@@ -87,43 +71,21 @@ router.post("/suggest", (req, res) => {
     .limit(10)
     .then(movie => {
       if (!movie) {
-        errors.movieSuggest = "movie not found";
+        errors.movieSuggest = "There are no movies that matched the query";
         return res.status(404).json(errors);
       }
       res.json(movie);
     })
-    .catch(err => res.status(404).json({ nomoviesfound: "No movie found" }));
+    .catch(err => res.status(404).json({ nomoviesfound: "There are no movies that matched the query" }));
 });
 
-// just for test !!!
-// post存一个看看collection叫啥:叫movies
-// 这个post测试用，注意title是必输项
-router.post("/save", (req, res) => {
-  const newMovie = new Movie({
-    movie_title: req.body.title,
-    title_year: req.body.year
-  });
-
-  newMovie
-    .save()
-    .then(movie => res.json(movie))
-    .catch(err => console.log(err));
-});
-
-// @route   GET api/movies
-// @desc    Get movies
+// @route   POST api/movies/home
+// @desc    Get movies to display on homepage
 // @access  Public
-// test - randomly get 13 movies from db
-router.get("/today", (req, res) => {
-  Movie.aggregate([{ $sample: { size: 13 } }])
-    .then(movies => res.json(movies))
-    .catch(err => res.status(404).json({ home: "No movies found" }));
-});
-
 router.get("/home", (req, res) => {
   Movie.find({ title: { $regex: /(2016)/ } }, { _id: 1, genres: 1, tmdbId: 1 })
     .then(movies => res.json(movies))
-    .catch(err => res.status(404).json({ home: "No movies found" }));
+    .catch(err => res.status(404).json({ nomoviesfound: "No movies found" }));
 });
 
 module.exports = router;

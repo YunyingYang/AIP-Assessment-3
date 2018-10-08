@@ -2,18 +2,8 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-// Load Validation
 const validateProfileInput = require("../../validation/profile");
-
-// Load Profile Model
 const Profile = require("../../models/Profile");
-// Load User Model
-const User = require("../../models/User");
-
-// @route   GET api/profile/test
-// @desc    Tests profile route
-// @access  Public
-router.get("/test", (req, res) => res.json({ msg: "Profile Works" }));
 
 // @route   GET api/profile
 // @desc    Get current users profile
@@ -40,9 +30,8 @@ router.get(
 // @route   GET api/profile/profiles/:page
 // @desc    Get all profiles by page info
 // @access  Public
-
 router.get("/profiles/:pages", function(req, res) {
-  var itemsPerPage = 2;
+  var itemsPerPage = 5;
   var currentPage = req.params.pages || 1;
 
   Profile.find()
@@ -63,7 +52,6 @@ router.get("/profiles/:pages", function(req, res) {
 // @route   GET api/profile/handle/:handle
 // @desc    Get profile by handle
 // @access  Public
-
 router.get("/handle/:handle", (req, res) => {
   const errors = {};
 
@@ -74,7 +62,6 @@ router.get("/handle/:handle", (req, res) => {
         errors.noprofile = "There is no profile for this user";
         res.status(404).json(errors);
       }
-
       res.json(profile);
     })
     .catch(err => res.status(404).json(err));
@@ -83,7 +70,6 @@ router.get("/handle/:handle", (req, res) => {
 // @route   GET api/profile/user/:user_id
 // @desc    Get profile by user ID
 // @access  Public
-
 router.get("/user/:user_id", (req, res) => {
   const errors = {};
 
@@ -110,15 +96,12 @@ router.post(
   (req, res) => {
     const { errors, isValid } = validateProfileInput(req.body);
 
-    // Check Validation
-    if (!isValid) {
-      // Return any errors with 400 status
-      return res.status(400).json(errors);
-    }
+    if (!isValid)
+        return res.status(400).json(errors);
 
     // Get fields
     const profileFields = {};
-    profileFields.user = req.user.id; //这行可以用电影的id
+    profileFields.user = req.user.id;
     if (req.body.handle) profileFields.handle = req.body.handle;
     if (req.body.location) profileFields.location = req.body.location;
     if (req.body.bio) profileFields.bio = req.body.bio;
@@ -134,16 +117,12 @@ router.post(
           { new: true }
         ).then(profile => res.json(profile));
       } else {
-        // Create
-
         // Check if handle exists
         Profile.findOne({ handle: profileFields.handle }).then(profile => {
           if (profile) {
             errors.handle = "That handle already exists";
             res.status(400).json(errors);
           }
-
-          // Save Profile
           new Profile(profileFields).save().then(profile => res.json(profile));
         });
       }

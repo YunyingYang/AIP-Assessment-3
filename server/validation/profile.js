@@ -1,5 +1,5 @@
 const Validator = require('validator');
-const isEmpty = require('./is-empty');
+const isEmpty = require('./isempty');
 
 module.exports = function validateProfileInput(data) {
   let errors = {};
@@ -7,17 +7,14 @@ module.exports = function validateProfileInput(data) {
   data.handle = !isEmpty(data.handle) ? data.handle : '';
   data.status = !isEmpty(data.status) ? data.status : '';
 
-  if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
+  if (!Validator.isLength(data.handle, { min: 2, max: 40 }))
     errors.handle = 'Handle needs to between 2 and 4 characters';
-  }
 
-  if (Validator.isEmpty(data.handle)) {
+  if (Validator.isEmpty(data.handle))
     errors.handle = 'Profile handle is required';
-  }
 
-  if (Validator.isEmpty(data.status)) {
+  if (Validator.isEmpty(data.status))
     errors.status = 'Status field is required';
-  }
 
   return {
     errors,

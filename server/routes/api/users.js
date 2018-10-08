@@ -1,22 +1,17 @@
 const express = require("express");
-const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const keys = require("../../config/keys");
 const passport = require("passport");
 
-// Load Input Validation
+const keys = require("../../config/keys");
+const confirmation = require("../../utils/Confirmation");
+
+const router = express.Router();
+
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
-
-// Load User model
 const User = require("../../models/User");
-
-// @route   GET api/users/test
-// @desc    Tests users route
-// @access  Public
-router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
 
 // @route   GET api/users/register
 // @desc    Register user
@@ -24,10 +19,8 @@ router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
-  // Check Validation
-  if (!isValid) {
+  if (!isValid)
     return res.status(400).json(errors);
-  }
 
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
@@ -47,13 +40,21 @@ router.post("/register", (req, res) => {
         password: req.body.password
       });
 
+      let userData = {};
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
           newUser.password = hash;
           newUser
             .save()
-            .then(user => res.json(user))
+            .then(user => {
+              res.json(user);
+              userData = {
+                id: user._id,
+                email: user.email
+              };
+              confirmation(userData);
+            })
             .catch(err => console.log(err));
         });
       });
@@ -67,17 +68,14 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
 
-  // Check Validation
-  if (!isValid) {
+  if (!isValid)
     return res.status(400).json(errors);
-  }
 
   const email = req.body.email;
   const password = req.body.password;
 
   // Find user by email
   User.findOne({ email }).then(user => {
-    // Check for user
     if (!user) {
       errors.email = "User not found";
       return res.status(404).json(errors);
@@ -87,20 +85,25 @@ router.post("/login", (req, res) => {
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // User Matched
-        const payload = { id: user.id, name: user.name, avatar: user.avatar }; // Create JWT Payload
-
-        // Sign Token
-        jwt.sign(
-          payload,
-          keys.secretOrKey,
-          { expiresIn: 3600 },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token
-            });
+        // check if user email has been confirmed
+          if(user.confirmation === true) {
+              const payload = { id: user.id, name: user.name, avatar: user.avatar };
+              // Sign Token
+              jwt.sign(
+                  payload,
+                  keys.secretOrKey,
+                  { expiresIn: 3600 },
+                  (err, token) => {
+                      res.json({
+                          success: true,
+                          token: "Bearer " + token
+                      });
+                  }
+              );
+          } else {
+              errors.confirmation = 'Please confirm your email';
+              return res.status(400).json(errors);
           }
-        );
       } else {
         errors.password = "Password incorrect";
         return res.status(400).json(errors);
@@ -123,5 +126,37 @@ router.get(
     });
   }
 );
+
+//  @route  GET api/users/email/confirmation/:token
+//  @desc   Confirm user email
+//  @access Private
+router.get('/confirmation/:token',
+    (req, res) => {
+        jwt.verify(
+            req.params.token,
+            keys.secretOrKey,
+            (err, user) => {
+                if (err) return next(err);
+                User.findOne({_id: user.id})
+                    .then(user =>
+                    {
+                        if(user){
+                            User.findOneAndUpdate(
+                                    {_id: user.id},
+                                    {confirmation: true }
+                                )
+                                .catch(err => console.log("cannot find registed user"));
+
+                            /////////////////////////
+                            /// @ mayumi 改这里 ⬇️ ///
+                            /////////////////////////
+
+                            // res.redirect('https://doreamon.herokuapp.com/');
+                            res.redirect("http://localhost:3000/");
+                        }
+                    })
+                    .catch(err => res.status(400).json('errors'))
+            });
+    });
 
 module.exports = router;

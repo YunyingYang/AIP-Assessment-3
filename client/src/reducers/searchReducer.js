@@ -10,8 +10,8 @@ const initialState = {
   movieTmdb: null,
   movies: null,
   loading: false,
-    currentPage: null,
-    totalPages: null
+  currentPage: null,
+  totalPages: null
 };
 
 export default function(state = initialState, action) {
@@ -25,8 +25,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         movies: action.payload.movies,
-          currentPage: action.payload.currentPage,
-          totalPages: action.payload.totalPages
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages
       };
     case GET_CURRENTMV:
       return {

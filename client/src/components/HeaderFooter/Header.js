@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-
-import "./header.css";
-import icon from "../../images/icon.png";
-import search from "../../images/search.png";
+import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import axios from "axios";
+
 import { logoutUser } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
 import { getMovies } from "../../actions/searchActions";
-import axios from "axios";
+
+import "./Header.css";
+import icon from "../../images/icon.png";
+import search from "../../images/search.png";
 
 class Header extends Component {
   constructor(props) {
@@ -21,8 +22,8 @@ class Header extends Component {
       searchContent: "",
       suggests: []
     };
-    this.onSubmit = this.onSubmit.bind(this); //！
-    this.onChange = this.onChange.bind(this); //！
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.onLogoutClick = this.onLogoutClick.bind(this);
     this.onClickTitle = this.onClickTitle.bind(this);
     this.onFocusOut = this.onFocusOut.bind(this);
@@ -87,9 +88,6 @@ class Header extends Component {
   }
 
   onFocusOut(e) {
-    // this.setState({
-    //   suggests: []
-    // });
     setTimeout(
       function() {
         //Start the timer
@@ -98,12 +96,9 @@ class Header extends Component {
       400
     );
   }
-  //抄过来的还没改完
+
   onSubmit(e) {
     e.preventDefault();
-    // const newSearch = {
-    //   searchContent: this.state.searchContent //movie title keyword
-    // };
     const newSearch = this.state.searchContent;
 
     this.setState({
@@ -111,15 +106,6 @@ class Header extends Component {
     });
 
     this.props.history.push(`/api/movies/search/${newSearch}`);
-
-    // this.props.getMovies(newSearch);
-    // axios
-    //   .post("/api/movies/search", newSearch)
-    //   .then(res => {
-    //     console.log(res.data);
-    //     this.props.history.push("/mvsearchresult");
-    //   })
-    //   .catch(err => this.setState(console.log("cannot search")));
   }
 
   render() {
@@ -212,7 +198,6 @@ class Header extends Component {
             </Link>
           </li>
           <li className="search-box nav-item dropdown">
-            {/* <form className="form-wrapper-2 cf" method="GET" action="api/search"> */}
             <form
               className="form-wrapper-2 cf form-inline my-2 my-lg-0"
               onSubmit={this.onSubmit}

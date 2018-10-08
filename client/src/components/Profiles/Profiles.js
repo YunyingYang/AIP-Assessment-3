@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { getProfiles } from "../../actions/profileActions";
-import Spinner from "../common/Spinner";
+import Spinner from "../Common/Spinner";
 import ProfileItem from "./ProfileItem";
 
 class Profiles extends Component {
@@ -16,7 +16,7 @@ class Profiles extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.profile.profiles === null && this.props.profile.loading) {
-      this.props.history.push("/not-found");
+      this.props.history.push("/Not-found");
     }
   }
 

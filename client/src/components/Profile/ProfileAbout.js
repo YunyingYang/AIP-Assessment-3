@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import isEmpty from "../../validation/is-empty";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ReactStars from "react-stars";
+import isEmpty from "../../validation/is-empty";
 
 class ProfileAbout extends Component {
   constructor(props) {

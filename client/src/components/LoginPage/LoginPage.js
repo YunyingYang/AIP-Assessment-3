@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import { Link } from "react-router-dom";
+
 import cross from "../../images/cross.png";
-import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 
 class LoginPage extends Component {
@@ -74,15 +75,12 @@ class LoginPage extends Component {
             <div className="col-md-8 m-auto">
               <br />
               <h1 className="display-4 text-center">User Login</h1>
-              {/* <p className = "lead text-center">
-                                Log in with your Filmtopia account!
-                            </p> */}
               <form noValidate onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
                     type="email"
                     className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.email
+                      "is-invalid": errors.email || errors.confirmation
                     })}
                     placeholder="Email Address"
                     name="email"
@@ -92,6 +90,9 @@ class LoginPage extends Component {
                   />
                   {errors.email && (
                     <div className="invalid-feedback">{errors.email}</div>
+                  )}
+                  {errors.confirmation && (
+                        <div className="invalid-feedback">{errors.confirmation}</div>
                   )}
                 </div>
                 <div className="form-group">

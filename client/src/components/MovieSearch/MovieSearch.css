@@ -15,17 +15,7 @@
 }
 
 .trailer {
-  /*position: relative;*/
-  /*!*top: 30px;*!*/
-  /*!*left: 30px;*!*/
-  /*margin-top: auto;*/
-  /*margin-bottom: auto;*/
-
   position: relative;
-  /* left: 3%;
-  top: 7%; */
-  /* left: 50%; */
-  /* margin: 0 0 0 +450px; */
 }
 
 .widthControl {

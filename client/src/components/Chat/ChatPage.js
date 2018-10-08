@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import io from "socket.io-client";
-
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
+import io from "socket.io-client";
 import axios from "axios";
 
 import "./ChatPage.css";
@@ -39,16 +37,12 @@ class ChatPage extends Component {
         author: this.state.username,
         message: this.state.message
       });
-      // var div = document.getElementsByClassName("messages");
-      // div.scrollTop = div.scrollHeight;
       const messageData = {
         text: this.state.message
       };
-      //console.log(messageData);
       axios
         .post("/api/chats", messageData)
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err));
+        .catch(err => console.log("Chat error: http request failed"));
       this.setState({ message: "" });
     };
   }
@@ -113,8 +107,6 @@ class ChatPage extends Component {
                     className="form-horizontal form-inline"
                     onSubmit={this.sendMessage}
                   >
-                    {/* <input type="text" placeholder="Username" value={this.state.username} onChange={ev => this.setState({ username: ev.target.value })} className="form-control" />
-                                <br /> */}
                     <div className="form-group col-md-12 col-lg-13 m-auto form-inline">
                       <input
                         type="text"

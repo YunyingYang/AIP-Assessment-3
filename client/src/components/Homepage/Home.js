@@ -4,7 +4,7 @@ import Carousel from "./Carousel";
 import MovieCardLarge from "./MovieCardLarge";
 import MovieCardMedium from "./MovieCardMedium";
 import MovieCardSmall from "./MovieCardSmall";
-import Spinner from "../common/Spinner";
+import Spinner from "../Common/Spinner";
 
 class Home extends Component {
   constructor() {
@@ -30,7 +30,8 @@ class Home extends Component {
   }
 
   render() {
-    if (!this.state.movies[0]) return <Spinner />;
+    if (!this.state.movies[0])
+        return <Spinner />;
 
     return (
       <div>

@@ -1,39 +1,32 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/authActions";
-import { clearCurrentProfile } from "./actions/profileActions";
-import store from "./store";
-import PrivateRoute from "./components/auth/PrivateRoute";
 
-import Header from "./components/Header/header";
-import Footer from "./components/Homepage/Footer";
+import store from "./store";
+import setAuthToken from "./utils/setAuthToken";
+import { clearCurrentProfile } from "./actions/profileActions";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+import PrivateRoute from "./components/Auth/PrivateRoute";
+
+import Header from "./components/HeaderFooter/Header";
+import Footer from "./components/HeaderFooter/Footer";
 import ChatPage from "./components/Chat/ChatPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
 import Dashboard from "./components/Dashboard/Dashboard";
-import MovieSearch from "./components/MovieSearch/movieSearchResult";
-import MovieItemDetail from "./components/MovieSearch/movieItemDetail";
-
+import MovieSearch from "./components/MovieSearch/MovieSearchResult";
+import MovieItemDetail from "./components/MovieSearch/MovieItemDetail";
 import CreateProfile from "./components/EditProfile/CreateProfile";
 import EditProfile from "./components/EditProfile/EditProfile";
 import Profiles from "./components/Profiles/Profiles";
 import Profile from "./components/Profile/Profile";
-
 import Home from "./components/Homepage/Home";
-
-import NotFound from "./components/not-found/NotFound";
+import NotFound from "./components/Not-found/NotFound";
 
 // Check the token
 if (localStorage.jwtToken) {
-  // set auth header token
+  // set Auth header token
   setAuthToken(localStorage.jwtToken);
   // Decode token to retrieve user info and expiration
   const decoded = jwt_decode(localStorage.jwtToken);
@@ -65,11 +58,8 @@ class App extends Component {
                 <Route exact path="/signup" component={RegisterPage} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
-
-
-
-                  <Route
-                      exact
+                <Route
+                  exact
                   path="/api/movies/search/:search_content"
                   render={props => (
                     <Redirect
@@ -80,7 +70,6 @@ class App extends Component {
                     />
                   )}
                 />
-
 
                 <Route
                   exact
@@ -96,31 +85,11 @@ class App extends Component {
                   )}
                 />
 
+                <Route exact path="/api/movies/mvdetails/:movie_id" component={MovieItemDetail}/>
+                <PrivateRoute exact path="/edit-profile" component={EditProfile}/>
+                <PrivateRoute exact path="/create-profile" component={CreateProfile}/>
+                <Route exact path="/profiles" render={() => <Redirect to="/profiles/1" />}/>
 
-
-                <Route
-                  exact
-                  path="/api/movies/mvdetails/:movie_id"
-                  component={MovieItemDetail}
-                />
-                <PrivateRoute
-                  exact
-                  path="/edit-profile"
-                  component={EditProfile}
-                />
-                <PrivateRoute
-                  exact
-                  path="/create-profile"
-                  component={CreateProfile}
-                />
-
-                {/* test */}
-                {/* <Route exact path="/profiles" component={Profiles} /> */}
-                <Route
-                  exact
-                  path="/profiles"
-                  render={() => <Redirect to="/profiles/1" />}
-                />
                 <Route
                   exact
                   path="/profiles/:page"
@@ -133,11 +102,7 @@ class App extends Component {
                 />
 
                 <Route exact path="/profile/:handle" component={Profile} />
-                <Route
-                  exact
-                  path="/profile/user/:user_id"
-                  component={Profile}
-                />
+                <Route exact path="/profile/user/:user_id" component={Profile}/>
                 <Route exact path="/not-found" component={NotFound} />
                 <Route component={NotFound} />
               </Switch>

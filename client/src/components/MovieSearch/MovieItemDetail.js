@@ -1,17 +1,13 @@
 import React, { Component } from "react";
-import axios from "axios";
-// import { Router, Route, Switch, Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import ReactStars from "react-stars";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import "./movieSearch.css";
-import {
-  getMovieByMvId,
-  getMovieItemTmdb,
-  saveSingleTmdb
-} from "../../actions/searchActions";
+import axios from "axios";
+
+import { getMovieByMvId, getMovieItemTmdb, saveSingleTmdb } from "../../actions/searchActions";
 import isEmpty from "../../validation/is-empty";
+import "./MovieSearch.css";
 import nopic from "../../images/nopic.jpg";
 
 class MovieItemDetail extends Component {
@@ -81,7 +77,6 @@ class MovieItemDetail extends Component {
         movie.tmdbId +
         "?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
     );
-    // To prevent the Authorization fighting with tmdb api, delete it before axios get.
     const authheader = axios.defaults.headers.common["Authorization"] || null;
     delete axios.defaults.headers.common["Authorization"];
     axios
@@ -90,7 +85,7 @@ class MovieItemDetail extends Component {
         this.setState({ movieTmdb: res.data });
         this.props.saveSingleTmdb(res.data);
       })
-      .catch(err => this.setState(console.log("Tmdb error: tmdb database does not have this movie")));
+      .catch(err => this.setState(console.log("Error: this movie does not exist in tmdb database")));
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
@@ -100,16 +95,14 @@ class MovieItemDetail extends Component {
         movie.tmdbId +
         "/videos?api_key=9ff347d908a575c777ebecebe3fdcf6b&language=en-US"
     );
-    // To prevent the Authorization fighting with tmdb api, delete it before axios get.
     const authheader = axios.defaults.headers.common["Authorization"] || null;
     delete axios.defaults.headers.common["Authorization"];
     axios
       .get(url)
       .then(res => {
         this.setState({ videoKey: res.data.results[0].key });
-        // this.props.saveSingleTmdb(res.data);
       })
-      .catch(err => console.log("cannot find from tmdb"));
+      .catch(err => console.log("Error: tmdb database does not contain details of this movie"));
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
@@ -119,16 +112,14 @@ class MovieItemDetail extends Component {
         movie.tmdbId +
         "/credits?api_key=9ff347d908a575c777ebecebe3fdcf6b"
     );
-    // To prevent the Authorization fighting with tmdb api, delete it before axios get.
     const authheader = axios.defaults.headers.common["Authorization"] || null;
     delete axios.defaults.headers.common["Authorization"];
     axios
       .get(url)
       .then(res => {
         this.setState({ casts: res.data.cast });
-        // this.props.saveSingleTmdb(res.data);
       })
-      .catch(err => this.setState(console.log("cannot find from tmdb")));
+      .catch(err => this.setState(console.log("Error: tmdb database does not contain details of this movie")));
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
@@ -152,13 +143,8 @@ class MovieItemDetail extends Component {
 
   render() {
     const { movie, movieTmdb, videoKey } = this.state;
-
     const { isAuthenticated } = this.props.auth;
-    // const { isAuthenticated, user } = this.props.auth;
-
-    const picBaseUrl = new URL(
-      "http://image.tmdb.org/t/p/w185_and_h278_bestv2/"
-    );
+    const picBaseUrl = new URL( "http://image.tmdb.org/t/p/w185_and_h278_bestv2/" );
 
     var videoUrl = 0;
     if (videoKey !== null) {
@@ -175,10 +161,7 @@ class MovieItemDetail extends Component {
     let castImg;
     let castName;
 
-    if (casts === null) {
-      //删了||loading
-      // movieItems = <Spinner />;
-    } else {
+    if (casts !== null) {
       if (casts.length > 0) {
         castImg = casts.map(cast => {
           if (cast.profile_path === null) {
@@ -206,10 +189,7 @@ class MovieItemDetail extends Component {
       }
     }
 
-    if (casts === null) {
-      //删了||loading
-      // movieItems = <Spinner />;
-    } else {
+    if (casts !== null) {
       if (casts.length > 0) {
         castName = casts.map(cast => <h6 key={cast.cast_id}>{cast.name} </h6>);
       } else {
@@ -253,7 +233,6 @@ class MovieItemDetail extends Component {
     return (
       <div className="container">
         <div className="row">
-          {/* 第一个card */}
           <div className="col-md-12">
             <div className="card col-md-12 p-3">
               <div className="row">
@@ -263,10 +242,6 @@ class MovieItemDetail extends Component {
                     src={picBaseUrl + movieTmdb.poster_path}
                     alt="movie poster"
                   />
-                  {/* <img
-                  className="w-100"
-                  src="https://via.placeholder.com/350x350"
-                /> */}
                 </div>
                 <div className="col-md-8">
                   <div className="card-block">
@@ -298,11 +273,9 @@ class MovieItemDetail extends Component {
             </div>
             <br />
           </div>
-          {/* 第2个card */}
           <div className="col-md-12">
             <div className="card col-md-12 p-3">
               <h5 className="card-header">- About Casts -</h5>
-
               <div className="row">
                 <div className="col-md-12">
                   <div className="card-block">
@@ -352,7 +325,6 @@ class MovieItemDetail extends Component {
             </div>
             <br />
           </div>
-          {/* 第3个card */}
           <div className="col-md-12">
             <div className="card col-md-12 p-3">
               <h5 className="card-header">- Trailer -</h5>
@@ -386,11 +358,9 @@ class MovieItemDetail extends Component {
             </div>
             <br />
           </div>
-          {/* 第4个card */}
           <div className="col-md-12">
             <div className="card col-md-12 p-3">
               <h5 className="card-header">- Users' rating -</h5>
-
               <div className="row">
                 <div className="col-md-12">
                   <div className="card-block">
@@ -436,7 +406,6 @@ MovieItemDetail.propTypes = {
   movie: PropTypes.object,
   movieTmdb: PropTypes.object,
   loading: PropTypes.object,
-  // search: PropTypes.object.isRequired,
   getMovieByMvId: PropTypes.func.isRequired,
   getMovieItemTmdb: PropTypes.func,
   saveSingleTmdb: PropTypes.func

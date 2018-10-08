@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import { withRouter, Link } from "react-router-dom";
-import cross from "../../images/cross.png";
-import { connect } from "react-redux";
+
 import { registerUser } from "../../actions/authActions";
+import cross from "../../images/cross.png";
 
 class RegisterPage extends Component {
   constructor() {
@@ -48,10 +49,6 @@ class RegisterPage extends Component {
     };
 
     this.props.registerUser(newUser, this.props.history);
-
-    // axios.post('/api/users/register', newUser)
-    //     .then(res => console.log(res.data))
-    //     .catch(err => this.setState({ errors: err.response.data }));
   }
 
   render() {
@@ -106,11 +103,6 @@ class RegisterPage extends Component {
                     name="email"
                     required
                   />
-
-                  {/* <small className="form-text text-muted">
-                                        This site uses Gravatar so if you want a
-                                        profile image, use a Gravatar email
-                                    </small> */}
                   {errors.email && (
                     <div className="invalid-feedback">{errors.email}</div>
                   )}

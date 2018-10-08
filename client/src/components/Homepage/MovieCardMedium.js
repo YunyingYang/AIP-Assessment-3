@@ -34,7 +34,7 @@ class MovieCardMedium extends Component {
                 this.setState({ title: res.data.title });
                 this.setState({ rating: parseFloat(res.data.vote_average) });
             })
-            .catch(err => console.log("Medium card: tmdb err"));
+            .catch(err => console.log("Error: tmdb database does not contain details of this movie"));
 
         // get movie stills from fanart.tv api
         const fanartUrl = "https://webservice.fanart.tv/v3/movies/"
@@ -47,9 +47,8 @@ class MovieCardMedium extends Component {
                 this.setState({ images: res.data.moviebackground[0] });
                 // console.log(this.state.images);
             })
-            .catch(err => console.log("Medium card: fanart err"));
+            .catch(err => console.log("Error: movie stills do not exist in Fanart database, will display a default image instead"));
 
-        // add authentication back
         axios.defaults.headers.common["Authorization"] = authheader;
     }
 

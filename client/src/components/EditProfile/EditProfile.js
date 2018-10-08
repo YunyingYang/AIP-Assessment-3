@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import TextFieldGroup from "../common/TextFieldGroup";
-import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-//import InputGroup from '../common/InputGroup';
-import SelectListGroup from "../common/SelectListGroup";
+import { Checkbox } from "antd";
+
+import TextFieldGroup from "../Common/TextFieldGroup";
+import TextAreaFieldGroup from "../Common/TextAreaFieldGroup";
+import SelectListGroup from "../Common/SelectListGroup";
 import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 import isEmpty from "../../validation/is-empty";
-import "./EditProfile.css";
-import { Checkbox } from "antd";
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -40,9 +39,6 @@ class CreateProfile extends Component {
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
 
-      //   // Bring skills array back to CSV
-      //   const skillsCSV = profile.skills.join(',');
-
       // If profile field doesnt exist, make empty string
       profile.location = !isEmpty(profile.location) ? profile.location : "";
       profile.bio = !isEmpty(profile.bio) ? profile.bio : "";
@@ -52,7 +48,6 @@ class CreateProfile extends Component {
         handle: profile.handle,
         location: profile.location,
         status: profile.status,
-        //skills: skillsCSV,
         bio: profile.bio,
         prefs: profile.prefs
       });
@@ -174,33 +169,6 @@ class CreateProfile extends Component {
                     onChange={this.onCheckChange}
                   />
                 </div>
-
-                {/*checkbox-style button group*/}
-                {/*先丢在这好了=。= 晚点研究一下*/}
-                {/*按下btn以后setstate 把相应的value放进prefs数组里*/}
-                {/* <div
-                  className="btn-group"
-                  role="group"
-                  data-toggle="buttons"
-                  aria-label="preference"
-                >
-                  <button className="btn btn-outline-secondary btn-sm">
-                    aaaaa
-                  </button>
-                  <button className="btn btn-outline-secondary btn-sm">
-                    bbbbb
-                  </button>
-                  <button className="btn btn-outline-secondary btn-sm">
-                    ccccc
-                  </button>
-                  <button className="btn btn-outline-secondary btn-sm">
-                    ddddd
-                  </button>
-                  <button className="btn btn-outline-secondary btn-sm">
-                    eeeee
-                  </button>
-                </div> */}
-
                 <input
                   type="submit"
                   value="Submit"

@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentProfile } from "../../actions/profileActions";
-import Spinner from "../common/Spinner";
-import axios from "axios";
-import isEmpty from "../../validation/is-empty";
 import ReactStars from "react-stars";
+import axios from "axios";
+
+import { getCurrentProfile } from "../../actions/profileActions";
+import Spinner from "../Common/Spinner";
+import isEmpty from "../../validation/is-empty";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Dashboard extends Component {
       usermovieratings: [],
       user: this.props.auth.user
     };
-    this.onClickDelete = this.onClickDelete.bind(this); //！
+    this.onClickDelete = this.onClickDelete.bind(this);
   }
 
   componentDidMount() {
@@ -23,7 +24,6 @@ class Dashboard extends Component {
     axios
       .get(`/api/usermovieratings/user/${this.state.user.id}`)
       .then(res => {
-        //console.log(res.data);
         this.setState({ usermovieratings: res.data });
       })
       .catch(err => console.log(err));
@@ -33,28 +33,18 @@ class Dashboard extends Component {
     axios
       .delete(`/api/usermovieratings/${id}`)
       .then(res => {
-        //console.log(res.data);
         axios
           .get(`/api/usermovieratings/user/${this.state.user.id}`)
           .then(res => {
-            //console.log(res.data);
             this.setState({ usermovieratings: res.data });
           })
           .catch(err => console.log(err));
-        // var ratingArray = this.state.usermovieratings;
-        // var removeIndex = ratingArray.map(function (rating) { return rating.id; })
-        //     .indexOf(id);
-        // ratingArray.splice(removeIndex, 1);
-        // this.setState({ usermovieratings: ratingArray })
-        //TODO:删除页面上的条目或者rerender？
       })
       .catch(err => this.setState(console.log("cannot delete")));
   }
 
   render() {
-    //const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
-
     let dashboardContent;
 
     if (profile === null || loading) {
@@ -149,7 +139,7 @@ class Dashboard extends Component {
                       &nbsp;
                       <i className="fa fa-frown text-dark" />
                       &nbsp;&nbsp;
-                      {this.state.user.name} has not rated a movie
+                      {this.state.user.name} has not rated any movie
                     </div>
                   ) : (
                     <ul className="list-group w-100">{ratings}</ul>

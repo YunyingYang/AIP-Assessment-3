@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import TextFieldGroup from "../common/TextFieldGroup";
-import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-// import InputGroup from '../common/InputGroup';
-import SelectListGroup from "../common/SelectListGroup";
-import { createProfile } from "../../actions/profileActions";
 import { Checkbox } from "antd";
-import "./EditProfile.css";
-//import CheckBoxGroup from '../common/CheckBoxGroup';
+
+import TextFieldGroup from "../Common/TextFieldGroup";
+import TextAreaFieldGroup from "../Common/TextAreaFieldGroup";
+import SelectListGroup from "../Common/SelectListGroup";
+import { createProfile } from "../../actions/profileActions";
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -36,7 +34,6 @@ class CreateProfile extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-
     const profileData = {
       handle: this.state.handle,
       location: this.state.location,
@@ -44,7 +41,6 @@ class CreateProfile extends Component {
       bio: this.state.bio,
       prefs: this.state.prefs
     };
-
     this.props.createProfile(profileData, this.props.history);
   }
 
@@ -53,9 +49,7 @@ class CreateProfile extends Component {
   }
 
   onCheckChange(checkedValues) {
-    console.log("checked = ", checkedValues);
     this.setState({ prefs: checkedValues });
-    console.log(this.state.prefs);
   }
 
   render() {
@@ -139,41 +133,11 @@ class CreateProfile extends Component {
                   info="Tell us a little about yourself"
                 />
                 <div className="checkboxes">
-                  {/* <Checkbox.Group
-                    style={{ width: "100%" }}
-                    onChange={this.onCheckChange}
-                    defaultValue={this.state.prefs}
-                  >
-                    <Row>
-                      <Checkbox value="Drama">Drama</Checkbox>
-                      <Col span={4}>
-                        <Checkbox value="Romance">Romance</Checkbox>
-                      </Col>
-                      <Col span={4}>
-                        <Checkbox value="Mucical">Mucical</Checkbox>
-                      </Col>
-                      <Col span={4}>
-                        <Checkbox value="Comedy">Comedy</Checkbox>
-                      </Col>
-                      <Col span={4}>
-                        <Checkbox value="Sci-Fi">Sci-Fi</Checkbox>
-                      </Col>
-                    </Row>
-                  </Checkbox.Group> */}
-
                   <Checkbox.Group
                     options={prefsOptions}
                     onChange={this.onCheckChange}
                   />
                 </div>
-                {/* <CheckBoxGroup
-                                    placeholder="Prefs"
-                                    name="status"
-                                    value={this.state.prefs}
-                                    onChange={this.onCheckChange}
-                                    options={prefsOptions}
-                                    error={errors.status}
-                                    info="Tell us what kind of movies do you like" /> */}
                 <br />
                 <input
                   type="submit"

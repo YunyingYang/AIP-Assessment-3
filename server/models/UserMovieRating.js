@@ -11,10 +11,6 @@ const UserMovieRatingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "movies"
     },
-    // movie: {
-    //     type: String,
-    //     required: true
-    // },
     rating: {
         type: Number,
         required: true,
