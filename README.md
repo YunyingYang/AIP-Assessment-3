@@ -3,6 +3,7 @@
 ### <font color=#0099ff>About</font>
 
 Filmtopia is a web app which helps users to discover new films and people with shared interests.
+
 Users can search for films, create a taste profile and discover interesting people.
  
 Created for AIP assessment 3 | Inspired by Amazon and [Douban Movie](https://movie.douban.com/)
@@ -59,7 +60,7 @@ All movie stills used are from Fanart.tv API.
 
 Libraries and other resources used for this project are listed as below:
 
-#### &emsp;&emsp;&emsp;<font color=#0099ff>Libraries/API:</font>
+#### <font color=#0099ff>Libraries/API:</font>
 
 - [Ant Design](https://ant.design/)
 - [bcryptjs](https://www.npmjs.com/package/bcryptjs)
@@ -74,7 +75,7 @@ Libraries and other resources used for this project are listed as below:
 - [validator](https://www.npmjs.com/package/validator)
 
 
-#### &emsp;&emsp;&emsp;<font color=#0099ff>Online courses:</font>
+#### <font color=#0099ff>Online courses:</font>
 
 - [Udamy - React 16 - The Complete Guide](https://www.udemy.com/react-the-complete-guide-incl-redux/)
 - [Udamy - MERN Stack Front To Back: Full Stack React, Redux & Node.js](https://www.udemy.com/mern-stack-front-to-back/)
