@@ -18,7 +18,12 @@ class ChatPage extends Component {
       messages: []
     };
 
-    this.socket = io("localhost:5000");
+    if (process.env.NODE_ENV === "production") {
+      var HOST = window.location.origin.replace(/^http/, "ws");
+      this.socket = io(HOST);
+    } else {
+      this.socket = io("localhost:5000");
+    }
 
     this.socket.on("RECEIVE_MESSAGE", function(data) {
       addMessage(data);
@@ -39,7 +44,7 @@ class ChatPage extends Component {
       const messageData = {
         text: this.state.message
       };
-      console.log(messageData);
+      //console.log(messageData);
       axios
         .post("/api/chats", messageData)
         .then(res => console.log(res.data))
