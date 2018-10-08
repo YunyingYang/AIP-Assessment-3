@@ -80,7 +80,6 @@ class Header extends Component {
   }
 
   onClickTitle(e) {
-    console.log(e.target.getAttribute("value"));
     this.setState({
       searchContent: e.target.getAttribute("value"),
       suggests: []

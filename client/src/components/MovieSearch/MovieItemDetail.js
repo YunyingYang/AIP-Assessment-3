@@ -137,7 +137,6 @@ class MovieItemDetail extends Component {
     };
     axios
       .post("/api/usermovieratings", userRatingData)
-      .then(res => console.log(res.data))
       .catch(err => console.log(err));
   }
 

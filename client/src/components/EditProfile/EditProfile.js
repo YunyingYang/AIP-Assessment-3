@@ -73,9 +73,7 @@ class CreateProfile extends Component {
   }
 
   onCheckChange(checkedValues) {
-    console.log("checked = ", checkedValues);
     this.setState({ prefs: checkedValues });
-    console.log(this.state.prefs);
   }
 
   render() {
