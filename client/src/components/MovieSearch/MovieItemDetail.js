@@ -13,6 +13,7 @@ import {
 import isEmpty from "../../validation/is-empty";
 import "./MovieSearch.css";
 import nopic from "../../images/nopic.jpg";
+import defaultImage from "../../images/cat-small.png";
 
 class MovieItemDetail extends Component {
   constructor(props) {
@@ -62,9 +63,13 @@ class MovieItemDetail extends Component {
     axios
       .get(`/api/usermovieratings/${this.props.match.params.movie_id}`)
       .then(res => {
-          this.setState({ rating: res.data.rating });
+        this.setState({ rating: res.data.rating });
       })
-      .catch(err => console.log("No rating record: no user has rated this movie, \"Rating for this movie:\" field will be displayed as empty"));
+      .catch(err =>
+        console.log(
+          'No rating record: no user has rated this movie, "Rating for this movie:" field will be displayed as empty'
+        )
+      );
 
     getMovieItemTmdb(this.state.movie);
   }
@@ -259,11 +264,19 @@ class MovieItemDetail extends Component {
             <div className="card col-md-12 p-3">
               <div className="row">
                 <div className="col-md-4">
-                  <img
-                    className="card-img pic_size2 w-100"
-                    src={picBaseUrl + movieTmdb.poster_path}
-                    alt="movie poster"
-                  />
+                  {movieTmdb.poster_path ? (
+                    <img
+                      className="card-img pic_size2 w-100"
+                      src={picBaseUrl + movieTmdb.poster_path}
+                      alt="movie poster"
+                    />
+                  ) : (
+                    <img
+                      className="card-img pic_size2 w-100"
+                      src={defaultImage}
+                      alt="movie poster"
+                    />
+                  )}
                 </div>
                 <div className="col-md-8">
                   <div className="card-block">
