@@ -39,17 +39,22 @@ class RegisterPage extends Component {
   }
 
   onSubmit(e) {
-    e.preventDefault();
+      e.preventDefault();
 
-    const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2
-    };
+      const newUser = {
+          name: this.state.name,
+          email: this.state.email,
+          password: this.state.password,
+          password2: this.state.password2
+      };
 
-    this.props.registerUser(newUser, this.props.history);
+      this.props.registerUser(newUser, this.props.history);
+
+      if (this.state.password === this.state.password2) {
+          alert("Please verify your email address");
+      }
   }
+
 
   render() {
     const { errors } = this.state;

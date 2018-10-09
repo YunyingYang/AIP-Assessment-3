@@ -60,7 +60,7 @@ class MovieItemDetail extends Component {
       .then(res => {
         this.setState({ rating: res.data.rating });
       })
-      .catch(err => console.log("this user has not rated any movies"));
+      .catch(err => console.log("No rating record: no user has rated this movie, \"Rating for this movie:\" field will be displayed as 0"));
 
     getMovieItemTmdb(this.state.movie);
   }
