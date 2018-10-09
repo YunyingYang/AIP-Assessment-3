@@ -43,7 +43,7 @@ class MovieCardSmall extends Component {
             <div className="card" style={style}>
                 {/* redirect to movie details page */}
                 <Link to={`/api/movies/mvdetails/${this.props.movie._id}`} >
-                    {this.state.poster ? (
+                    {typeof this.state.poster === "string" ? (
                         <img
                             className="card-img-top"
                             src={imgUrl}
