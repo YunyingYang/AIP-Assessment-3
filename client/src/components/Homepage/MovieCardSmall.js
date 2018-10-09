@@ -31,7 +31,7 @@ class MovieCardSmall extends Component {
             .then(res => {
                 this.setState({ poster: res.data.poster_path });
             })
-            .catch(err => console.log("Error: tmdb database does not contain details of this movie"));
+            .catch(err => console.log("Tmdb error: tmdb database does not contain details of this movie"));
 
         axios.defaults.headers.common["Authorization"] = authheader;
     }

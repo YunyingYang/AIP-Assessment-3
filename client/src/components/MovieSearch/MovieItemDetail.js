@@ -62,9 +62,9 @@ class MovieItemDetail extends Component {
     axios
       .get(`/api/usermovieratings/${this.props.match.params.movie_id}`)
       .then(res => {
-        this.setState({ rating: res.data.rating });
+          this.setState({ rating: res.data.rating });
       })
-      .catch(err => console.log("No rating record: no user has rated this movie, \"Rating for this movie:\" field will be displayed as 0"));
+      .catch(err => console.log("No rating record: no user has rated this movie, \"Rating for this movie:\" field will be displayed as empty"));
 
     getMovieItemTmdb(this.state.movie);
   }
@@ -91,7 +91,7 @@ class MovieItemDetail extends Component {
       })
       .catch(err =>
         this.setState(
-          console.log("Error: this movie does not exist in tmdb database")
+          console.log("Tmdb error: this movie does not exist in tmdb database")
         )
       );
     axios.defaults.headers.common["Authorization"] = authheader;
@@ -112,7 +112,7 @@ class MovieItemDetail extends Component {
       })
       .catch(err =>
         console.log(
-          "Error: tmdb database does not contain details of this movie"
+          "Tmdb error: tmdb database does not contain details of this movie"
         )
       );
     axios.defaults.headers.common["Authorization"] = authheader;
@@ -134,7 +134,7 @@ class MovieItemDetail extends Component {
       .catch(err =>
         this.setState(
           console.log(
-            "Error: tmdb database does not contain details of this movie"
+            "Tmdb error: tmdb database does not contain details of this movie"
           )
         )
       );
