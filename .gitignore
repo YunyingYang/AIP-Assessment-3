@@ -1,4 +1,16 @@
 # dependencies
+/node_modules
+
+# webstorm
+/.idea
+
+# mongo db link and secret
+/config/keys_dev.js
+
+#
+package-lock.json
+
+# dependencies
 /client/node_modules
 /server/node_modules
 

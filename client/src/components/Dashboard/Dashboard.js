@@ -99,12 +99,12 @@ class Dashboard extends Component {
             <Link to={`/api/movies/mvdetails/${usermovierating.movie._id}`}>
               <span>&nbsp;&nbsp;&nbsp;</span>
               <span className="badge badge-pill badge-dark">
-                {/* {usermovierating.rating} */}
                 <ReactStars
                   count={5}
                   size={15}
                   value={usermovierating.rating / 2}
                   color2={"#ffd700"}
+                  edit={false}
                 />
               </span>
               <span>&nbsp;&nbsp;&nbsp;</span>

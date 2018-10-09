@@ -47,6 +47,7 @@ class ProfileAbout extends Component {
                   size={15}
                   value={usermovierating.rating / 2}
                   color2={"#ffd700"}
+                  edit={false}
                 />
               </span>
               <span>&nbsp;&nbsp;&nbsp;</span>

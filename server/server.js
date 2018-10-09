@@ -41,13 +41,14 @@ app.use("/api/chats", chats);
 app.use("/api/usermovieratings", usermovieratings);
 
 // set server static assets for production version
-if (process.env.NODE_ENV === 'production') {
-    // set static folder
-    app.use(express.static('../client/build'));
-    app.get('*', (req, res) => {
-      //resolve a sequence of paths or path segments into an absolute path
-      res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'));
-    });
+if (process.env.NODE_ENV === "production") {
+  // set static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    //path.resolve(): resolves a sequence of paths or path segments into an absolute path
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
 }
 
 const port = process.env.PORT || 5000;
@@ -58,8 +59,8 @@ var server = app.listen(port, () =>
 
 // socket.io config
 io.attach(server);
-io.on("connection", function (socket) {
-  socket.on("SEND_MESSAGE", function (data) {
+io.on("connection", function(socket) {
+  socket.on("SEND_MESSAGE", function(data) {
     io.emit("RECEIVE_MESSAGE", data);
   });
 });
