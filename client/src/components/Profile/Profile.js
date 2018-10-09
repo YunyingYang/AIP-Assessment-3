@@ -5,7 +5,10 @@ import { Link } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 import ProfileAbout from "./ProfileAbout";
 import Spinner from "../Common/Spinner";
-import { getProfileByHandle, getProfileByUserId } from "../../actions/profileActions";
+import {
+  getProfileByHandle,
+  getProfileByUserId
+} from "../../actions/profileActions";
 
 class Profile extends Component {
   componentDidMount() {
@@ -47,7 +50,7 @@ class Profile extends Component {
               <Link to="/profiles" className="btn btn-light mb-3 float-left">
                 Back To Profiles
               </Link>
-              {isAuthenticated && user.id === profile.user._id
+              {isAuthenticated && profile.user && user.id === profile.user._id
                 ? editYourProfile
                 : null}
             </div>
