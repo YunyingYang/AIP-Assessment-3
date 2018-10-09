@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
-import defaultImage from "../../images/noimagefound-dog.png";
+import defaultImage from "../../images/dog-small.png";
 
 const style = {
     width: '180px',
@@ -43,7 +43,7 @@ class MovieCardSmall extends Component {
             <div className="card" style={style}>
                 {/* redirect to movie details page */}
                 <Link to={`/api/movies/mvdetails/${this.props.movie._id}`} >
-                    {imgUrl ? (
+                    {this.state.poster ? (
                         <img
                             className="card-img-top"
                             src={imgUrl}

@@ -19,7 +19,7 @@ class ProfileAbout extends Component {
       .then(res => {
         this.setState({ usermovieratings: res.data });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log("This user has not rated movie"));
   }
 
   render() {

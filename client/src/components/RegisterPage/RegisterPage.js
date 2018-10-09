@@ -49,10 +49,6 @@ class RegisterPage extends Component {
       };
 
       this.props.registerUser(newUser, this.props.history);
-
-      if (this.state.password === this.state.password2) {
-          alert("Please verify your email address");
-      }
   }
 
 

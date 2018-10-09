@@ -26,7 +26,7 @@ class Dashboard extends Component {
       .then(res => {
         this.setState({ usermovieratings: res.data });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log("This user has not created a profile"));
   }
 
   onClickDelete(id) {
@@ -38,9 +38,9 @@ class Dashboard extends Component {
           .then(res => {
             this.setState({ usermovieratings: res.data });
           })
-          .catch(err => console.log(err));
+          .catch(err => console.log("Error: cannot delete user rating"));
       })
-      .catch(err => this.setState(console.log("cannot delete")));
+      .catch(err => this.setState(console.log("Error: cannot delete user rating")));
   }
 
   render() {
