@@ -19,6 +19,7 @@ class Header extends Component {
       homeActive: false,
       discoverActive: false,
       chatActive: false,
+      activeIndex: -1,
       searchContent: "",
       suggests: []
     };
@@ -27,6 +28,8 @@ class Header extends Component {
     this.onLogoutClick = this.onLogoutClick.bind(this);
     this.onClickTitle = this.onClickTitle.bind(this);
     this.onFocusOut = this.onFocusOut.bind(this);
+    this.onInputKeyDown = this.onInputKeyDown.bind(this);
+    this.onMouseOver = this.onMouseOver.bind(this);
   }
 
   componentDidMount() {
@@ -96,12 +99,48 @@ class Header extends Component {
     );
   }
 
+  onInputKeyDown(e) {
+    if (e.which === 40) {
+      var activeIndexPlus = this.state.activeIndex + 1;
+      if (activeIndexPlus < this.state.suggests.length) {
+        this.setState({ activeIndex: activeIndexPlus });
+      } else {
+        this.setState({ activeIndex: this.state.suggests.length - 1 });
+      }
+    } else if (e.which === 38) {
+      var activeIndexMinus = this.state.activeIndex - 1;
+      if (activeIndexMinus < -1) {
+        activeIndexMinus = -1;
+      }
+      this.setState({ activeIndex: activeIndexMinus });
+    }
+  }
+
+  onMouseOver(e) {
+    let indexStr = e.target.getAttribute("name");
+    let index = parseInt(indexStr, 10);
+    this.setState({ activeIndex: index });
+  }
+
   onSubmit(e) {
     e.preventDefault();
-    const newSearch = this.state.searchContent;
+    let newSearch = this.state.searchContent;
+    if (
+      this.state.activeIndex >= 0 &&
+      this.state.activeIndex < this.state.suggests.length
+    ) {
+      this.setState({
+        searchContent: this.state.suggests[this.state.activeIndex].title
+      });
+      newSearch = this.state.suggests[this.state.activeIndex].title;
+    }
+    // else {
+    //   newSearch = this.state.searchContent;
+    // }
 
     this.setState({
-      suggests: []
+      suggests: [],
+      activeIndex: -1
     });
 
     this.props.history.push(`/api/movies/search/${newSearch}`);
@@ -114,12 +153,16 @@ class Header extends Component {
       <li
         className="dropdown-item list-item-group"
         key={index}
+        name={index}
         onClick={this.onClickTitle}
+        onMouseOver={this.onMouseOver}
         value={suggest.title}
         style={{
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
-          overflow: "hidden"
+          overflow: "hidden",
+          background:
+            index === this.state.activeIndex ? "rgb(231, 206, 95)" : null
         }}
       >
         {suggest.title}
@@ -210,6 +253,7 @@ class Header extends Component {
                 value={this.state.searchContent}
                 onChange={this.onChange}
                 onBlur={this.onFocusOut}
+                onKeyDown={this.onInputKeyDown}
               />
               {this.state.searchContent.length > 1 &&
               this.state.suggests.length > 0 ? (

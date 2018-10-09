@@ -5,7 +5,11 @@ import ReactStars from "react-stars";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-import { getMovieByMvId, getMovieItemTmdb, saveSingleTmdb } from "../../actions/searchActions";
+import {
+  getMovieByMvId,
+  getMovieItemTmdb,
+  saveSingleTmdb
+} from "../../actions/searchActions";
 import isEmpty from "../../validation/is-empty";
 import "./MovieSearch.css";
 import nopic from "../../images/nopic.jpg";
@@ -85,7 +89,11 @@ class MovieItemDetail extends Component {
         this.setState({ movieTmdb: res.data });
         this.props.saveSingleTmdb(res.data);
       })
-      .catch(err => this.setState(console.log("Error: this movie does not exist in tmdb database")));
+      .catch(err =>
+        this.setState(
+          console.log("Error: this movie does not exist in tmdb database")
+        )
+      );
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
@@ -102,7 +110,11 @@ class MovieItemDetail extends Component {
       .then(res => {
         this.setState({ videoKey: res.data.results[0].key });
       })
-      .catch(err => console.log("Error: tmdb database does not contain details of this movie"));
+      .catch(err =>
+        console.log(
+          "Error: tmdb database does not contain details of this movie"
+        )
+      );
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
@@ -119,7 +131,13 @@ class MovieItemDetail extends Component {
       .then(res => {
         this.setState({ casts: res.data.cast });
       })
-      .catch(err => this.setState(console.log("Error: tmdb database does not contain details of this movie")));
+      .catch(err =>
+        this.setState(
+          console.log(
+            "Error: tmdb database does not contain details of this movie"
+          )
+        )
+      );
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
@@ -143,7 +161,9 @@ class MovieItemDetail extends Component {
   render() {
     const { movie, movieTmdb, videoKey } = this.state;
     const { isAuthenticated } = this.props.auth;
-    const picBaseUrl = new URL( "http://image.tmdb.org/t/p/w185_and_h278_bestv2/" );
+    const picBaseUrl = new URL(
+      "http://image.tmdb.org/t/p/w185_and_h278_bestv2/"
+    );
 
     var videoUrl = 0;
     if (videoKey !== null) {
@@ -207,6 +227,9 @@ class MovieItemDetail extends Component {
           value={this.state.rating / 2}
           color2={"#ffd700"}
         />
+        {this.state.rating !== 0 ? (
+          <p className="text-left text-muted">You rated this movie</p>
+        ) : null}
       </div>
     );
 

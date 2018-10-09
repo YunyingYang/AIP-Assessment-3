@@ -37,8 +37,7 @@ router.post(
     const { errors, isValid } = validateChatInput(req.body);
 
     // Check Validation
-    if (!isValid)
-      return res.status(400).json(errors);
+    if (!isValid) return res.status(400).json(errors);
     // Get fields
     const chatFields = {};
     chatFields.user = req.user.id;

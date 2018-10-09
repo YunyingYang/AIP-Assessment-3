@@ -17,7 +17,9 @@ router.get("/mvdetails/:movie_id", (req, res) => {
       res.json(movie);
     })
     .catch(err =>
-      res.status(404).json({ nomoviesfound: "This movie id does not exist in database" })
+      res
+        .status(404)
+        .json({ nomoviesfound: "This movie id does not exist in database" })
     );
 });
 
@@ -42,8 +44,9 @@ router.post("/search/:search_content/:page", function(req, res) {
       } else {
         numOfResults = Object.keys(movies).length;
         // sort search result and only return items displayed on current page
-        Movie
-          .find({ title: { $regex: ".*" + searchContent2 + ".*", $options: "i" } })
+        Movie.find({
+          title: { $regex: ".*" + searchContent2 + ".*", $options: "i" }
+        })
           .sort([["imdbId", -1]])
           .skip(itemsPerPage * currentPage - itemsPerPage)
           .limit(itemsPerPage)
@@ -56,7 +59,11 @@ router.post("/search/:search_content/:page", function(req, res) {
           });
       }
     })
-    .catch(err => res.status(404).json({ nomoviesfound: "There are no movies that matched the query" }));
+    .catch(err =>
+      res
+        .status(404)
+        .json({ nomoviesfound: "There are no movies that matched the query" })
+    );
 });
 
 // @route   POST api/movies/suggest
@@ -65,7 +72,7 @@ router.post("/search/:search_content/:page", function(req, res) {
 router.post("/suggest", (req, res) => {
   const searchContent = req.body.searchContent.trim();
   Movie.find({
-    title: { $regex: searchContent + ".*", $options: "i" }
+    title: { $regex: "^" + searchContent + ".*", $options: "i" }
   })
     .sort({ _id: -1 })
     .limit(10)
@@ -76,7 +83,11 @@ router.post("/suggest", (req, res) => {
       }
       res.json(movie);
     })
-    .catch(err => res.status(404).json({ nomoviesfound: "There are no movies that matched the query" }));
+    .catch(err =>
+      res
+        .status(404)
+        .json({ nomoviesfound: "There are no movies that matched the query" })
+    );
 });
 
 // @route   POST api/movies/home
