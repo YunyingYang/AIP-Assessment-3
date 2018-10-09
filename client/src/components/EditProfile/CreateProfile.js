@@ -137,6 +137,9 @@ class CreateProfile extends Component {
                     options={prefsOptions}
                     onChange={this.onCheckChange}
                   />
+                  <small className="form-text text-muted">
+                    Which movie genres would you prefer
+                  </small>
                 </div>
                 <br />
                 <input
