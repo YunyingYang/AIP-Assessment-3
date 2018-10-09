@@ -19,8 +19,7 @@ const User = require("../../models/User");
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
-  if (!isValid)
-    return res.status(400).json(errors);
+  if (!isValid) return res.status(400).json(errors);
 
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
@@ -68,8 +67,7 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
 
-  if (!isValid)
-    return res.status(400).json(errors);
+  if (!isValid) return res.status(400).json(errors);
 
   const email = req.body.email;
   const password = req.body.password;
@@ -77,7 +75,8 @@ router.post("/login", (req, res) => {
   // Find user by email
   User.findOne({ email }).then(user => {
     if (!user) {
-      errors.email = "User not found";
+      errors.email = "The email or password entered is not correct";
+      errors.password = "The email or password entered is not correct";
       return res.status(404).json(errors);
     }
 
@@ -86,26 +85,27 @@ router.post("/login", (req, res) => {
       if (isMatch) {
         // User Matched
         // check if user email has been confirmed
-          if(user.confirmation === true) {
-              const payload = { id: user.id, name: user.name, avatar: user.avatar };
-              // Sign Token
-              jwt.sign(
-                  payload,
-                  keys.secretOrKey,
-                  { expiresIn: 3600 },
-                  (err, token) => {
-                      res.json({
-                          success: true,
-                          token: "Bearer " + token
-                      });
-                  }
-              );
-          } else {
-              errors.confirmation = 'Please confirm your email';
-              return res.status(400).json(errors);
-          }
+        if (user.confirmation === true) {
+          const payload = { id: user.id, name: user.name, avatar: user.avatar };
+          // Sign Token
+          jwt.sign(
+            payload,
+            keys.secretOrKey,
+            { expiresIn: 3600 },
+            (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token
+              });
+            }
+          );
+        } else {
+          errors.confirmation = "Please confirm your email";
+          return res.status(400).json(errors);
+        }
       } else {
-        errors.password = "Password incorrect";
+        errors.email = "The email or password entered is not correct";
+        errors.password = "The email or password entered is not correct";
         return res.status(400).json(errors);
       }
     });
@@ -130,33 +130,26 @@ router.get(
 //  @route  GET api/users/email/confirmation/:token
 //  @desc   Confirm user email
 //  @access Private
-router.get('/confirmation/:token',
-    (req, res) => {
-        jwt.verify(
-            req.params.token,
-            keys.secretOrKey,
-            (err, user) => {
-                if (err) return next(err);
-                User.findOne({_id: user.id})
-                    .then(user =>
-                    {
-                        if(user){
-                            User.findOneAndUpdate(
-                                    {_id: user.id},
-                                    {confirmation: true }
-                                )
-                                .catch(err => console.log("cannot find registed user"));
+router.get("/confirmation/:token", (req, res) => {
+  jwt.verify(req.params.token, keys.secretOrKey, (err, user) => {
+    if (err) return next(err);
+    User.findOne({ _id: user.id })
+      .then(user => {
+        if (user) {
+          User.findOneAndUpdate({ _id: user.id }, { confirmation: true }).catch(
+            err => console.log("cannot find registed user")
+          );
 
-                            /////////////////////////
-                            /// @ mayumi 改这里 ⬇️ ///
-                            /////////////////////////
+          /////////////////////////
+          /// @ mayumi 改这里 ⬇️ ///
+          /////////////////////////
 
-                            // res.redirect('https://doreamon.herokuapp.com/');
-                            res.redirect("http://localhost:3000/");
-                        }
-                    })
-                    .catch(err => res.status(400).json('errors'))
-            });
-    });
+          // res.redirect('https://doreamon.herokuapp.com/');
+          res.redirect("http://localhost:3000/");
+        }
+      })
+      .catch(err => res.status(400).json("errors"));
+  });
+});
 
 module.exports = router;
