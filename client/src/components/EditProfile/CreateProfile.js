@@ -7,7 +7,7 @@ import { Checkbox } from "antd";
 import TextFieldGroup from "../Common/TextFieldGroup";
 import TextAreaFieldGroup from "../Common/TextAreaFieldGroup";
 import SelectListGroup from "../Common/SelectListGroup";
-import { createProfile } from "../../actions/profileActions";
+import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -26,9 +26,21 @@ class CreateProfile extends Component {
     this.onCheckChange = this.onCheckChange.bind(this);
   }
 
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
+    }
+
+    if (nextProps.profile.profile) {
+      const profile = nextProps.profile.profile;
+
+      if (Object.keys(profile).length !== 0) {
+        this.props.history.push("/edit-profile");
+      }
     }
   }
 
@@ -166,6 +178,7 @@ class CreateProfile extends Component {
 
 CreateProfile.propTypes = {
   profile: PropTypes.object.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
@@ -176,5 +189,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createProfile }
+  { createProfile, getCurrentProfile }
 )(withRouter(CreateProfile));
