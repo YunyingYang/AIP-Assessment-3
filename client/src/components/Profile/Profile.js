@@ -42,7 +42,7 @@ class Profile extends Component {
 
     if (profile === null || loading) {
       profileContent = <Spinner />;
-    } else {
+    } else if (Object.keys(profile).length > 0) {
       profileContent = (
         <div>
           <div className="row">
@@ -63,6 +63,8 @@ class Profile extends Component {
           <br />
         </div>
       );
+    } else {
+      profileContent = <Spinner />;
     }
 
     return (
