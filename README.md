@@ -1,4 +1,4 @@
-## [Filmtopia](https://filmtopia.herokuapp.com/)
+## [Filmtopia](https://filmtopias.herokuapp.com/)
 
 ### <font color=#0099ff>About</font>
 
@@ -59,6 +59,8 @@ All movie stills used are from Fanart.tv API.
 ### <font color=#0099ff>Reference</font>
 
 Libraries and other resources used for this project are listed as below:
+
+When designing the code structure of this app, we followed part of the sample project in the following online course.
 
 #### <font color=#0099ff>Libraries/API:</font>
 
