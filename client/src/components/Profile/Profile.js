@@ -12,19 +12,19 @@ import {
 
 class Profile extends Component {
   componentDidMount() {
-    if (this.props.match.params.handle) {
-      this.props.getProfileByHandle(this.props.match.params.handle);
+    if (this.props.handle) {
+      this.props.getProfileByHandle(this.props.handle);
     }
-    if (this.props.match.params.user_id) {
-      this.props.getProfileByUserId(this.props.match.params.user_id);
+    if (this.props.user_id) {
+      this.props.getProfileByUserId(this.props.user_id);
     }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.profile.profile === null && this.props.profile.loading) {
-  //     this.props.history.push("/Not-found");
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.profile.profile === null && this.props.profile.loading) {
+      this.props.history.push("/Not-found");
+    }
+  }
 
   render() {
     const { profile, loading } = this.props.profile;
@@ -40,7 +40,11 @@ class Profile extends Component {
       </div>
     );
 
+    console.log("测试" + profile);
+
     if (profile === null || loading) {
+      profileContent = <Spinner />;
+    } else if (profile.user === null || loading) {
       profileContent = <Spinner />;
     } else {
       profileContent = (

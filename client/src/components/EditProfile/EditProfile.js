@@ -39,18 +39,22 @@ class CreateProfile extends Component {
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
 
-      // If profile field doesnt exist, make empty string
-      profile.location = !isEmpty(profile.location) ? profile.location : "";
-      profile.bio = !isEmpty(profile.bio) ? profile.bio : "";
+      if (Object.keys(profile).length === 0) {
+        this.props.history.push("/create-profile");
+      } else {
+        // If profile field doesnt exist, make empty string
+        profile.location = !isEmpty(profile.location) ? profile.location : "";
+        profile.bio = !isEmpty(profile.bio) ? profile.bio : "";
 
-      // Set component fields state
-      this.setState({
-        handle: profile.handle,
-        location: profile.location,
-        status: profile.status,
-        bio: profile.bio,
-        prefs: profile.prefs
-      });
+        // Set component fields state
+        this.setState({
+          handle: profile.handle,
+          location: profile.location,
+          status: profile.status,
+          bio: profile.bio,
+          prefs: profile.prefs
+        });
+      }
     }
   }
 
@@ -191,7 +195,7 @@ class CreateProfile extends Component {
 CreateProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
+  // profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 

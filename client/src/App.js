@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 import store from "./store";
@@ -85,10 +90,26 @@ class App extends Component {
                   )}
                 />
 
-                <Route exact path="/api/movies/mvdetails/:movie_id" component={MovieItemDetail}/>
-                <PrivateRoute exact path="/edit-profile" component={EditProfile}/>
-                <PrivateRoute exact path="/create-profile" component={CreateProfile}/>
-                <Route exact path="/profiles" render={() => <Redirect to="/profiles/1" />}/>
+                <Route
+                  exact
+                  path="/api/movies/mvdetails/:movie_id"
+                  component={MovieItemDetail}
+                />
+                <PrivateRoute
+                  exact
+                  path="/edit-profile"
+                  component={EditProfile}
+                />
+                <PrivateRoute
+                  exact
+                  path="/create-profile"
+                  component={CreateProfile}
+                />
+                <Route
+                  exact
+                  path="/profiles"
+                  render={() => <Redirect to="/profiles/1" />}
+                />
 
                 <Route
                   exact
@@ -101,8 +122,26 @@ class App extends Component {
                   )}
                 />
 
-                <Route exact path="/profile/:handle" component={Profile} />
-                <Route exact path="/profile/user/:user_id" component={Profile}/>
+                <Route
+                  exact
+                  path="/profile/:handle"
+                  render={props => (
+                    <Profile
+                      {...props.match.params}
+                      key={props.match.params.handle}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/profile/user/:user_id"
+                  render={props => (
+                    <Profile
+                      {...props.match.params}
+                      key={props.match.params.user_id}
+                    />
+                  )}
+                />
                 <Route exact path="/not-found" component={NotFound} />
                 <Route component={NotFound} />
               </Switch>
