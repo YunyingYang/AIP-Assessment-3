@@ -54,10 +54,10 @@ class CreateProfile extends Component {
 
   render() {
     const { errors } = this.state;
-    const { profile } = this.state;
-    if (profile !== null) {
-      this.props.history.push("/edit-profile");
-    }
+    // const { profile } = this.state;
+    // if (Object.keys(profile).length > 0) {
+    //   this.props.history.push("/edit-profile");
+    // }
 
     // Select options for status
     const options = [
