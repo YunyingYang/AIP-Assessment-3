@@ -7,7 +7,7 @@ module.exports = function validateProfileInput(data) {
   data.handle = !isEmpty(data.handle) ? data.handle : "";
   data.status = !isEmpty(data.status) ? data.status : "";
   data.location = !isEmpty(data.location) ? data.location : "";
-  data.bio = !isEmpty(data.bio)? data.bio:"";
+  data.bio = !isEmpty(data.bio) ? data.bio : "";
 
   if (!Validator.isLength(data.handle, { min: 2, max: 40 }))
     errors.handle = "Handle needs to between 2 and 4 characters";
@@ -19,10 +19,9 @@ module.exports = function validateProfileInput(data) {
     errors.status = "Status field is required";
 
   if (Validator.isEmpty(data.location))
-        errors.status = "Location field is required";
+    errors.location = "Location field is required";
 
-  if (Validator.isEmpty(data.bio))
-        errors.status = "Bio field is required";
+  if (Validator.isEmpty(data.bio)) errors.bio = "Bio field is required";
 
   return {
     errors,
