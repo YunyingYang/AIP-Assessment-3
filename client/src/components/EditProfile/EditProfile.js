@@ -136,7 +136,7 @@ class CreateProfile extends Component {
                   info="A unique handle for your profile URL. Your full name, nickname, etc."
                 />
                 <TextFieldGroup
-                  placeholder="Location"
+                  placeholder="* Location"
                   name="location"
                   value={this.state.location}
                   onChange={this.onChange}
@@ -153,7 +153,7 @@ class CreateProfile extends Component {
                   info="Give us an idea of how much you like movies"
                 />
                 <TextAreaFieldGroup
-                  placeholder="Short Bio"
+                  placeholder="* Short Bio"
                   name="bio"
                   value={this.state.bio}
                   onChange={this.onChange}
