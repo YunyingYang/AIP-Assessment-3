@@ -52,24 +52,24 @@ class Dashboard extends Component {
     } else {
       //Check if logged in user has profile data
       if (Object.keys(profile).length > 0) {
-        dashboardContent = (
-          <div className="text-center">
-            <p className="lead text-secondary">
-              Welcome {this.state.user.name} ,&nbsp;click&nbsp;
-              <Link to={`/profile/${profile.handle}`}>
-                <span className="text-info">HERE</span>
-              </Link>
-              &nbsp;to view your profile page.
-            </p>
-            <br />
-            <Link to="/edit-profile" className="btn btn-light">
-              <i className="fas fa-user-circle text-dark mr-1" /> Edit Profile
-            </Link>
-            <div style={{ marginBottom: "60px" }} />
-          </div>
-        );
+          dashboardContent = (
+              <div className="text-center">
+                  <p className="lead text-secondary">
+                      Welcome {this.state.user.name} ,&nbsp;click&nbsp;
+                      <Link to={`/profile/${profile.handle}`}>
+                          <span className="text-info">HERE</span>
+                      </Link>
+                      &nbsp;to view your profile page.
+                  </p>
+                  <br/>
+                  <Link to="/edit-profile" className="btn btn-light">
+                      <i className="fas fa-user-circle text-dark mr-1"/> Edit Profile
+                  </Link>
+                  <div style={{marginBottom: "60px"}}/>
+              </div>
+          );
       } else {
-        // User is logged in but has no profile
+        //User is logged in but has no profile
         dashboardContent = (
           <div className="text-center">
             <p className="lead">Welcome {this.state.user.name}</p>

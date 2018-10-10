@@ -67,7 +67,7 @@ class MovieItemDetail extends Component {
       })
       .catch(err =>
         console.log(
-          'No rating record: no user has rated this movie, "Rating for this movie:" field will be displayed as empty'
+          'No rating record: user has not rated this movie, "Rating for this movie:" field will be displayed as empty'
         )
       );
 
