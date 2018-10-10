@@ -78,6 +78,11 @@ class CreateProfile extends Component {
 
   render() {
     const { errors } = this.state;
+    // const { profile } = this.state;
+    // if (Object.keys(profile).length > 0) {
+    // } else {
+    //   this.props.history.push("/create-profile");
+    // }
 
     // Select options for status
     const options = [
