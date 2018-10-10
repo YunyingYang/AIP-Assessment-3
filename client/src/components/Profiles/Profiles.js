@@ -14,11 +14,11 @@ class Profiles extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.profile.profiles === null && this.props.profile.loading) {
-      this.props.history.push("/Not-found");
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.profile.profiles === null && this.props.profile.loading) {
+  //     this.props.history.push("/Not-found");
+  //   }
+  // }
 
   render() {
     const { profiles, loading, totalPages } = this.props.profile;
