@@ -7,7 +7,6 @@ const io = require("socket.io")();
 
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
-const posts = require("./routes/api/posts");
 const movies = require("./routes/api/movies");
 const chats = require("./routes/api/chats");
 const usermovieratings = require("./routes/api/usermovieratings");
@@ -35,7 +34,6 @@ require("./config/passport")(passport);
 // Use Routes
 app.use("/api/users", users);
 app.use("/api/profile", profile);
-app.use("/api/posts", posts);
 app.use("/api/movies", movies);
 app.use("/api/chats", chats);
 app.use("/api/usermovieratings", usermovieratings);

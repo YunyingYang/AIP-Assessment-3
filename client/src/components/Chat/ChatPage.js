@@ -48,6 +48,7 @@ class ChatPage extends Component {
   }
 
   componentDidMount() {
+    // load the latest 3 messages from db
     this.setState({ username: this.props.auth.user.name });
     axios
       .get("/api/chats/latest")

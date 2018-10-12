@@ -94,7 +94,7 @@ class Header extends Component {
     setTimeout(
       function() {
         //Start the timer
-        this.setState({ suggests: [] }); //After 1 second, set render to true
+        this.setState({ suggests: [] }); //After a while, close the autocomplete div
       }.bind(this),
       400
     );
@@ -135,9 +135,6 @@ class Header extends Component {
       });
       newSearch = this.state.suggests[this.state.activeIndex].title;
     }
-    // else {
-    //   newSearch = this.state.searchContent;
-    // }
 
     this.setState({
       suggests: [],

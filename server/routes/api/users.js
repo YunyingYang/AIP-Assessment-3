@@ -140,9 +140,9 @@ router.get("/confirmation/:token", (req, res) => {
             err => console.log("cannot find registed user")
           );
 
-          /////////////////////////
-          /// @ mayumi 改这里 ⬇️ ///
-          /////////////////////////
+          /////////////////////////////
+          /// back up for deploying ///
+          /////////////////////////////
 
           // res.redirect('https://doreamon.herokuapp.com/');
           res.redirect("http://localhost:3000/");

@@ -38,7 +38,7 @@ class CreateProfile extends Component {
 
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
-
+      // If user does not have a profile
       if (Object.keys(profile).length === 0) {
         this.props.history.push("/create-profile");
       } else {
@@ -82,11 +82,6 @@ class CreateProfile extends Component {
 
   render() {
     const { errors } = this.state;
-    // const { profile } = this.state;
-    // if (Object.keys(profile).length > 0) {
-    // } else {
-    //   this.props.history.push("/create-profile");
-    // }
 
     // Select options for status
     const options = [

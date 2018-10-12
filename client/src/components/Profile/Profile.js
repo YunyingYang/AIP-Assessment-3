@@ -40,8 +40,6 @@ class Profile extends Component {
       </div>
     );
 
-    console.log("测试" + profile);
-
     if (profile === null || loading) {
       profileContent = <Spinner />;
     } else if (Object.keys(profile).length > 0) {

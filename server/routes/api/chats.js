@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 });
 
 // @route   GET api/chats/latest
-// @desc    Get latest 5 chats
+// @desc    Get latest 3 chats
 // @access  Public
 router.get("/latest", (req, res) => {
   Chat.find()

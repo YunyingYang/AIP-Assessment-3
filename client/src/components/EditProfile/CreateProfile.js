@@ -37,7 +37,7 @@ class CreateProfile extends Component {
 
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
-
+      //if user already had a profile
       if (Object.keys(profile).length !== 0) {
         this.props.history.push("/edit-profile");
       }
@@ -66,10 +66,6 @@ class CreateProfile extends Component {
 
   render() {
     const { errors } = this.state;
-    // const { profile } = this.state;
-    // if (Object.keys(profile).length > 0) {
-    //   this.props.history.push("/edit-profile");
-    // }
 
     // Select options for status
     const options = [
@@ -124,7 +120,7 @@ class CreateProfile extends Component {
                   info="A unique handle for your profile URL. Your full name, nickname, etc."
                 />
                 <TextFieldGroup
-                  placeholder="Location"
+                  placeholder="* Location"
                   name="location"
                   value={this.state.location}
                   onChange={this.onChange}
@@ -141,7 +137,7 @@ class CreateProfile extends Component {
                   info="Give us an idea of how much you like movies"
                 />
                 <TextAreaFieldGroup
-                  placeholder="Short Bio"
+                  placeholder="* Short Bio"
                   name="bio"
                   value={this.state.bio}
                   onChange={this.onChange}
