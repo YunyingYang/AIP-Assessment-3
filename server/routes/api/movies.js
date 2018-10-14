@@ -24,10 +24,11 @@ router.get("/mvdetails/:movie_id", (req, res) => {
 });
 
 // @route   GET api/movies/search/:search_content/:page
-// @desc    Get movies
+// @desc    Get movies when searching
 // @access  Public
 router.post("/search/:search_content/:page", function(req, res) {
   let searchContent = req.params.search_content.trim();
+  //avoid parentheses in search content regard as escape
   let searchContent1 = searchContent.replace(/\(/gi, "\\(");
   let searchContent2 = searchContent1.replace(/\)/gi, "\\)");
 
