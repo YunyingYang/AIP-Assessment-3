@@ -23,19 +23,22 @@ Created for AIP assessment 3 | Inspired by Amazon and [Douban Movie](https://mov
 Create a new directory and `cd dir_name` to that directory in terminal:
 
 ```
-	// clone this project
-	git clone https://github.com/YunyingYang/AIP-Assessment-3.git
+// create a new git repository
+git init
+
+// clone this project
+git clone https://github.com/YunyingYang/AIP-Assessment-3.git
 	
-	// install client side dependencies
-	cd client
-	npm install
+// install client side dependencies
+cd AIP-Assessment-3/client/
+npm install
 	
-	// install server side dependencies
-	cd server
-	npm install
-	
-	//run the development version
-	npm run dev
+// install server side dependencies
+cd ../server/
+npm install
+
+// run the development version in server directory
+npm run dev
 
 ```
 Client runs on port 3000 and server runs on port 5000.
@@ -52,7 +55,7 @@ This project is built with React.js, Express and MongoDB, and is hosted on [Hero
 
 This product uses the TMDb API but is not endorsed or certified by TMDb.
 
-All movie stills used are from Fanart.tv API.
+All movie stills used in this project are from Fanart.tv API.
 
 <br>
 
@@ -60,7 +63,7 @@ All movie stills used are from Fanart.tv API.
 
 Libraries and other resources used for this project are listed as below:
 
-When designing the code structure of this app, we followed part of the sample project in the following online course.
+When designing the code structure of this app, we followed part of the sample project in the following online courses.
 
 #### <font color=#0099ff>Libraries/API:</font>
 
@@ -72,6 +75,7 @@ When designing the code structure of this app, we followed part of the sample pr
 - [gravatar](https://en.gravatar.com/)
 - [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
 - [jwt-decode](https://github.com/auth0/jwt-decode)
+- [Nodemailer](https://www.nodemailer.com/)
 - [react-star-ratings](https://www.npmjs.com/package/react-star-ratings)
 - [socket.io](https://socket.io/docs/client-api/)
 - [validator](https://www.npmjs.com/package/validator)
