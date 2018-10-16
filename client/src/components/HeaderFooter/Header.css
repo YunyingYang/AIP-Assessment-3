@@ -158,7 +158,6 @@ li.dropdown {
   border: 0;
   padding: 0;
   cursor: pointer;
-  /* height: 40px; */
   width: 2.5rem;
   font: bold 15px/40px "Raleway", sans-serif;
   color: #fff;
@@ -190,7 +189,3 @@ li.dropdown {
   border: 0;
   padding: 0;
 }
-
-/* .dropdown-item:hover {
-  background: rgb(231, 206, 95);
-} */

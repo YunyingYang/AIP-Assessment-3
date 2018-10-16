@@ -1,3 +1,4 @@
+// reuseable - check if a field is empty
 const isEmpty = value =>
     value === undefined ||
     value === null ||

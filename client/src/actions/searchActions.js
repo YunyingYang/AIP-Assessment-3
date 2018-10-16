@@ -69,7 +69,6 @@ export const getMovieItemTmdb = movie => dispatch => {
   axios
     .get(url)
     .then(res => {
-      // console.log(res.data);
       dispatch({
         type: GET_CURRENTMVTMDB,
         payload: res.data

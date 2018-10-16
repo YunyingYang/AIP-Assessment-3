@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Create Schema
+// create chat schema
 const ChatSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,

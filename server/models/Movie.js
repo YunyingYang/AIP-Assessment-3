@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Create Schema for moogoose
+// Create Movie Schema
 const MovieSchema = new Schema({
   movieId: {
     type: Number,

@@ -16,6 +16,7 @@ class MovieItem extends Component {
     };
   }
 
+  // get movie details via tmdb api
   componentDidMount() {
     const { movie } = this.props;
 
@@ -49,6 +50,8 @@ class MovieItem extends Component {
         <table className="table">
           <tbody>
             <tr>
+              {/* if movie poster exists in tmdb database, display poster */}
+              {/* if not, display default image */}
               <th scope="col" style={{ width: "30%" }}>
                 {this.state.tmdbDetail.poster_path ? (
                   <img
@@ -64,6 +67,7 @@ class MovieItem extends Component {
                   />
                 )}
               </th>
+              {/* onClick: redirect to movie detail page */}
               <th scope="row" style={{ width: "70%" }}>
                 <div className="card-body">
                   <Link to={`/api/movies/mvdetails/${movie._id}`}>
@@ -74,6 +78,7 @@ class MovieItem extends Component {
                       {movie.title}
                     </h5>
                   </Link>
+                  {/* movie info */}
                   <h6 className="text-left text-muted">{movie.genres}</h6>
                   <br />
                   <h6 className="text-left black">
@@ -96,6 +101,7 @@ class MovieItem extends Component {
   }
 }
 
+// for redux
 MovieItem.propTypes = {
   movie: PropTypes.object.isRequired,
   getMovieItem: PropTypes.func.isRequired,

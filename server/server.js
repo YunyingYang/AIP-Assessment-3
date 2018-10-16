@@ -49,6 +49,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// server settings
 const port = process.env.PORT || 5000;
 
 var server = app.listen(port, () =>

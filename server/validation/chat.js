@@ -1,6 +1,7 @@
 const Validator = require("validator");
 const isEmpty = require("./isempty");
 
+// set constraints for chatting content
 module.exports = function validateChatInput(data) {
     let errors = {};
     data.text = !isEmpty(data.text) ? data.text : "";

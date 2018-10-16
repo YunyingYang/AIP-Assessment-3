@@ -1,6 +1,7 @@
 const Validator = require('validator');
 const isEmpty = require('./isempty');
 
+// validate user's rating of a movie
 module.exports = function validateUserMovieRatingInput(data) {
     let errors = {};
     data.rating = !isEmpty(data.rating) ? String(data.rating) : '';

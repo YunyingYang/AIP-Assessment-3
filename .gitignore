@@ -1,16 +1,16 @@
-# dependencies
-/node_modules
-
-# webstorm
+# WebStorm
 /.idea
+/client/.idea
+/server/.idea
 
-# mongo db link and secret
-/config/keys_dev.js
+# MongoDB configuration
+/server/config/keys_dev.js
 
-#
+# System
 package-lock.json
 
 # dependencies
+/node_modules
 /client/node_modules
 /server/node_modules
 
@@ -20,12 +20,6 @@ package-lock.json
 
 # production
 /client/build
-/server/build
-
-# webstorm
-/.idea
-/client/.idea
-/server/.idea
 
 # misc
 .DS_Store

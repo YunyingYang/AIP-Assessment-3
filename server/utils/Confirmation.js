@@ -13,9 +13,9 @@ module.exports = userData => {
       expiresIn: "1d"
     },
     (err, emailToken) => {
-      /////////////////////////////
-      /// back up for deploying ///
-      /////////////////////////////
+      //////////////////////////////
+      /// back up for deployment ///
+      //////////////////////////////
 
       // const url = `https://doreamon.herokuapp.com/api/users/confirmation/${emailToken}`;
       const url = `http://localhost:5000/api/users/confirmation/${emailToken}`;
@@ -28,6 +28,7 @@ module.exports = userData => {
         }
       });
 
+      // email content (send to a new user after register)
       let mailOptions = {
         from: '"Filmtopia"<filmtopia.team@gmail.com>',
         to: userData.email,

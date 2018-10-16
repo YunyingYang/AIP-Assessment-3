@@ -4,6 +4,7 @@ const footerStyle = {
     height: '60px',
 };
 
+// footer content
 const footer = () => {
     return (
         <div className="fixed-bottom bg-dark text-white mt-5 p-4" style={footerStyle}>

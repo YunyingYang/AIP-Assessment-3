@@ -13,20 +13,21 @@ class ProfileAbout extends Component {
     };
   }
 
+  // get current user's rating record
   componentDidMount() {
     axios
       .get(`/api/usermovieratings/user/${this.props.user._id}`)
       .then(res => {
         this.setState({ usermovieratings: res.data });
       })
-      .catch(err => console.log("This user has not rated movie"));
+      .catch(err => console.log("This user has not rated any movie"));
   }
 
   render() {
     const { profile } = this.props;
     // Get first name
     const firstName = profile.user.name.trim().split(" ")[0];
-
+    // get user preference
     const prefs = profile.prefs.map((pref, index) => (
       <div key={index} className="p-3 alert alert-dismissible alert-secondary">
         <i className="fa fa-heart text-danger" /> &nbsp;
@@ -34,7 +35,7 @@ class ProfileAbout extends Component {
         &nbsp;
       </div>
     ));
-
+    // Get user ratings
     const ratings = this.state.usermovieratings.map(
       (usermovierating, index) => (
         <div key={index} className="col-md-12">

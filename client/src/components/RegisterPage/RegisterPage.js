@@ -21,7 +21,7 @@ class RegisterPage extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-
+  // for redirecting to dashboard if user exists
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
@@ -38,6 +38,7 @@ class RegisterPage extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  // register a new user
   onSubmit(e) {
       e.preventDefault();
 
@@ -51,7 +52,6 @@ class RegisterPage extends Component {
       this.props.registerUser(newUser, this.props.history);
   }
 
-
   render() {
     const { errors } = this.state;
     return (
@@ -60,6 +60,7 @@ class RegisterPage extends Component {
           className="container alert alert-dismissible alert-secondary"
           style={{ maxWidth: "40rem" }}
         >
+            {/* redirect to homepage */}
           <Link to="/">
             <img
               src={cross}
@@ -77,7 +78,8 @@ class RegisterPage extends Component {
               <h1 className="display-4 text-center">User Signup</h1>
               <form noValidate onSubmit={this.onSubmit}>
                 <div className="form-group">
-                  <input
+                    {/* validate user name */}
+                    <input
                     type="text"
                     className={classnames("form-control form-control-lg", {
                       "is-invalid": errors.name
@@ -93,6 +95,7 @@ class RegisterPage extends Component {
                   )}
                 </div>
                 <div className="form-group">
+                  {/* validate user email */}
                   <input
                     type="email"
                     className={classnames("form-control form-control-lg", {
@@ -109,6 +112,7 @@ class RegisterPage extends Component {
                   )}
                 </div>
                 <div className="form-group">
+                  {/* validate password */}
                   <input
                     type="password"
                     className={classnames("form-control form-control-lg", {
@@ -124,6 +128,7 @@ class RegisterPage extends Component {
                     <div className="invalid-feedback">{errors.password}</div>
                   )}
                 </div>
+                {/* validate confirm password */}
                 <div className="form-group">
                   <input
                     type="password"
@@ -158,6 +163,7 @@ class RegisterPage extends Component {
   }
 }
 
+// for redux
 RegisterPage.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,

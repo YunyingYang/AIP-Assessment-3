@@ -19,6 +19,7 @@ class Dashboard extends Component {
     this.onClickDelete = this.onClickDelete.bind(this);
   }
 
+  // get user profile from database
   componentDidMount() {
     this.props.getCurrentProfile();
     axios
@@ -29,6 +30,7 @@ class Dashboard extends Component {
       .catch(err => console.log("This user has not created a profile"));
   }
 
+  // delete user's rating record of a movie
   onClickDelete(id) {
     axios
       .delete(`/api/usermovieratings/${id}`)
@@ -85,6 +87,7 @@ class Dashboard extends Component {
         );
       }
     }
+    // show all movies the user has rated with ratings
     const ratings = this.state.usermovieratings.map(
       (usermovierating, index) => (
         <div key={index} className="col-md-12">
@@ -133,6 +136,7 @@ class Dashboard extends Component {
               <h2 className="text-info">&nbsp;&nbsp;Manage Your Ratings:</h2>
               <br />
               <div className="row">
+                  {/* check if user has rated movies and render content accordingly */}
                 <div className="d-flex flex-wrap justify-content-center align-items-center w-100">
                   {isEmpty(this.state.usermovieratings) ? (
                     <div className="text-dark text-center">
@@ -157,6 +161,7 @@ class Dashboard extends Component {
   }
 }
 
+// for redux
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,

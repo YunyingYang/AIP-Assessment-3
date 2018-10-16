@@ -1,4 +1,4 @@
-//for deploy
+// mLab account and configuration - for final product
 module.exports = {
   mongoURI: process.env.MONGO_URI,
   secretOrKey: process.env.SECRET_OR_KEY,

@@ -28,7 +28,7 @@ router.get("/mvdetails/:movie_id", (req, res) => {
 // @access  Public
 router.post("/search/:search_content/:page", function(req, res) {
   let searchContent = req.params.search_content.trim();
-  //avoid parentheses in search content regard as escape
+  // use RegEx to escape parentheses in search content
   let searchContent1 = searchContent.replace(/\(/gi, "\\(");
   let searchContent2 = searchContent1.replace(/\)/gi, "\\)");
 

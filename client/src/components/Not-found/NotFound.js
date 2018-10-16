@@ -1,6 +1,7 @@
 import React from "react";
 import NotFound from "../../images/not-found.png";
 
+// 404 page
 export default () => {
   return (
     <div className="text-center">

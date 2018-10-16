@@ -130,7 +130,7 @@ router.post(
       movie: req.body.movieID
     }).then(usermovierating => {
       if (usermovierating) {
-        // Update
+        // Update user's rating
         UserMovieRating.findOneAndUpdate(
           { user: req.user.id, movie: req.body.movieID },
           { $set: userMovieRatingFields },

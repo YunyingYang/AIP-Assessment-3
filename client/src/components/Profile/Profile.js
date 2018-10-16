@@ -20,6 +20,7 @@ class Profile extends Component {
     }
   }
 
+  // check if user exists
   componentWillReceiveProps(nextProps) {
     if (nextProps.profile.profile === null && this.props.profile.loading) {
       this.props.history.push("/Not-found");
@@ -31,6 +32,7 @@ class Profile extends Component {
     const { isAuthenticated, user } = this.props.auth;
     let profileContent;
 
+    // edit profile button
     const editYourProfile = (
       <div className="edit-your-profile-button">
         <Link to="/edit-profile" className="btn btn-light mb-3 float-left">
@@ -40,6 +42,8 @@ class Profile extends Component {
       </div>
     );
 
+    // display spinner before get res from back end
+    // display profile page for logged in user
     if (profile === null || loading) {
       profileContent = <Spinner />;
     } else if (Object.keys(profile).length > 0) {
@@ -79,6 +83,7 @@ class Profile extends Component {
   }
 }
 
+// for redux
 Profile.propTypes = {
   getProfileByHandle: PropTypes.func.isRequired,
   getProfileByUserId: PropTypes.func.isRequired,

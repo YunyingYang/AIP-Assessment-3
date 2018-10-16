@@ -1,9 +1,10 @@
 const express = require("express");
-const router = express.Router();
 const passport = require("passport");
 
 const Chat = require("../../models/Chat");
 const validateChatInput = require("../../validation/chat");
+
+const router = express.Router();
 
 // @route   GET api/chats
 // @desc    Get chats

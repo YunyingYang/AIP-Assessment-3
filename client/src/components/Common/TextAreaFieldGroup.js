@@ -2,6 +2,8 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
+// reuseable - for user input group
+// get error message and show info
 const TextAreaFieldGroup = ({
   name,
   placeholder,

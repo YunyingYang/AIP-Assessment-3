@@ -6,6 +6,7 @@ import axios from "axios";
 
 import "./ChatPage.css";
 
+// chat room
 class ChatPage extends Component {
   constructor(props) {
     super(props);
@@ -16,6 +17,7 @@ class ChatPage extends Component {
       messages: []
     };
 
+    // socket.io configuration
     if (process.env.NODE_ENV === "production") {
       var HOST = window.location.origin.replace(/^http/, "ws");
       this.socket = io(HOST);

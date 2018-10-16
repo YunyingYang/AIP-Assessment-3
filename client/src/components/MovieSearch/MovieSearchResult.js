@@ -92,7 +92,7 @@ class MovieSearchResult extends Component {
         );
       }
 
-      // previous button ...
+      // the previous pages button ...
       var i = currentPage > 4 ? currentPage - 3 : 1;
       if (i !== 1) {
         previousPages = (
@@ -101,7 +101,8 @@ class MovieSearchResult extends Component {
           </li>
         );
       }
-      // next button ...
+
+      // the next pages button ...
       if (i < totalPages - 6) {
         nextPages = (
           <li className="page-item disabled">
@@ -158,6 +159,7 @@ class MovieSearchResult extends Component {
   }
 }
 
+// for redux
 MovieSearchResult.propTypes = {
   auth: PropTypes.object,
   getMovies: PropTypes.func

@@ -18,6 +18,8 @@ class MovieCardSmall extends Component {
     }
 
     componentDidMount() {
+        // authentication conflicts with tmdb api and fanart.tv api
+        // quick & dirty solution: delete authentication for now and add it back later
         const authheader = axios.defaults.headers.common["Authorization"] || null;
         delete axios.defaults.headers.common["Authorization"];
 
@@ -33,10 +35,12 @@ class MovieCardSmall extends Component {
             })
             .catch(err => console.log("Tmdb error: tmdb database does not contain details of this movie"));
 
+        // add authentication back
         axios.defaults.headers.common["Authorization"] = authheader;
     }
 
     render() {
+        // get poster from tmdb api
         const imgUrl = "http://image.tmdb.org/t/p/w185_and_h278_bestv2/" + this.state.poster;
 
         return (

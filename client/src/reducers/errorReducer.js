@@ -1,5 +1,6 @@
 import { GET_ERRORS, CLEAR_ERRORS } from '../actions/types';
 
+// reducer for all errors
 const initialState = {};
 
 export default function (state = initialState, action) {

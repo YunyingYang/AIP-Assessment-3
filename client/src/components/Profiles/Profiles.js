@@ -8,12 +8,13 @@ import Spinner from "../Common/Spinner";
 import ProfileItem from "./ProfileItem";
 
 class Profiles extends Component {
+  // get current user's profile
   componentDidMount() {
     if (this.props.page) {
       this.props.getProfiles(this.props.page);
     }
   }
-
+  // check if user profile exists
   componentWillReceiveProps(nextProps) {
     if (nextProps.profile.profiles === null && this.props.profile.loading) {
       this.props.history.push("/Not-found");
@@ -67,6 +68,7 @@ class Profiles extends Component {
           </li>
         );
       }
+
       //the last page button >>
       if (parseInt(currentPage, 10) === parseInt(totalPages, 10)) {
         lastPage = (
@@ -88,7 +90,7 @@ class Profiles extends Component {
         );
       }
 
-      // previous button ...
+      // the previous pages button ...
       var i = currentPage > 4 ? currentPage - 3 : 1;
       if (i !== 1) {
         previousPages = (
@@ -97,7 +99,7 @@ class Profiles extends Component {
           </li>
         );
       }
-      // next button ...
+      // the next pages button ...
       if (i < totalPages - 6) {
         nextPages = (
           <li className="page-item disabled">
@@ -168,6 +170,7 @@ class Profiles extends Component {
   }
 }
 
+// for redux
 Profiles.propTypes = {
   getProfiles: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired

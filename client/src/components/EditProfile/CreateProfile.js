@@ -26,6 +26,7 @@ class CreateProfile extends Component {
     this.onCheckChange = this.onCheckChange.bind(this);
   }
 
+  // get existing profiles
   componentDidMount() {
     this.props.getCurrentProfile();
   }
@@ -37,13 +38,14 @@ class CreateProfile extends Component {
 
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
-      //if user already had a profile
+      //if user already has a profile
       if (Object.keys(profile).length !== 0) {
         this.props.history.push("/edit-profile");
       }
     }
   }
 
+  // create new profile
   onSubmit(e) {
     e.preventDefault();
     const profileData = {
@@ -77,6 +79,7 @@ class CreateProfile extends Component {
       { label: "Other", value: "Other" }
     ];
 
+    // all movie genres for selection
     const prefsOptions = [
       { label: "Drama", value: "Drama" },
       { label: "Comedy", value: "Comedy" },
@@ -172,6 +175,7 @@ class CreateProfile extends Component {
   }
 }
 
+// for redux
 CreateProfile.propTypes = {
   profile: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,

@@ -57,12 +57,14 @@ class App extends Component {
             <br />
             <div className="container w-90">
               <Switch>
+                  {/* public & private links */}
                 <Route exact path="/" component={Home} />
                 <PrivateRoute exact path="/chat" component={ChatPage} />
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/signup" component={RegisterPage} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
+                  {/* redirect search result to page 1 */}
                 <Route
                   exact
                   path="/api/movies/search/:search_content"
@@ -105,6 +107,7 @@ class App extends Component {
                   path="/create-profile"
                   component={CreateProfile}
                 />
+                  {/* redirect all profiles result to page 1 */}
                 <Route
                   exact
                   path="/profiles"
@@ -142,6 +145,7 @@ class App extends Component {
                     />
                   )}
                 />
+                  {/* 404 page */}
                 <Route exact path="/not-found" component={NotFound} />
                 <Route component={NotFound} />
               </Switch>

@@ -42,7 +42,7 @@ class CreateProfile extends Component {
       if (Object.keys(profile).length === 0) {
         this.props.history.push("/create-profile");
       } else {
-        // If profile field doesnt exist, make empty string
+        // If profile field doesn't exist, make empty string
         profile.location = !isEmpty(profile.location) ? profile.location : "";
         profile.bio = !isEmpty(profile.bio) ? profile.bio : "";
 
@@ -58,6 +58,7 @@ class CreateProfile extends Component {
     }
   }
 
+  // create new profile
   onSubmit(e) {
     e.preventDefault();
 
@@ -93,6 +94,7 @@ class CreateProfile extends Component {
       { label: "Other", value: "Other" }
     ];
 
+    // select options for movie genres
     const prefsOptions = [
       { label: "Drama", value: "Drama" },
       { label: "Comedy", value: "Comedy" },
@@ -192,6 +194,7 @@ class CreateProfile extends Component {
   }
 }
 
+// for redux
 CreateProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,

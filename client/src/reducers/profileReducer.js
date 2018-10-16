@@ -5,6 +5,7 @@ import {
   CLEAR_CURRENT_PROFILE
 } from '../actions/types';
 
+// reducer for user profile
 const initialState = {
   profile: null,
   profiles: null,

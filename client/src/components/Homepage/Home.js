@@ -30,6 +30,7 @@ class Home extends Component {
   }
 
   render() {
+      // show loading spinner until receive res from back-end
     if (!this.state.movies[0])
         return <Spinner />;
 

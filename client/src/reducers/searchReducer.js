@@ -5,6 +5,7 @@ import {
   GET_CURRENTMVTMDB
 } from "../actions/types";
 
+// reducer for search result
 const initialState = {
   movie: null,
   movieTmdb: null,

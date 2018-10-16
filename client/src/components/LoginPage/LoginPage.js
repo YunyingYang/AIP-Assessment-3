@@ -20,12 +20,14 @@ class LoginPage extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  // for redirecting to dashboard
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
   }
 
+    // for redirecting to dashboard
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
@@ -39,6 +41,7 @@ class LoginPage extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  // get user email and password
   onSubmit(e) {
     e.preventDefault();
 
@@ -129,6 +132,7 @@ class LoginPage extends Component {
   }
 }
 
+// for redux
 LoginPage.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,

@@ -8,6 +8,7 @@ class Star extends Component {
         }
     }
 
+    // display user rating in five stars
     render() {
         return(
             <span>

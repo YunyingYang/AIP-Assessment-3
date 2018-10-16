@@ -39,15 +39,17 @@ class MovieItemDetail extends Component {
       this.props.getMovieByMvId(this.props.match.params.movie_id);
     }
 
+    // check if any user has rated this movie
     axios
       .get(`/api/usermovieratings/users/${this.props.match.params.movie_id}`)
       .then(res => {
         this.setState({ ratings: res.data });
       })
       .catch(err => {
-        console.log("this user has not rated any movies");
+        console.log("no user has rated this movie");
       });
 
+    // find movie details
     axios
       .get(`/api/movies/mvdetails/${this.props.match.params.movie_id}`)
       .then(res => {
@@ -60,6 +62,7 @@ class MovieItemDetail extends Component {
         console.log("this movie do not exist in database");
       });
 
+    // check if current user has rated this movie
     axios
       .get(`/api/usermovieratings/${this.props.match.params.movie_id}`)
       .then(res => {
@@ -80,6 +83,7 @@ class MovieItemDetail extends Component {
     }
   }
 
+  // get movie info from tmdb api
   getTmdbData_detail(movie) {
     const url = new URL(
       "https://api.themoviedb.org/3/movie/" +
@@ -102,6 +106,7 @@ class MovieItemDetail extends Component {
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
+  // get movie trailer link
   getTmdbData_video(movie) {
     const url = new URL(
       "https://api.themoviedb.org/3/movie/" +
@@ -123,6 +128,7 @@ class MovieItemDetail extends Component {
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
+  // get actors info
   getTmdbData_cast(movie) {
     const url = new URL(
       "https://api.themoviedb.org/3/movie/" +
@@ -150,6 +156,7 @@ class MovieItemDetail extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  // change current user's rating of this movie
   changeRating(newRating) {
     this.setState({
       rating: newRating * 2
@@ -185,6 +192,7 @@ class MovieItemDetail extends Component {
     let castImg;
     let castName;
 
+    // actors field
     if (casts !== null) {
       if (casts.length > 0) {
         castImg = casts.map(cast => {
@@ -221,6 +229,7 @@ class MovieItemDetail extends Component {
       }
     }
 
+    // rating field
     const voteForm = (
       <div>
         <br />
@@ -263,6 +272,8 @@ class MovieItemDetail extends Component {
           <div className="col-md-12">
             <div className="card col-md-12 p-3">
               <div className="row">
+                  {/* if movie poster exists in tmdb database, display poster */}
+                  {/* if not, display default image */}
                 <div className="col-md-4">
                   {movieTmdb.poster_path ? (
                     <img
@@ -435,6 +446,7 @@ class MovieItemDetail extends Component {
   }
 }
 
+// for redux
 MovieItemDetail.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,

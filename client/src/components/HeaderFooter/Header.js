@@ -35,19 +35,19 @@ class Header extends Component {
   componentDidMount() {
     this.props.history.listen(() => {
       // get new URL whenever the route change
-      if (this.props.history.location.pathname === "/") {
+      if (this.props.history.location.pathname === "/") { //homepage
         this.setState({
           homeActive: true,
           discoverActive: false,
           chatActive: false
         });
-      } else if (this.props.history.location.pathname === "/profiles/1") {
+      } else if (this.props.history.location.pathname === "/profiles/1") { // all profiles
         this.setState({
           homeActive: false,
           discoverActive: true,
           chatActive: false
         });
-      } else if (this.props.history.location.pathname === "/chat") {
+      } else if (this.props.history.location.pathname === "/chat") { // chat room
         this.setState({
           homeActive: false,
           discoverActive: false,
@@ -63,6 +63,7 @@ class Header extends Component {
     });
   }
 
+  // log out and redirect to homepage
   onLogoutClick(e) {
     e.preventDefault();
     this.props.clearCurrentProfile();
@@ -70,6 +71,7 @@ class Header extends Component {
     this.props.history.push("/");
   }
 
+  // search for movies via keywords
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
     const newSuggest = {
@@ -94,12 +96,14 @@ class Header extends Component {
     setTimeout(
       function() {
         //Start the timer
-        this.setState({ suggests: [] }); //After a while, close the autocomplete div
+        this.setState({ suggests: [] }); //After a while, close the auto-complete div
       }.bind(this),
       400
     );
   }
 
+  // get keyboard input - for movie search result drop down menu
+  // 38: up key; 40: down key
   onInputKeyDown(e) {
     if (e.which === 40) {
       var activeIndexPlus = this.state.activeIndex + 1;
@@ -123,6 +127,7 @@ class Header extends Component {
     this.setState({ activeIndex: index });
   }
 
+  // search for movies via keywords
   onSubmit(e) {
     e.preventDefault();
     let newSearch = this.state.searchContent;
@@ -147,6 +152,7 @@ class Header extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
+    // movie search results
     let suggests = this.state.suggests.map((suggest, index) => (
       <li
         className="dropdown-item list-item-group"
@@ -167,6 +173,7 @@ class Header extends Component {
       </li>
     ));
 
+    // display welcome message for logged in users
     const authLinks = (
       <div className="auth-view">
         <li className="user-mgmt">
@@ -189,6 +196,8 @@ class Header extends Component {
         </li>
       </div>
     );
+
+    // display login button for visitors
     const guestLinks = (
       <div className="guest-view">
         <li className="user-mgmt">
@@ -199,6 +208,7 @@ class Header extends Component {
         </li>
       </div>
     );
+
     return (
       <div className="header-menu">
         <ul className="header-bar">
@@ -209,6 +219,7 @@ class Header extends Component {
           <li>
             <Link to="/">PEPPA FILMTOPIA</Link>
           </li>
+          {/* check if user has logged in and display messages */}
           {isAuthenticated ? authLinks : guestLinks}
         </ul>
         <ul className="navi-bar">
@@ -237,6 +248,7 @@ class Header extends Component {
               Share Your Feelings
             </Link>
           </li>
+          {/* movie search box */}
           <li className="search-box nav-item dropdown">
             <form
               className="form-wrapper-2 cf form-inline my-2 my-lg-0"
@@ -280,6 +292,7 @@ class Header extends Component {
   }
 }
 
+// for redux
 Header.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,

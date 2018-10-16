@@ -1,6 +1,7 @@
 import React from "react";
 import spinner from "../../images/whalespinner.gif";
 
+// show loading spinner
 export default () => {
   return (
     <div>
