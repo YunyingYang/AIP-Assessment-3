@@ -10,6 +10,7 @@ const profile = require("./routes/api/profile");
 const movies = require("./routes/api/movies");
 const chats = require("./routes/api/chats");
 const usermovieratings = require("./routes/api/usermovieratings");
+const recom = require("./routes/api/recom");
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/api/profile", profile);
 app.use("/api/movies", movies);
 app.use("/api/chats", chats);
 app.use("/api/usermovieratings", usermovieratings);
+app.use("/api/recom", recom);
 
 // set server static assets for production version
 if (process.env.NODE_ENV === "production") {

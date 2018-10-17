@@ -3,6 +3,24 @@ const router = express.Router();
 
 const Movie = require("../../models/Movie");
 
+// @route   POST api/movies/mvrecom
+// @desc    Fetch TmdbId by MovieId
+// @access  Public
+router.post("/mvrecom", (req, res) => {
+  Movie.findOne({ movieId: req.body.movieId })
+    .then(movie => {
+      if (!movie) {
+        console.log("no movie🐷");
+      }
+      res.json(movie);
+    })
+    .catch(err =>
+      res
+        .status(404)
+        .json({ nomoviesfound: "This movie id does not exist in database" })
+    );
+});
+
 // @route   GET api/movies/mvdetails/:movie_id
 // @desc    Get movies
 // @access  Public

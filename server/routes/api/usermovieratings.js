@@ -117,27 +117,22 @@ router.post(
   (req, res) => {
     const { errors, isValid } = validateUserMovieRatingInput(req.body);
 
-    if (!isValid)
-      return res.status(400).json(errors);
+    if (!isValid) return res.status(400).json(errors);
 
     const userMovieRatingFields = {};
     userMovieRatingFields.user = req.user.id;
     userMovieRatingFields.movie = req.body.movieID;
     if (req.body.rating) userMovieRatingFields.rating = req.body.rating;
 
-    UserMovieRating.findOne({
-      user: req.user.id,
-      movie: req.body.movieID
-    }).then(usermovierating => {
-      if (usermovierating) {
-        // Update user's rating
-        UserMovieRating.findOneAndUpdate(
-          { user: req.user.id, movie: req.body.movieID },
-          { $set: userMovieRatingFields },
-          { new: true }
-        ).then(usermovierating => res.json(usermovierating));
-      } else {
-        // Create and save UserMovieRating
+    UserMovieRating.findOneAndUpdate(
+      {
+        user: req.user.id,
+        movie: req.body.movieID
+      },
+      { $set: userMovieRatingFields },
+      { new: true }
+    ).then(usermovierating => {
+      if (!usermovierating) {
         new UserMovieRating(userMovieRatingFields)
           .save()
           .then(usermovierating => res.json(usermovierating));

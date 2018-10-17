@@ -4,7 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 import ReactStars from "react-stars";
 import PropTypes from "prop-types";
 import axios from "axios";
-
+import Spinner from "../Common/Spinner";
 import {
   getMovieByMvId,
   getMovieItemTmdb,
@@ -14,6 +14,7 @@ import isEmpty from "../../validation/is-empty";
 import "./MovieSearch.css";
 import nopic from "../../images/nopic.jpg";
 import defaultImage from "../../images/cat-small.png";
+import MovieCardRecom from "./MovieCard";
 
 class MovieItemDetail extends Component {
   constructor(props) {
@@ -25,13 +26,24 @@ class MovieItemDetail extends Component {
       casts: [],
       rating: 0,
       ratings: [],
-      errors: {}
+      errors: {},
+      // ----
+      haveItemcb: null,
+      itemcb: {},
+      // Item Content Based recommendation
+      itemcb_Movie1: null,
+      itemcb_Movie2: null,
+      itemcb_Movie3: null,
+      itemcb_Movie4: null,
+      itemcb_Movie5: null,
+      itemcb_Movie6: null
     };
     this.getTmdbData_detail = this.getTmdbData_detail.bind(this);
     this.getTmdbData_video = this.getTmdbData_video.bind(this);
     this.getTmdbData_cast = this.getTmdbData_cast.bind(this);
     this.onChange = this.onChange.bind(this);
     this.changeRating = this.changeRating.bind(this);
+    this.readTmdbFromItemcb = this.readTmdbFromItemcb.bind(this);
   }
 
   componentDidMount() {
@@ -57,6 +69,20 @@ class MovieItemDetail extends Component {
         this.getTmdbData_detail(res.data);
         this.getTmdbData_video(res.data);
         this.getTmdbData_cast(res.data);
+        const movieInfo = {
+          movieId: res.data.movieId //movie id
+        };
+        // ========= CB recommendation =========
+        axios
+          .post("/api/recom/itemcb", movieInfo)
+          .then(res => {
+            this.setState({ itemcb: res.data });
+            this.setState({ haveItemcb: true });
+            this.readTmdbFromItemcb();
+          })
+          .catch(err => {
+            this.setState({ haveItemcb: false });
+          });
       })
       .catch(err => {
         console.log("this movie do not exist in database");
@@ -152,6 +178,51 @@ class MovieItemDetail extends Component {
     axios.defaults.headers.common["Authorization"] = authheader;
   }
 
+  // Display the related 6 movies for the current movie
+  readTmdbFromItemcb() {
+    const itemcb1 = {
+      movieId: this.state.itemcb.movie1
+    };
+    axios.post("/api/movies/mvrecom", itemcb1).then(res => {
+      this.setState({ itemcb_Movie1: res.data });
+    });
+
+    const itemcb2 = {
+      movieId: this.state.itemcb.movie2
+    };
+    axios.post("/api/movies/mvrecom", itemcb2).then(res => {
+      this.setState({ itemcb_Movie2: res.data });
+    });
+
+    const itemcb3 = {
+      movieId: this.state.itemcb.movie3
+    };
+    axios.post("/api/movies/mvrecom", itemcb3).then(res => {
+      this.setState({ itemcb_Movie3: res.data });
+    });
+
+    const itemcb4 = {
+      movieId: this.state.itemcb.movie4
+    };
+    axios.post("/api/movies/mvrecom", itemcb4).then(res => {
+      this.setState({ itemcb_Movie4: res.data });
+    });
+
+    const itemcb5 = {
+      movieId: this.state.itemcb.movie5
+    };
+    axios.post("/api/movies/mvrecom", itemcb5).then(res => {
+      this.setState({ itemcb_Movie5: res.data });
+    });
+
+    const itemcb6 = {
+      movieId: this.state.itemcb.movie6
+    };
+    axios.post("/api/movies/mvrecom", itemcb6).then(res => {
+      this.setState({ itemcb_Movie6: res.data });
+    });
+  }
+
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -176,7 +247,7 @@ class MovieItemDetail extends Component {
     const picBaseUrl = new URL(
       "http://image.tmdb.org/t/p/w185_and_h278_bestv2/"
     );
-
+    let itemcbPos;
     var videoUrl = 0;
     if (videoKey !== null) {
       videoUrl = new URL(
@@ -266,14 +337,52 @@ class MovieItemDetail extends Component {
       </li>
     ));
 
+    if (this.state.haveItemcb === null) {
+      return <Spinner />;
+    } else if (this.state.haveItemcb === true) {
+      if (!this.state.itemcb) return <Spinner />;
+      if (!this.state.itemcb_Movie1) return <Spinner />;
+      if (!this.state.itemcb_Movie2) return <Spinner />;
+      if (!this.state.itemcb_Movie3) return <Spinner />;
+      if (!this.state.itemcb_Movie4) return <Spinner />;
+      if (!this.state.itemcb_Movie5) return <Spinner />;
+      if (!this.state.itemcb_Movie6) return <Spinner />;
+
+      itemcbPos = (
+        <div>
+          <div className="card-deck">
+            <MovieCardRecom movie={this.state.itemcb_Movie1} />
+            <MovieCardRecom movie={this.state.itemcb_Movie2} />
+            <MovieCardRecom movie={this.state.itemcb_Movie3} />
+            <MovieCardRecom movie={this.state.itemcb_Movie4} />
+            <MovieCardRecom movie={this.state.itemcb_Movie5} />
+            <MovieCardRecom movie={this.state.itemcb_Movie6} />
+          </div>
+          <br />
+        </div>
+      );
+    } else {
+      itemcbPos = (
+        <div>
+          <br />
+          <h3 className="text-white">Guess what you like... (Item CB)</h3>
+          <br />
+          <h5 className="text-white">
+            ** You surf too fast! Please wait for the recommendation results...
+          </h5>
+          <br />
+        </div>
+      );
+    }
+
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-12">
             <div className="card col-md-12 p-3">
               <div className="row">
-                  {/* if movie poster exists in tmdb database, display poster */}
-                  {/* if not, display default image */}
+                {/* if movie poster exists in tmdb database, display poster */}
+                {/* if not, display default image */}
                 <div className="col-md-4">
                   {movieTmdb.poster_path ? (
                     <img
@@ -401,6 +510,21 @@ class MovieItemDetail extends Component {
                 </div>
               </div>
               <br />
+            </div>
+            <br />
+          </div>
+          <div className="col-md-12">
+            <div className="card col-md-12 p-3">
+              <h5 className="card-header">- Recommend For You -</h5>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="card-block">
+                    <div className="card-body">
+                      <div className="row">{itemcbPos}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <br />
           </div>
