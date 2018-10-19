@@ -35,19 +35,22 @@ class Header extends Component {
   componentDidMount() {
     this.props.history.listen(() => {
       // get new URL whenever the route change
-      if (this.props.history.location.pathname === "/") { //homepage
+      if (this.props.history.location.pathname === "/") {
+        //homepage
         this.setState({
           homeActive: true,
           discoverActive: false,
           chatActive: false
         });
-      } else if (this.props.history.location.pathname === "/profiles/1") { // all profiles
+      } else if (this.props.history.location.pathname === "/profiles/1") {
+        // all profiles
         this.setState({
           homeActive: false,
           discoverActive: true,
           chatActive: false
         });
-      } else if (this.props.history.location.pathname === "/chat") { // chat room
+      } else if (this.props.history.location.pathname === "/chat") {
+        // chat room
         this.setState({
           homeActive: false,
           discoverActive: false,

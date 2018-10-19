@@ -11,7 +11,7 @@ import {
 export const getMovies = (searchContent, currentPage) => dispatch => {
   dispatch(setMovieLoading());
   axios
-    .post(`/api/movies/search/${searchContent}/${currentPage}`)
+    .get(`/api/movies/search/${searchContent}/${currentPage}`)
     .then(res => {
       dispatch({
         type: POST_SEARCHRESULT,
