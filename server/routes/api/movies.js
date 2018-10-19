@@ -44,7 +44,7 @@ router.get("/mvdetails/:movie_id", (req, res) => {
 // @route   GET api/movies/search/:search_content/:page
 // @desc    Get movies when searching
 // @access  Public
-router.post("/search/:search_content/:page", function(req, res) {
+router.get("/search/:search_content/:page", function(req, res) {
   let searchContent = req.params.search_content.trim();
   // use RegEx to escape parentheses in search content
   let searchContent1 = searchContent.replace(/\(/gi, "\\(");
@@ -109,7 +109,7 @@ router.post("/suggest", (req, res) => {
     );
 });
 
-// @route   POST api/movies/home
+// @route   GET api/movies/home
 // @desc    Get movies to display on homepage
 // @access  Public
 router.get("/home", (req, res) => {
