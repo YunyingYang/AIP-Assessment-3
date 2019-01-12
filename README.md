@@ -10,14 +10,6 @@ Created for AIP assessment 3 | Inspired by Amazon and [Douban Movie](https://mov
 
 <br>
 
-### <font color=#0099ff>Team</font>
-
-- 12642221  Jiayi Shi 
-- 12428898  Yunying Yang 
-- 12728352  Yuan Yuan 
-
-<br>
-
 ### <font color=#0099ff>Installation</font>
 
 Create a new directory and `cd dir_name` to that directory in terminal:
